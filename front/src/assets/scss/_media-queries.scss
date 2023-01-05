@@ -1,0 +1,30 @@
+$navigation-bar-min-width : 19rem;
+$aside-bar-min-width : $navigation-bar-min-width;
+$content-min-width : calc((100vh - 1.5rem) * (4/7));
+
+// RATIO VIDEO : 4/7
+
+// main{
+//   width: 100%;
+// }
+// nav{
+//   display: none;
+// }
+// aside {
+//   display: none;
+// }
+
+// @media screen and (min-width : calc($navigation-bar-min-width + $content-min-width)) {
+//   main{
+//     width: $content-min-width;
+//   }
+//   nav{
+//     display: block;
+//   }
+// }
+
+// @media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $aside-bar-min-width)) {
+//   aside {
+//     display: block;
+//   }
+// }
