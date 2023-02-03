@@ -24,7 +24,7 @@ app.mount("#app");
 
 // Variable Globale pour Axios nommé "api"
 window.API = axios.create({
-  baseURL: "https://localhost:8000/", //! URL de l'API
+  baseURL: import.meta.env.VITE_API_URL,
   defaults: {
     headers: {
       common: {
