@@ -1,16 +1,24 @@
 <template>
-  <button>
+  <div>
     <slot></slot>
-  </button>
+  </div>
 </template>
 
 <style scoped>
-  button{
-    border-radius: 1.125rem;
-    padding: 6px 12px;
-    margin: 12px;
-    background: #ff2d2d;
-    border: none;
-    color: white;
-  }
+div {
+  display: inline-block;
+
+  line-height: 1.5rem;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  margin: .75rem;
+  padding: .375rem .75rem;
+
+  border-radius: 1.125rem;
+
+  background: #ff2d2d;
+  color: white;
+}
 </style>
