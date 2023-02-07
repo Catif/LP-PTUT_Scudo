@@ -21,4 +21,12 @@ button {
 
     cursor: pointer;
 }
+
+button:hover {
+    background: rgba(83, 83, 255, 0.85);
+}
+
+button:active {
+    background: rgba(83, 83, 255, 0.7);
+}
 </style>
