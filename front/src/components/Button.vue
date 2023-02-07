@@ -5,12 +5,19 @@
 </template>
 
 <style scoped>
-    button{
-        border-radius: 1.125rem;
-        padding: 6px 12px;
-        margin: 12px;
-        background: rgb(83, 83, 255);
-        border: none;
-        color: white;
-    }
+button {
+    line-height: 1.5rem;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    margin: .75rem;
+    padding: .375rem .75rem;
+
+    border-radius: 1.125rem;
+    border: none;
+
+    background: rgb(83, 83, 255);
+    color: white;
+}
 </style>
