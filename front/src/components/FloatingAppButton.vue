@@ -5,13 +5,20 @@
 </template>
 
 <style scoped>
-    button{
-        border-radius: 1.125rem;
-        padding: 12px;
-        margin: 12px;
-        height: 40px;
-        background: rgb(83, 83, 255);
-        border: none;
-        color: white;
-    }
+button {
+    line-height: 2.5rem;
+
+    font-size: 1.25rem;
+
+    margin: .75rem;
+    padding: .75rem;
+
+    border-radius: 1.125rem;
+    border: none;
+
+    background: rgb(83, 83, 255);
+    color: white;
+
+    cursor: pointer;
+}
 </style>
