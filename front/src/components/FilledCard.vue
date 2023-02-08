@@ -5,7 +5,7 @@ import Card from "./Card.vue";
 
 <template>
   <Card>
-    jnk
+    <slot></slot>
   </Card>
 </template>
 
