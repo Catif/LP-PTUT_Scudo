@@ -4,12 +4,14 @@
   </h2>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 h2 {
   line-height: 1.5rem;
 
   font-size: 1.25rem;
 
   margin: .75rem;
+
+  color: $neutral-color-10;
 }
 </style>

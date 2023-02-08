@@ -19,7 +19,7 @@ button {
     border: none;
 
     background: transparent;
-    color: white;
+    color: $neutral-color-98;
 
     cursor: pointer;
 

@@ -4,12 +4,14 @@
   </p>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 p {
   line-height: 1.25rem;
 
   font-size: 1rem;
 
   margin: .75rem;
+
+  color: $neutral-color-10;
 }
 </style>
