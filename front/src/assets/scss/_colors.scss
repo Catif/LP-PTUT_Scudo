@@ -9,6 +9,10 @@ $main-color-90: #7bf9cb; // containeur light
 $alert-color-40: #c00012; // alert light
 $alert-color-80: #ffb4ab; // alert dark
 
-$transparent-00: rgba(0, 0, 0, 0);
-$transparent-10: rgba(0, 0, 0, 0.1);
-$transparent-20: rgba(0, 0, 0, 0.2);
+$dark-00: rgba(0, 0, 0, 0);
+$dark-10: rgba(0, 0, 0, 0.1);
+$dark-20: rgba(0, 0, 0, 0.2);
+
+$light-00: rgba(255, 255, 255, 0);
+$light-10: rgba(255, 255, 255, 0.1);
+$light-20: rgba(255, 255, 255, 0.2);
