@@ -28,6 +28,8 @@ button {
 
 button:hover {
     background: $main-color-50;
+
+    transition: none;
 }
 
 button:active {
