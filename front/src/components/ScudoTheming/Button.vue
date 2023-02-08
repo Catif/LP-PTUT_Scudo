@@ -18,7 +18,7 @@ button {
     border-radius: 1.125rem;
     border: none;
 
-    background: $main-color-40;
+    background: transparent;
     color: white;
 
     cursor: pointer;
@@ -27,12 +27,14 @@ button {
 }
 
 button:hover {
-    background: $main-color-50;
+    background: $neutral-color-95;
 
-    transition: none;
+    transition: background ease-out 150ms;
 }
 
 button:active {
-    background: $main-color-60;
+    background: $neutral-color-90;
+
+    transition: none;
 }
 </style>
