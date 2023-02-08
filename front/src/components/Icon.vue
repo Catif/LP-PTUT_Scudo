@@ -13,15 +13,13 @@ const props = defineProps(['active'])
 span {
   line-height: 1.25rem;
 
+  vertical-align: bottom;
   font-size: 1.5rem;
-
   font-variation-settings:
     'FILL' 0,
     'wght' 400,
     'GRAD' 0,
     'opsz' 48;
-
-  margin: .75rem;
 }
 
 span.filled {
