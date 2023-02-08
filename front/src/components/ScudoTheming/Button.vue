@@ -30,7 +30,6 @@ button:hover {
     background: $neutral-color-95;
 
     transition: background ease-out 150ms;
-
 }
 
 button:active {

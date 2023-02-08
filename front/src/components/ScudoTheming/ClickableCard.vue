@@ -1,5 +1,5 @@
 <script  setup>
-import Card from "./Card.vue";
+import Card from "./ClickableCard.vue";
 
 </script>
 
@@ -13,15 +13,11 @@ import Card from "./Card.vue";
 @import "@/assets/scss/colors";
 
 div {
-  cursor: pointer;
-
-  transition: background ease-out 150ms;
+  background: $neutral-color-95;
 }
 
 div:hover {
   background: $neutral-color-95;
-
-  transition: none;
 }
 
 div:active {
