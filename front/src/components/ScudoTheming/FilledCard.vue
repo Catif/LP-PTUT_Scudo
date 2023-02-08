@@ -9,8 +9,10 @@ import Card from "./Card.vue";
   </Card>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "../../assets/scss/colors";
+
 div {
-  background: #ABffCD;
+  background: $main-color-90;
 }
 </style>
