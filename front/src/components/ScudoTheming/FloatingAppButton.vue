@@ -22,10 +22,14 @@ button {
     color: white;
 
     cursor: pointer;
+
+    transition: background ease-out 150ms;
 }
 
 button:hover {
     background: $main-color-50;
+
+    transition: none;
 }
 
 button:active {
