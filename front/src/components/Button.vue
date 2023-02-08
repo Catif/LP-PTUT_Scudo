@@ -23,7 +23,7 @@ button {
 
     cursor: pointer;
 
-    transition: background ease-out 1500ms;
+    transition: background ease-out 150ms;
 }
 
 button:hover {
