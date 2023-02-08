@@ -4,7 +4,9 @@
     </button>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/scss/colors";
+
 button {
     line-height: 2.5rem;
 
@@ -16,17 +18,21 @@ button {
     border-radius: 1.125rem;
     border: none;
 
-    background: rgb(83, 83, 255);
+    background: $main-color-40;
     color: white;
 
     cursor: pointer;
+
+    transition: background ease-out 150ms;
 }
 
 button:hover {
-    background: rgba(83, 83, 255, 0.85);
+    background: $main-color-50;
+
+    transition: none;
 }
 
 button:active {
-    background: rgba(83, 83, 255, 0.7);
+    background: $main-color-60;
 }
 </style>
