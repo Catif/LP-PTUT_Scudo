@@ -5,6 +5,8 @@
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/colors";
+
 h2 {
   line-height: 1.5rem;
 
