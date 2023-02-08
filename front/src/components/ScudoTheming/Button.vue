@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import "../assets/scss/_colors.scss";
+@import "../../assets/scss/colors";
 
 button {
     line-height: 1.5rem;
