@@ -13,14 +13,20 @@ import Card from "./ClickableCard.vue";
 @import "@/assets/scss/colors";
 
 div {
-  background: $neutral-color-95;
+  cursor: pointer;
+
+  transition: background ease-out 150ms;
 }
 
 div:hover {
   background: $neutral-color-95;
+
+  transition: background ease-out 150ms;
 }
 
 div:active {
   background: $neutral-color-90;
+
+  transition: none;
 }
 </style>
