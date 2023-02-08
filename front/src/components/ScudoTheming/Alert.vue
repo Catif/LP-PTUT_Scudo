@@ -21,6 +21,6 @@ div {
   border-radius: 1.125rem;
 
   background: $alert-color-40;
-  color: white;
+  color: $neutral-color-98;
 }
 </style>
