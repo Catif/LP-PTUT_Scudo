@@ -29,10 +29,13 @@ button {
 button:hover {
     background: $neutral-color-95;
 
-    transition: none;
+    transition: background ease-out 150ms;
+
 }
 
 button:active {
     background: $neutral-color-90;
+
+    transition: none;
 }
 </style>
