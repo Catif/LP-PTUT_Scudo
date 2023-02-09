@@ -4,7 +4,7 @@ import Image from '@/components/ScudoTheming/Image.vue';
 import Text from '@/components/ScudoTheming/Text.vue';
 import AuthorSection from '@/components/AuthorSection.vue';
 
-const props = defineProps(['resource'])
+const props = defineProps(['resource', 'alt'])
 </script>
 
 <template>
