@@ -1,33 +1,33 @@
 <script setup>
-import card from '@/components/Card.vue';
-import image from '@/components/Image.vue';
-import texte from '@/components/Text.vue';
-import icon from '@/components/Icon.vue';
+import Card from '@/components/ScudoTheming/FilledCard.vue';
+import Image from '@/components/ScudoTheming/Image.vue';
+import Title from '@/components/ScudoTheming/Title.vue';
+import Icon from '@/components/ScudoTheming/Icon.vue';
+
+const props = defineProps(['group'])
+
 </script>
 
 <template>
-    <card>
-        <image/>
-            
-        <texte>
-            
-        </texte>
-        <div>
-            <texte>
-                
-            </texte>
-            <icon>
-                
-            </icon>
-        </div>
-    </card>
+    <Card>
+        <Image :src="props['group'].image" :alt="'Photo de présentation de '+ props['group'].name"/>
+        <section>
+            <Title>
+                {{ props['group'].name }}
+            </Title>
+            <Title>
+                {{ props['group'].followers }}
+                <Icon>
+                group
+                </Icon>
+            </Title>
+        </section> 
+    </Card>
 </template>
 
 <style lang="scss" scoped>
- div{
+ section{
     display: flex;
-    texte{
-      justify-content: space-between;  
-    }
+    justify-content: space-between;  
  }
 </style>
