@@ -1,9 +1,11 @@
 <script setup>
 
+const props = defineProps(['to'])
+
 </script>
 
 <template>
-  <router-link to="oui">
+  <router-link :to="props['to']">
     @<slot></slot>
   </router-link>
 </template>
