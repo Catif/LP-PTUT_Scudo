@@ -13,7 +13,7 @@ const props = defineProps(['src', 'alt'])
 @import "@/assets/scss/colors";
 img {
   aspect-ratio: 1 / 1;
-  border: 2px solid $neutral-color-10;
+  border: 1.75px solid $neutral-color-10;
   border-radius: 1.125rem;
   object-fit: cover;
   vertical-align: bottom;
