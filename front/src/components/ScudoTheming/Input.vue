@@ -46,6 +46,7 @@ defineEmits(["update:value"]);
       :value="props.value"
       :required="props.required"
       :disabled="props.disabled"
+      :placeholder="props.placeholder"
       @input="$emit('update:value', $event.target.value)"
     />
   </div>
@@ -102,6 +103,8 @@ div {
     background-color: transparent;
     font-size: 1rem;
     padding: 1rem;
+
+    width: 100%;
 
     &:focus {
       outline: none;
