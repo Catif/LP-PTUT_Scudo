@@ -1,6 +1,9 @@
 <script setup>
 const props = defineProps({
-  placeholder: String,
+  placeholder: {
+    type: String,
+    default: "",
+  },
   label: {
     type: String,
     default: "",
