@@ -12,7 +12,7 @@ p {
 
   font-size: 1rem;
 
-  margin: .75rem;
+  margin: 0.75rem;
 
   color: $neutral-color-10;
 }
