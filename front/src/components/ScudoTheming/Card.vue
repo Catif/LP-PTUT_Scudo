@@ -11,5 +11,7 @@ div {
   border-radius: 1.75rem;
 
   background: transparent;
+
+  overflow: hidden;
 }
 </style>
