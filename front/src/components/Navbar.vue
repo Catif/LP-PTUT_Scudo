@@ -2,6 +2,8 @@
 import Icon from "./ScudoTheming/Icon.vue";
 import Text from "./ScudoTheming/Text.vue";
 
+import Search from "./Navbar_Search.vue";
+
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -21,6 +23,8 @@ const elementsNav = [
 
 <template>
   <nav>
+    <Search placeholder="Recherche SCUDO" />
+
     <router-link v-for="el in elementsNav" :key="el.name" :to="el.path" v-bind:class="{ mobile: !el.mobile, desktop: el.mobile }">
       <Text
         ><Icon :active="route.path == el.path">{{ el.icon }}</Icon
