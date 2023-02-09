@@ -7,11 +7,13 @@ const props = defineProps(['src', 'alt'])
   <img :src="props['src']" :alt="props['alt']">
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/scss/colors";
 img {
-  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1.75px solid $neutral-color-10;
+  border-radius: 1.125rem;
   object-fit: cover;
-  border-radius: 1.75rem;
   vertical-align: bottom;
 }
 </style>

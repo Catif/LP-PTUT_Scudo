@@ -10,7 +10,6 @@ const props = defineProps(["active"]);
 <style scoped>
 span {
   line-height: inherit;
-
   vertical-align: bottom;
   font-size: 1.5rem;
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
