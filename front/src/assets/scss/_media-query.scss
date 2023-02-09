@@ -1,0 +1,30 @@
+$navigation-bar-min-width : 304px;
+$aside-bar-min-witdh : $navigation-bar-min-width;
+$content-min-witdh : calc((100vh - 24px) * (4/7));
+
+// RATIO VIDEO : 4/7
+
+// main{
+//   width: 100%;
+// }
+// nav{
+//   display: none;
+// }
+// aside {
+//   display: none;
+// }
+
+// @media screen and (min-witdh : calc($navigation-bar-min-width + $content-min-witdh)) {
+//   main{
+//     width: $content-min-witdh;
+//   }
+//   nav{
+//     display: block;
+//   }
+// }
+
+// @media screen and (min-witdh : calc($navigation-bar-min-width + $content-min-witdh + $aside-bar-min-witdh)) {
+//   aside {
+//     display: block;
+//   }
+// }
