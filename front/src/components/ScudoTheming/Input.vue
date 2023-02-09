@@ -1,7 +1,10 @@
 <script setup>
 const props = defineProps({
   placeholder: String,
-  label: String,
+  label: {
+    type: String,
+    default: "",
+  },
   disabled: {
     type: Boolean,
     default: false,
@@ -10,7 +13,14 @@ const props = defineProps({
     type: String,
     default: "text",
   },
-  value: String,
+  name: {
+    type: String,
+    default: "default",
+  },
+  value: {
+    type: String,
+    default: "",
+  },
   required: {
     type: Boolean,
     default: false,
@@ -21,16 +31,23 @@ const props = defineProps({
   },
 });
 
-const inputValue = ref(props.value);
+defineEmits(["update:value"]);
 </script>
 
 <template>
   <div v-bind:class="{ border: props.border }">
-    <template v-if="props.placeholder">
-      <label v-bind:class="{ active: () }">{{ props.placeholder }}</label>
+    <template v-if="props.label">
+      <label v-bind:class="{ active: props.value.length > 0 }" :for="props.name">{{ props.label }}</label>
     </template>
-    <label>{{ props.placeholder }}</label>
-    <input :type="props.type" :value="props.value" :required="props.required" :disabled="props.disabled" placeholder="test" v-model="" />
+    <input
+      :type="props.type"
+      :id="props.name"
+      :name="props.name"
+      :value="props.value"
+      :required="props.required"
+      :disabled="props.disabled"
+      @input="$emit('update:value', $event.target.value)"
+    />
   </div>
 </template>
 
@@ -53,12 +70,31 @@ div {
 
   label {
     position: absolute;
-    left: 1rem;
+    left: 0.5rem;
     color: $neutral-color-50;
-    z-index: 2;
+    top: 50%;
+    padding: 0 0.5rem;
+    transform: translate(0, -50%);
+    cursor: text;
+
+    transition: all 0.1s ease-out;
 
     &.active {
-      color: $main-color-50;
+      color: $neutral-color-10;
+      top: 0px;
+      left: 6px;
+      font-size: 0.9rem;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-color: $neutral-color-98;
+      }
     }
   }
   input {
@@ -66,7 +102,10 @@ div {
     background-color: transparent;
     font-size: 1rem;
     padding: 1rem;
-    z-index: 3;
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 </style>
