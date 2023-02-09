@@ -10,6 +10,7 @@ const props = defineProps(['src', 'alt'])
 <style scoped>
 img {
   width: 100%;
+  object-fit: cover;
   border-radius: 1.75rem;
   vertical-align: bottom;
 }
