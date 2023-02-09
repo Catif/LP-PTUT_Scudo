@@ -10,5 +10,9 @@ class Ressource extends \Illuminate\Database\Eloquent\Model
   
   public $timestamps = true;
 
+  public function group(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+  {
+    return $this->belongsToMany('api\models\Group', 'Resource_Group', 'id_group', 'id_resource');
+  }
 
 }

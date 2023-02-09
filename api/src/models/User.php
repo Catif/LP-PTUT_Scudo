@@ -1,7 +1,6 @@
 <?php
 
 namespace api\models;
-
 class User extends \Illuminate\Database\Eloquent\Model
 {
 
@@ -10,8 +9,14 @@ class User extends \Illuminate\Database\Eloquent\Model
   
   public $timestamps = true;
 
-  public function Conversation(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+
+  public function group(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('\api\models\Conversation', 'id_conversation', 'id_conversation', 'id_sender');
+    return $this->belongsToMany('api\models\Group', 'User_Group', 'id_group', 'id_user');
+  }
+
+  public function follow(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+  {
+    return $this->belongsToMany('api\models\User', 'User_Follow', 'id_user_follow', 'id_user');
   }
 }
