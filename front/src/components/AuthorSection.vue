@@ -5,16 +5,16 @@ import ProfilePicture from "@/components/ProfilePicture.vue";
 import Title from "@/components/ScudoTheming/Title.vue";
 import Text from "@/components/ScudoTheming/Text.vue";
 
-const props = defineProps(['profile'])
+const props = defineProps(['user', 'title'])
 
 </script>
 
 <template>
     <section class="authorSection">
-        <ProfilePicture :src="props['profile'].image" :alt="profile"/>
+        <ProfilePicture :src="props['user'].image" alt="profil"/>
         <div>
-            <Title>A la marche contre le climat !</Title>
-            <Text><Username :to="props['profile'].pseudo">{{ props['profile'].pseudo }}</Username></Text>
+            <Title>{{ props['title'] }}</Title>
+            <Text><Username :to="props['user'].username">{{ props['user'].username }}</Username></Text>
         </div>
     </section>
 </template>
