@@ -1,31 +1,36 @@
 <script setup>
+// Import ScudoTheming components
 import Icon from "./ScudoTheming/Icon.vue";
 import Text from "./ScudoTheming/Text.vue";
+import Image from "./ScudoTheming/Image.vue";
 
+// Import Navbar components
 import Search from "./Navbar_Search.vue";
 
+// Import Route
 import { useRoute } from "vue-router";
-
 const route = useRoute();
-console.log(route.path);
 
+// Create elementsNav array
 const elementsNav = [
   // Mobile + Desktop
-  { name: "Home", path: "/", icon: "home", title: "Accueil", mobile: false },
-  { name: "Upload", path: "/upload", icon: "add_circle", title: "Publier", mobile: false },
-  { name: "Conversation", path: "/conversation", icon: "chat_bubble", title: "Conversations", mobile: false },
+  { name: "Home", path: "/", icon: "home", title: "Accueil", mobile: true },
+  { name: "Upload", path: "/upload", icon: "add_circle", title: "Publier", mobile: true },
+  { name: "Conversation", path: "/conversation", icon: "chat_bubble", title: "Conversations", mobile: true },
 
   // Desktop
-  { name: "Profil", path: "/profile", icon: "account_circle", title: "Profil", mobile: true },
-  { name: "Params", path: "/settings", icon: "settings", title: "Paramètres", mobile: true },
+  { name: "Profil", path: "/profile", icon: "account_circle", title: "Profil", mobile: false },
+  { name: "Params", path: "/settings", icon: "settings", title: "Paramètres", mobile: false },
 ];
 </script>
 
 <template>
   <nav>
-    <Search placeholder="Recherche SCUDO" />
+    <Image src="/assets/img/logo-short_light.svg" alt="Logo" />
 
-    <router-link v-for="el in elementsNav" :key="el.name" :to="el.path" v-bind:class="{ mobile: !el.mobile, desktop: el.mobile }">
+    <Search id="search" />
+
+    <router-link v-for="el in elementsNav" :key="el.name" :to="el.path" v-bind:class="{ mobile: el.mobile, desktop: !el.mobile }">
       <Text
         ><Icon :active="route.path == el.path">{{ el.icon }}</Icon
         ><span class="title">{{ el.title }}</span></Text
@@ -52,12 +57,17 @@ nav {
 
   background-color: $neutral-color-98;
 
-  .title {
+  .desktop,
+  .title,
+  #search {
     display: none;
   }
 
-  .desktop {
+  img {
     display: none;
+    width: 3rem;
+    padding: 0.5rem;
+    margin-left: 0.75rem;
   }
 
   .mobile,
@@ -95,8 +105,13 @@ nav {
     align-items: flex-start;
     justify-content: flex-start;
 
-    .desktop {
+    .desktop,
+    img {
       display: block;
+    }
+
+    #search {
+      display: flex;
     }
 
     a {
