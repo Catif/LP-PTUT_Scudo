@@ -20,6 +20,7 @@ const props = defineProps(['back', 'title'])
 
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
+@import "@/assets/scss/media-query";
 
 header {
   display: flex;
@@ -43,5 +44,11 @@ h1 {
   font-weight: 400;
 
   margin: 0;
+}
+
+@media screen and (min-width: calc($navigation-bar-min-width + $content-min-witdh)) {
+  header {
+    border-bottom: none;
+  }
 }
 </style>
