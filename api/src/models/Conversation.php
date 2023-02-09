@@ -10,7 +10,7 @@ class User extends \Illuminate\Database\Eloquent\Model
   
   public $timestamps = false;
 
-  public function resource(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+  public function resources(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
     return $this->belongsToMany('api\models\Resource', 'Resource_Group', 'id_resource', 'id_group');
   }
