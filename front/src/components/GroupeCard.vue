@@ -7,18 +7,27 @@ import icon from '@/components/Icon.vue';
 
 <template>
     <card>
-        <image>
+        <image/>
             
-        </image>
         <texte>
             
         </texte>
-        <icon>
-
-        </icon>
+        <div>
+            <texte>
+                
+            </texte>
+            <icon>
+                
+            </icon>
+        </div>
     </card>
 </template>
 
 <style lang="scss" scoped>
-
+ div{
+    display: flex;
+    texte{
+      justify-content: space-between;  
+    }
+ }
 </style>
