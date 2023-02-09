@@ -4,9 +4,7 @@ const props = defineProps(['src', 'alt'])
 
 </script>
 <template>
-<div>
   <img :src="props['src']" :alt="props['alt']">
-</div>
 </template>
 
 <style lang="scss" scoped>
