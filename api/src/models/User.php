@@ -1,6 +1,7 @@
 <?php
 
 namespace api\models;
+use api\models\Group as Group;
 
 class User extends \Illuminate\Database\Eloquent\Model
 {
@@ -10,8 +11,8 @@ class User extends \Illuminate\Database\Eloquent\Model
   
   public $timestamps = true;
 
-  public function Conversation(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-  {
-    return $this->belongsToMany('\api\models\Conversation', 'id_conversation', 'id_conversation', 'id_sender');
-  }
+
+
+
+
 }

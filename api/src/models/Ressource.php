@@ -2,10 +2,10 @@
 
 namespace api\models;
 
-class Ressource extends \Illuminate\Database\Eloquent\Model
+class Resource extends \Illuminate\Database\Eloquent\Model
 {
 
-  protected  $table = 'Ressource';
+  protected  $table = 'Resource';
   protected  $primaryKey = 'id_resource';
   
   public $timestamps = true;

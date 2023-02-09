@@ -2,11 +2,11 @@
 
 namespace api\models;
 
-class User extends \Illuminate\Database\Eloquent\Model
+class Conversation extends \Illuminate\Database\Eloquent\Model
 {
 
-  protected  $table = 'User';
-  protected  $primaryKey = 'id_user';
+  protected  $table = 'Conversation';
+  protected  $primaryKey = 'id_conversation';
   
   public $timestamps = false;
 

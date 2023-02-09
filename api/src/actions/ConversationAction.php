@@ -7,19 +7,19 @@ use Psr\Http\Message\ResponseInterface as Response ;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 
-use api\services\UserService as UserService;
+use api\services\ConversationService as ConversationService;
 use api\services\utils\FormatterAPI;
 
-final class UserAction {
+final class ConversationAction {
 
     
     public function __invoke(Request $rq, Response $rs, array $args) : Response
     {
-        $userService = new UserService; 
-        $users = $userService->getUser();
+        $conversationService = new ConversationService; 
+        $conversation = $conversationService->getConversation();
         $data = ['type' => 'Table',
-        'count'=> count($users),
-        'User'=> $users];
+        'count'=> count($conversation),
+        'Conversation'=> $conversation];
 
         return FormatterAPI::formatResponse($rq, $rs, $data);
     }

@@ -5,7 +5,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory as Appfactory;
 
-
+use  api\actions as actions; 
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -25,6 +25,13 @@ $app->get('/', function (Request $request, Response $response, $args) {
 });
 
 
-$app->get('/users', api\actions\UserAction::class);
+$app->get('/users', actions\UserAction::class);
+$app->get('/comments', actions\CommentAction::class);
+$app->get('/conversation', actions\ConversationAction::class);
+// $app->get('/message', actions\MessageAction::class); // A tester
+$app->get('/resource', actions\RessourceAction::class);
+$app->get('/group', actions\RessourceAction::class);
+
+
 
 $app->run();

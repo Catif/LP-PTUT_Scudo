@@ -3,7 +3,7 @@
 namespace api\services;
 
 
-use api\models as models;
+use api\models\User as User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -11,7 +11,7 @@ final class UserService
 {
   public function getUser(): array
   {
-    return models\User::select([
+    return User::select([
       'id_user',
       'fullname',
       'username',
@@ -28,7 +28,7 @@ final class UserService
   public function getUserByID($id): ?array
   {
     try {
-      $order = models\User::select([
+      $user = User::select([
         'id_user',
         'fullname',
         'username',
@@ -41,9 +41,9 @@ final class UserService
         'updated_at'
       ])->findOrFail($id);
     } catch (ModelNotFoundException $e) {
-        new Exception("error UserByID");
+        new Exception("error getUserById");
     }
 
-    return $order->toArray();
+    return $user->toArray();
   }
 }
