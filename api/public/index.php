@@ -25,6 +25,4 @@ $app->get('/', function (Request $request, Response $response, $args) {
 });
 
 
-$app->get('/users', api\actions\UserAction::class);
-
 $app->run();
