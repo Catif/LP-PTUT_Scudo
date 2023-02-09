@@ -1,25 +1,25 @@
 <?php
 
-namespace api\actions;
+namespace api\actions\user;
 
 
 use Psr\Http\Message\ResponseInterface as Response ;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 
-use api\services\MessageService as MessageService;
+use api\services\UserService as UserService;
 use api\services\utils\FormatterAPI;
 
-final class MessageAction {
+final class UserAction {
 
     
     public function __invoke(Request $rq, Response $rs, array $args) : Response
     {
-        $messageService = new MessageService; 
-        $messages = $messageService->getMessage();
+        $userService = new UserService; 
+        $users = $userService->getUser();
         $data = ['type' => 'Table',
-        'count'=> count($messages),
-        'Message'=> $messages];
+        'count'=> count($users),
+        'User'=> $users];
 
         return FormatterAPI::formatResponse($rq, $rs, $data);
     }

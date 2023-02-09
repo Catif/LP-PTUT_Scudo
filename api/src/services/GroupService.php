@@ -14,6 +14,8 @@ final class GroupService
     return Group::select([
       'id_group',
       'name',
+      'description',
+      'image',
       'created_at'
       ])->get()->toArray();
   }
@@ -24,6 +26,8 @@ final class GroupService
       $group = Group::select([
         'id_group',
         'name',
+        'description',
+        'image',
         'created_at'
       ])->findOrFail($id);
     } catch (ModelNotFoundException $e) {

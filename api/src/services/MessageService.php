@@ -31,7 +31,7 @@ final class MessageService
         'created_at'
       ])->findOrFail($id);
     } catch (ModelNotFoundException $e) {
-        new Exception("error getMessageById");
+        new Exception("error UserByID");
     }
 
     return $message->toArray();

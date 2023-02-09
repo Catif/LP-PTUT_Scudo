@@ -15,23 +15,23 @@ final class ConversationService
         'id_conversation',
         'id_sender',
         'id_recipient',
-        'isEstablished'
+        'is_established'
     ])->get()->toArray();
   }
 
   public function getConversationByID($id): ?array
   {
     try {
-      $conversation = Conversation::select([
+      $order = Conversation::select([
         'id_conversation',
         'id_sender',
         'id_recipient',
-        'isEstablished'
+        'is_established'
       ])->findOrFail($id);
     } catch (ModelNotFoundException $e) {
-        new Exception("error getConversationById");
+        new Exception("error UserByID");
     }
 
-    return $conversation->toArray();
+    return $order->toArray();
   }
 }

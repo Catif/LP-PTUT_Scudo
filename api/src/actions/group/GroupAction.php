@@ -1,25 +1,25 @@
 <?php
 
-namespace api\actions;
+namespace api\actions\group;
 
 
 use Psr\Http\Message\ResponseInterface as Response ;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 
-use api\services\ConversationService as ConversationService;
+use api\services\GroupService as GroupService;
 use api\services\utils\FormatterAPI;
 
-final class ConversationAction {
+final class GroupAction {
 
     
     public function __invoke(Request $rq, Response $rs, array $args) : Response
     {
-        $conversationService = new ConversationService; 
-        $conversation = $conversationService->getConversation();
+        $groupService = new GroupService; 
+        $group = $groupService->getGroup();
         $data = ['type' => 'Table',
-        'count'=> count($conversation),
-        'Conversation'=> $conversation];
+        'count'=> count($group),
+        'Group'=> $group];
 
         return FormatterAPI::formatResponse($rq, $rs, $data);
     }

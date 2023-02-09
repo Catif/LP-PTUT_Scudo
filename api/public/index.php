@@ -24,13 +24,19 @@ $app->get('/', function (Request $request, Response $response, $args) {
   return $response;
 });
 
+// Api
 
-$app->get('/users', actions\UserAction::class);
-$app->get('/comments', actions\CommentAction::class);
-$app->get('/conversation', actions\ConversationAction::class);
-// $app->get('/message', actions\MessageAction::class); // A tester
-$app->get('/resource', actions\RessourceAction::class);
-$app->get('/group', actions\RessourceAction::class);
+$app->get('/api/users', actions\user\UserAction::class); // OK
+$app->get('/api/comments', actions\comment\CommentAction::class); // OK
+$app->get('/api/conversations', actions\conversation\ConversationAction::class); // Ok
+$app->get('/api/messages', actions\message\MessageAction::class); // ok
+$app->get('/api/resources', actions\resource\ResourceAction::class); // ok
+$app->get('/api/groups', actions\group\GroupAction::class); // ok
+
+// SELECT BY ID
+
+$app->get('/users/{id}', api\actions\user\UserByIdAction::class);  // ok
+
 
 
 

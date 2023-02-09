@@ -13,15 +13,16 @@ final class ResourceService
   {
     return Resource::select([
         'id_resource',
+        'id_user',
         'filename',
         'title',
         'text',
         'longitude',
         'latitude',
         'type',
-        'isPrivate',
+        'is_private',
         'created_at',
-        'update_at',
+        'updated_at',
         'published_at'
     ])->get()->toArray();
   }
@@ -43,7 +44,7 @@ final class ResourceService
         'published_at'
       ])->findOrFail($id);
     } catch (ModelNotFoundException $e) {
-        new Exception("error getRessourceById");
+        new Exception("error UserByID");
     }
 
     return $resource->toArray();
