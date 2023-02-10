@@ -4,8 +4,8 @@ namespace api\services;
 
 
 use api\models\User as User;
-use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+
 
 final class UserService
 {
@@ -27,7 +27,7 @@ final class UserService
 
   public function getUserByID($id): ?array
   {
-    try {
+  
       $user = User::select([
         'id_user',
         'fullname',
@@ -40,10 +40,28 @@ final class UserService
         'created_at',
         'updated_at'
       ])->findOrFail($id);
-    } catch (ModelNotFoundException $e) {
-        new Exception("error getUserById");
-    }
+
 
     return $user->toArray();
   }
+
+  public function insertUser(array $property)
+  {
+    $modelsUser = new User();
+    $modelsUser->fullname = $property['fullname'];
+    $modelsUser->username = $property['username'];
+    $modelsUser->email = $property['email'];
+    $modelsUser->password = $property['password'];
+    $modelsUser->biography = $property['biography'];
+    $modelsUser->phone = $property['phone'];
+    $modelsUser->image = $property['image'];
+    $modelsUser->role = $property['role'];
+
+    $modelsUser->save();
+
+    return $modelsUser;
+  }
+
+
+
 }

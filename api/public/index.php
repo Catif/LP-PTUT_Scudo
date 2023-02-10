@@ -36,6 +36,7 @@ $app->get('/api/groups', actions\group\GroupAction::class); // ok
 // SELECT BY ID
 
 $app->get('/users/{id}', api\actions\user\UserByIdAction::class);  // ok
+$app->post('/api/post/test', api\actions\user\UserPostAction::class );
 
 
 
