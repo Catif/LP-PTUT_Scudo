@@ -14,6 +14,6 @@ h2 {
 
   margin: .75rem;
 
-  color: $text-primary;
+  color: $light-text-primary;
 }
 </style>

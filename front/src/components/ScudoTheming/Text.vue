@@ -14,6 +14,6 @@ p {
 
   margin: 0.75rem;
 
-  color: $text-primary;
+  color: $light-text-primary;
 }
 </style>

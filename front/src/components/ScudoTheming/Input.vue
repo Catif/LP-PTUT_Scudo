@@ -60,14 +60,14 @@ div {
   margin: 1.25rem 0;
 
   &.border {
-    border: 1px solid $border;
+    border: 1px solid $light-border;
     border-radius: 0.25rem;
   }
 
   label {
     position: absolute;
     left: 0.5rem;
-    color: $text-secondary;
+    color: $light-text-secondary;
     top: 50%;
     padding: 0 0.5rem;
     transform: translate(0, -50%);
@@ -76,7 +76,7 @@ div {
     transition: all 0.1s ease-out;
 
     &.active {
-      color: $text-primary;
+      color: $light-text-primary;
       top: 0px;
       left: 6px;
       font-size: 0.9rem;
@@ -89,7 +89,7 @@ div {
         width: 100%;
         height: 100%;
         z-index: -1;
-        background-color: $bg-primary;
+        background-color: $light-bg-primary;
       }
     }
   }

@@ -20,7 +20,7 @@ div {
 
   border-radius: 1.125rem;
 
-  background: $bg-alert;
-  color: $text-button-alert;
+  background: $light-bg-alert;
+  color: $light-text-button-alert;
 }
 </style>

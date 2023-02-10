@@ -57,7 +57,7 @@ nav {
   justify-content: space-around;
   align-items: center;
 
-  background-color: $bg-primary;
+  background-color: $light-bg-primary;
 
   .desktop,
   .title,
@@ -85,7 +85,7 @@ nav {
   }
 
   a {
-    color: $text-primary;
+    color: $light-text-primary;
     text-decoration: none;
 
     padding: 0.375rem;
@@ -143,12 +143,12 @@ nav {
       transition: background-color 0.15s ease-out;
 
       &:hover {
-        background-color: $bg-secondary-hover;
+        background-color: $light-bg-secondary-hover;
       }
 
       &:active,
       &.router-link-active {
-        background-color: $bg-secondary;
+        background-color: $light-bg-secondary;
       }
 
       p {

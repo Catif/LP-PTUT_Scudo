@@ -12,7 +12,7 @@ const props = defineProps(['src', 'alt'])
 
 img {
   aspect-ratio: 1 / 1;
-  border: 1.75px solid $border;
+  border: 1.75px solid $light-border;
   border-radius: 1.125rem;
   object-fit: cover;
   vertical-align: bottom;

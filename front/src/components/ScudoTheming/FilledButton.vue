@@ -12,15 +12,15 @@ import Button from "./Button.vue";
 @import "@/assets/scss/colors";
 
 button {
-  color: $text-button-alert;
-  background-color: $bg-button;
+  color: $light-text-button-alert;
+  background-color: $light-bg-button;
 }
 
 button:hover {
-  background-color: $bg-button-hover;
+  background-color: $light-bg-button-hover;
 }
 
 button:active {
-  background-color: $bg-button-active;
+  background-color: $light-bg-button-active;
 }
 </style>

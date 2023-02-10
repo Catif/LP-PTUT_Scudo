@@ -18,8 +18,8 @@ button {
     border-radius: 1.125rem;
     border: none;
 
-    background: $bg-button;
-    color: $text-button-alert;
+    background: $light-bg-button;
+    color: $light-text-button-alert;
 
     cursor: pointer;
 
@@ -27,12 +27,12 @@ button {
 }
 
 button:hover {
-    background: $bg-button-hover;
+    background: $light-bg-button-hover;
 
     transition: none;
 }
 
 button:active {
-    background: $bg-button-active;
+    background: $light-bg-button-active;
 }
 </style>

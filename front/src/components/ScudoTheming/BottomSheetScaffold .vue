@@ -11,7 +11,7 @@ div {
     border-top-left-radius: 2.375rem;
     border-top-right-radius: 2.375rem;
     ;
-    background: $bg-primary;
+    background: $light-bg-primary;
     position: relative;
     z-index: 1000;
     margin-top: calc(100vh - 200px);
