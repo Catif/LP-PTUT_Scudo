@@ -43,7 +43,7 @@ h1 {
   margin: 0;
 }
 
-@media screen and (min-width: calc($navigation-bar-min-width + $content-min-witdh)) {
+@media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
   header {
     border-bottom: none;
   }
