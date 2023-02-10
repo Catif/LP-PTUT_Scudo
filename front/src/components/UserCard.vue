@@ -20,10 +20,7 @@ const props = defineProps({
 <template>
   <section>
     <main>
-      <ProfilePicture
-        src="https://img.freepik.com/photos-gratuite/jolie-fille-blonde-chemise-rayee-montrant-signe-paix-vue-face-dame-francaise-riant-posant-mur-bleu_197531-14466.jpg"
-        alt="Photo de profile"
-      />
+      <ProfilePicture :src="user.image" alt="Photo de profile" />
       <Alert class="live" v-if="live">LIVE</Alert>
     </main>
     <aside>
