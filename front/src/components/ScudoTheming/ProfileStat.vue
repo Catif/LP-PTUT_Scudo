@@ -1,4 +1,7 @@
 <script setup>
+import { useUtils } from "@/stores/utils";
+const utils = useUtils();
+
 const props = defineProps({
   number: {
     type: Number,
@@ -9,11 +12,13 @@ const props = defineProps({
     required: "",
   },
 });
+
+var numberFormated = utils.formatNumber(props.number, 2);
 </script>
 
 <template>
   <div>
-    <span class="number">{{ props.number }}</span>
+    <span class="number">{{ numberFormated }}</span>
     <span class="type">{{ props.type }}</span>
   </div>
 </template>
