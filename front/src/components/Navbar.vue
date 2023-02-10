@@ -26,7 +26,9 @@ const elementsNav = [
 
 <template>
   <nav>
-    <Image src="/assets/img/logo-short_light.svg" alt="Logo" />
+    <router-link to="/" id="logo">
+      <Image src="/assets/img/logo-short_light.svg" alt="Logo" />
+    </router-link>
 
     <Search id="search" />
 
@@ -63,12 +65,14 @@ nav {
     display: none;
   }
 
-  img {
+  #logo {
     display: none;
-    width: 3rem;
-    padding: 0.5rem;
-    margin-left: 0.75rem;
-    border-radius: 0;
+    img {
+      width: 3rem;
+      padding: 0.5rem;
+      margin-left: 0.75rem;
+      border-radius: 0;
+    }
   }
 
   .mobile,
@@ -107,8 +111,21 @@ nav {
     justify-content: flex-start;
 
     .desktop,
-    img {
+    #logo {
       display: block;
+    }
+
+    #logo {
+      width: fit-content;
+      padding: 0.75rem;
+
+      &:hover {
+        background-color: transparent;
+      }
+      &.router-link-active {
+        background-color: transparent;
+      }
+      margin: 2.75rem 0 0.25rem 0;
     }
 
     #search {
