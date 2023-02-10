@@ -27,7 +27,7 @@ const elementsNav = [
 <template>
   <nav>
     <router-link to="/" id="logo">
-      <Image src="/assets/img/logo-short_light.svg" alt="Logo" />
+      <Image src="/assets/img/logo-short_dark.svg" alt="Logo" />
     </router-link>
 
     <Search id="search" />
