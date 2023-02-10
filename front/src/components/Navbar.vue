@@ -68,6 +68,7 @@ nav {
     width: 3rem;
     padding: 0.5rem;
     margin-left: 0.75rem;
+    border-radius: 0;
   }
 
   .mobile,
