@@ -1,15 +1,12 @@
 <script setup>
-import IconButton from './IconButton.vue';
+import IconButton from "./IconButton.vue";
 
-const props = defineProps(['back', 'title'])
-
+const props = defineProps(["back", "title"]);
 </script>
 <template>
   <header :class="{ backless: !props['back'] }">
     <section>
-      <IconButton v-if="props['back']">
-        arrow_back
-      </IconButton>
+      <IconButton v-if="props['back']"> arrow_back </IconButton>
       <h1>{{ title }}</h1>
     </section>
     <section>
@@ -20,7 +17,7 @@ const props = defineProps(['back', 'title'])
 
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
-@import "@/assets/scss/media-query";
+@import "@/assets/scss/media-queries";
 
 header {
   display: flex;
@@ -29,7 +26,7 @@ header {
   border-bottom: 1px solid $neutral-color-80;
 
   &.backless {
-    padding-left: .75rem
+    padding-left: 0.75rem;
   }
 }
 
