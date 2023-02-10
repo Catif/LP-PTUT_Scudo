@@ -13,14 +13,14 @@ import Card from "./Card.vue";
 @import "@/assets/scss/colors";
 
 div {
-  background: $main-color-90;
+  background: $bg-secondary;
 }
 
 div:hover {
-  background: $main-color-95;
+  background: $bg-secondary-hover;
 }
 
 div:active {
-  background: $main-color-98;
+  background: $bg-secondary-active;
 }
 </style>

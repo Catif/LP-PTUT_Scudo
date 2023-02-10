@@ -19,13 +19,13 @@ div {
 }
 
 div:hover {
-  background: $neutral-color-95;
+  background: $bg-primary-hover;
 
   transition: background ease-out 150ms;
 }
 
 div:active {
-  background: $neutral-color-90;
+  background: $bg-primary-active;
 
   transition: none;
 }

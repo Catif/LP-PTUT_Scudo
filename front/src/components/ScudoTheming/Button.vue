@@ -19,7 +19,7 @@ button {
     border: none;
 
     background: transparent;
-    color: $neutral-color-10;
+    color: $text-primary;
 
     cursor: pointer;
 
@@ -27,13 +27,13 @@ button {
 }
 
 button:hover {
-    background: $neutral-color-95;
+    background: $bg-primary-hover;
 
     transition: background ease-out 150ms;
 }
 
 button:active {
-    background: $neutral-color-90;
+    background: $bg-primary-active;
 
     transition: none;
 }

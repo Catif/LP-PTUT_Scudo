@@ -19,18 +19,18 @@ a {
   font-size: .875rem;
   text-decoration: none;
 
-  color: $neutral-color-40;
+  color: $text-secondary;
   transition: color ease-out 150ms;
 }
 
 a:hover {
-  color: $neutral-color-50;
+  color: $text-secondary-hover;
 
   transition: color ease-out 150ms;
 }
 
 a:active {
-  color: $neutral-color-60;
+  color: $text-secondary-active;
 
   transition: none;
 }

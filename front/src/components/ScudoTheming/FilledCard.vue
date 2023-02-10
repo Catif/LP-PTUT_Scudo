@@ -13,6 +13,6 @@ import Card from "./Card.vue";
 @import "@/assets/scss/colors";
 
 div {
-  background: $main-color-90;
+  background: $bg-secondary;
 }
 </style>
