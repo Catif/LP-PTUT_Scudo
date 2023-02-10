@@ -6,7 +6,7 @@ const props = defineProps(["back", "title"]);
 <template>
   <header :class="{ backless: !props['back'] }">
     <section>
-      <IconButton v-if="props['back']"> arrow_back </IconButton>
+      <IconButton v-if="props['back']" @click="$router.back"> arrow_back </IconButton>
       <h1>{{ title }}</h1>
     </section>
     <section>
