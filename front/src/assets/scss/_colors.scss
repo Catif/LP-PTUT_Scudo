@@ -31,14 +31,14 @@ $light-bg-alert : #ba1a1a;
 // $light-bg-alert-hover : n'existe pas
 // $light-bg-alert-active : n'existe pas
 
-$light-text-button-alert : #ffffff;
+$light-text-button-alert : $light-bg-primary;
 // $light-text-secondary-hover : n'existe pas
 // $light-text-secondary-active : n'existe pas
 
 
 // BORDURE
 
-$light-border : #707974;
+$light-border : $light-text-secondary;
 
 
 
@@ -75,14 +75,14 @@ $light-border : #707974;
   // $dark-bg-alert-hover : n'existe pas
   // $dark-bg-alert-active : n'existe pas
 
-  $dark-text-button-alert : #003828;
+  $dark-text-button-alert : $dark-bg-primary;
   // $dark-text-secondary-hover : n'existe pas
   // $dark-text-secondary-active : n'existe pas
 
 
   // BORDURE
 
-  $dark-border : #89938d;
+  $dark-border : $dark-text-secondary;
 
   
 
@@ -120,11 +120,11 @@ $light-border : #707974;
   // // $light-bg-alert-hover : n'existe pas
   // // $light-bg-alert-active : n'existe pas
 
-  // $light-text-button-alert : #003828;
+  // $light-text-button-alert : $light-bg-primary;
   // // $light-text-secondary-hover : n'existe pas
   // // $light-text-secondary-active : n'existe pas
 
 
   // // BORDURE
 
-  // $light-border : #89938d;
+  // $light-border : $light-text-secondary;
