@@ -1,28 +1,41 @@
 <script setup>
-import Username from "@/components/Username.vue";
+import Username from "@/components/SmallUsername.vue";
+
+import Card from "@/components/ScudoTheming/Card.vue";
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import Text from "@/components/ScudoTheming/Text.vue";
-
+import SmallText from "@/components/ScudoTheming/SmallText.vue";
 const props = defineProps(['user', 'comment'])
 
 </script>
 
 <template>
-        <section>
+    <Card>
+        <div class="content">
         <ProfilePicture :src="props['user'].image" alt="profil"/>
-        <div>
-            <Text><Username :to="props['user'].username">{{ props['user'].username }}</Username></Text>
+        <section>
+            <SmallText><Username :to="props['user'].username">{{ props['user'].username }}</Username></SmallText>
             <Text>{{ props['comment'] }}</Text>
+        </section>
         </div>
-    </section>
+    </Card>
 </template>
 
 <style lang="scss" scoped>
-    section{
+
+    .content{
         display: flex;
         margin: 0.75rem;
     }
     img{
-        height: 80px;
+        height: 3rem;
+    }
+    p{
+        margin: 0px 0.75rem 0;
+    }
+    section{
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
     }
 </style>
