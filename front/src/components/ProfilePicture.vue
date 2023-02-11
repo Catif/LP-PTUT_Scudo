@@ -9,9 +9,10 @@ const props = defineProps(['src', 'alt'])
 
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
+
 img {
   aspect-ratio: 1 / 1;
-  border: 1.75px solid $neutral-color-10;
+  border: 1.75px solid $light-border;
   border-radius: 1.125rem;
   object-fit: cover;
   vertical-align: bottom;
