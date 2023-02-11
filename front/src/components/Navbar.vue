@@ -5,7 +5,7 @@ import Text from "./ScudoTheming/Text.vue";
 import Image from "./ScudoTheming/Image.vue";
 
 // Import Navbar components
-import Search from "./Navbar_Search.vue";
+import Search from "./SearchInput.vue";
 
 // Import Route
 import { useRoute } from "vue-router";
@@ -32,11 +32,11 @@ const elementsNav = [
 
     <Search id="search" />
 
-    <router-link v-for="el in elementsNav" :key="el.name" :to="el.path" v-bind:class="{ mobile: el.mobile, desktop: !el.mobile }">
-      <Text
-        ><Icon :active="route.path == el.path">{{ el.icon }}</Icon
-        ><span class="title">{{ el.title }}</span></Text
-      >
+    <router-link v-for="el in elementsNav" :key="el.name" :to="el.path"
+      v-bind:class="{ mobile: el.mobile, desktop: !el.mobile }">
+      <Text>
+        <Icon :active="route.path == el.path">{{ el.icon }}</Icon><span class="title">{{ el.title }}</span>
+      </Text>
     </router-link>
   </nav>
 </template>
@@ -67,6 +67,7 @@ nav {
 
   #logo {
     display: none;
+
     img {
       width: 3rem;
       padding: 0.5rem;
@@ -122,9 +123,11 @@ nav {
       &:hover {
         background-color: transparent;
       }
+
       &.router-link-active {
         background-color: transparent;
       }
+
       margin: 2.75rem 0 0.25rem 0;
     }
 
