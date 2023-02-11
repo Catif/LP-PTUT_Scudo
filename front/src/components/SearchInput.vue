@@ -19,20 +19,20 @@ const searchElement = ref("");
 
 .search {
   width: 100%;
-  height: 50px;
 
   background-color: $main-color-95;
   border-radius: 18px;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  line-height: 1.5rem;
 
   span {
-    margin-left: 1rem;
+    margin: 1rem;
+    margin-right: 0;
   }
-  & > div {
+
+  &>div {
     margin: 0;
+    width: 100%;
   }
 }
 </style>

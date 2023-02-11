@@ -42,16 +42,8 @@ defineEmits(["update:value"]);
     <template v-if="props.label">
       <label v-bind:class="{ active: props.value.length > 0 }" :for="props.name">{{ props.label }}</label>
     </template>
-    <input
-      :type="props.type"
-      :id="props.name"
-      :name="props.name"
-      :value="props.value"
-      :required="props.required"
-      :disabled="props.disabled"
-      :placeholder="props.placeholder"
-      @input="$emit('update:value', $event.target.value)"
-    />
+    <input :type="props.type" :id="props.name" :name="props.name" :value="props.value" :required="props.required"
+      :disabled="props.disabled" :placeholder="props.placeholder" @input="$emit('update:value', $event.target.value)" />
   </div>
 </template>
 
@@ -101,9 +93,11 @@ div {
       }
     }
   }
+
   input {
     border: none;
     background-color: transparent;
+    line-height: 1.5rem;
     font-size: 1rem;
     padding: 1rem;
 
