@@ -36,15 +36,14 @@ div {
     border-top-left-radius: 2.375rem;
     border-top-right-radius: 2.375rem;
 
-    background: $neutral-color-98;
-    // background: $neutral-color-90;
+    background: $light-bg-primary;
 
     transition: bottom 200ms ease-out;
 
     :slotted(a) {
         padding: .75rem;
 
-        color: $neutral-color-10;
+        color: $light-text-primary;
 
         text-decoration: none;
     }

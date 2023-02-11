@@ -25,6 +25,14 @@ const props = defineProps(['user', 'title'])
         margin: 0.75rem;
     }
     img{
-        height: 80px;
+        height: 3.5rem;
+    }
+    h2, p{
+        margin: 0px 0.75rem 0;
+    }
+    div{
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
     }
 </style>

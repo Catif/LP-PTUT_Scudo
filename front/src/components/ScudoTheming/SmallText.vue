@@ -4,7 +4,7 @@
   </p>
 </template>
 
-<style lang="scss"scoped>
+<style lang="scss" scoped>
 @import "@/assets/scss/colors";
 
 p {
@@ -14,6 +14,6 @@ p {
 
   margin: .75rem;
 
-  color: $neutral-color-10;
+  color: $light-text-primary;
 }
 </style>

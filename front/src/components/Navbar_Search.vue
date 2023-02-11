@@ -21,7 +21,7 @@ const searchElement = ref("");
   width: 100%;
   height: 50px;
 
-  background-color: $main-color-95;
+  background-color: $light-bg-secondary-hover;
   border-radius: 18px;
 
   display: flex;
@@ -31,7 +31,8 @@ const searchElement = ref("");
   span {
     margin-left: 1rem;
   }
-  & > div {
+
+  &>div {
     margin: 0;
   }
 }
