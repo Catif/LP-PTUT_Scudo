@@ -37,6 +37,7 @@ const searchElement = ref("");
 
   &.small {
     background-color: $neutral-color-95;
+    margin: 0.625rem 0;
   }
 
   span {
