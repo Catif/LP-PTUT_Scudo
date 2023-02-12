@@ -3,12 +3,18 @@ import Navbar from "./components/Navbar.vue";
 </script>
 
 <template>
-  <Navbar />
-  <main>
+  <div id="content">
+    <Navbar />
     <RouterView />
-  </main>
+  </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/scss/media-queries.scss";
 
+@media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
+  #content {
+    display: flex;
+  }
+}
 </style>
