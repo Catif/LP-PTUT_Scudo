@@ -1,6 +1,6 @@
 <?php
 
-namespace api\actions\resource;
+namespace api\actions\resource\GET;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -15,7 +15,8 @@ use Slim\Exception\HttpNotFoundException;
 
 final class ResourceByIdAction
 {
-  public function __invoke(Request $rq, Response $rs, array $args): Response {
+  public function __invoke(Request $rq, Response $rs, array $args): Response
+  {
     $resourceService = new ResourceService();
     try {
       $resourceById = $resourceService->getResourceByID($args['id']);

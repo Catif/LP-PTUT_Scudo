@@ -1,6 +1,6 @@
 <?php
 
-namespace api\actions\group;
+namespace api\actions\group\GET;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -15,7 +15,8 @@ use Slim\Exception\HttpNotFoundException;
 
 final class GroupByIdAction
 {
-  public function __invoke(Request $rq, Response $rs, array $args): Response {
+  public function __invoke(Request $rq, Response $rs, array $args): Response
+  {
     $groupService = new GroupService();
     try {
       $groupById = $groupService->getGroupByID($args['id']);

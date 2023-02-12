@@ -1,6 +1,6 @@
 <?php
 
-namespace api\actions\user;
+namespace api\actions\user\POST;
 
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -12,8 +12,6 @@ use api\services\utils\FormatterAPI;
 
 final class UserPostAction
 {
-
-
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
         $userService = new UserService;

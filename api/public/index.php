@@ -19,27 +19,75 @@ $db->bootEloquent(); /* établir la connexion */
 
 $app = AppFactory::create();
 $app->addRoutingMiddleware();
+
+// Default route
 $app->get('/', function (Request $request, Response $response, $args) {
   $response->getBody()->write("Hello world!");
 
   return $response;
 });
 
-// Api
 
-$app->get('/api/users', actions\user\UserAction::class); // OK
-$app->get('/api/comments', actions\comment\CommentAction::class); // OK
-$app->get('/api/conversations', actions\conversation\ConversationAction::class); // Ok
-$app->get('/api/messages', actions\message\MessageAction::class); // ok
-$app->get('/api/resources', actions\resource\ResourceAction::class); // ok
-$app->get('/api/groups', actions\group\GroupAction::class); // ok
+// List des routes => https://docs.google.com/document/d/1DWMMHJNmhXVq-R11X4dQVAwZPHYrf-PKavtw7hfs0_Q/edit#
+// =====================
+//        User
+// =====================
+// GET
+$app->get('/api/users', actions\user\GET\UserAction::class); // OK
+$app->get('/api/users/{id}', actions\user\GET\UserByIdAction::class);  // ok
 
-// SELECT BY ID
-
-$app->get('/users/{id}', api\actions\user\UserByIdAction::class);  // ok
-$app->post('/api/post/test', api\actions\user\UserPostAction::class);
+// POST
+$app->post('/api/user', actions\user\POST\UserAction::class);
 
 
+// PATCH
+
+
+// =====================
+//     Conversation
+// =====================
+// GET
+$app->get('/api/conversations', actions\conversation\GET\ConversationAction::class); // Ok
+
+// POST
+
+
+
+// PATCH
+
+
+
+// =====================
+//     Message
+// =====================
+// POST
+
+
+
+// =====================
+//     Ressource
+// =====================
+// GET
+$app->get('/api/resources', actions\resource\GET\ResourceAction::class); // ok
+
+// POST
+
+
+
+// PATCH
+
+
+// =====================
+//     Groupe
+// =====================
+// GET
+$app->get('/api/groups', actions\group\GET\GroupAction::class); // ok
+
+// POST
+
+
+
+// PATCH
 
 
 $app->run();
