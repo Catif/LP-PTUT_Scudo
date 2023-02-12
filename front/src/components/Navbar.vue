@@ -59,6 +59,8 @@ nav {
 
   background-color: $light-bg-primary;
 
+  border-top: 1px solid $light-border;
+
   .desktop,
   .title,
   #search {
@@ -100,6 +102,7 @@ nav {
 @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
   nav {
     background-color: transparent;
+    border-top: none;
     top: 0;
 
     height: 100%;
