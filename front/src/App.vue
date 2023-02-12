@@ -4,6 +4,11 @@ import Navbar from "./components/Navbar.vue";
 
 <template>
   <Navbar />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
