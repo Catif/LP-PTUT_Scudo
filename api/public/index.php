@@ -34,7 +34,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 // =====================
 // GET
 $app->get('/api/users', actions\user\GET\UserAction::class); // OK
-$app->get('/api/users/{id}', actions\user\GET\UserByIdAction::class);  // ok
+$app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class);  // ok
 
 // POST
 $app->post('/api/register', actions\user\POST\RegisterAction::class);
