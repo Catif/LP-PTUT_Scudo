@@ -27,16 +27,16 @@ const elementsNav = [
 <template>
   <nav>
     <router-link to="/" id="logo">
-      <Image src="/assets/img/logo-short_light.svg" alt="Logo" />
+      <Image src="/assets/img/logo-short_dark.svg" alt="Logo" />
     </router-link>
 
     <Search id="search" />
 
-    <router-link v-for="el in elementsNav" :key="el.name" :to="el.path" v-bind:class="{ mobile: el.mobile, desktop: !el.mobile }">
-      <Text
-        ><Icon :active="route.path == el.path">{{ el.icon }}</Icon
-        ><span class="title">{{ el.title }}</span></Text
-      >
+    <router-link v-for="el in elementsNav" :key="el.name" :to="el.path"
+      v-bind:class="{ mobile: el.mobile, desktop: !el.mobile }">
+      <Text>
+        <Icon :active="route.path == el.path">{{ el.icon }}</Icon><span class="title">{{ el.title }}</span>
+      </Text>
     </router-link>
   </nav>
 </template>
@@ -57,7 +57,7 @@ nav {
   justify-content: space-around;
   align-items: center;
 
-  background-color: $neutral-color-98;
+  background-color: $light-bg-primary;
 
   .desktop,
   .title,
@@ -67,6 +67,7 @@ nav {
 
   #logo {
     display: none;
+
     img {
       width: 3rem;
       padding: 0.5rem;
@@ -84,7 +85,7 @@ nav {
   }
 
   a {
-    color: $neutral-color-10;
+    color: $light-text-primary;
     text-decoration: none;
 
     padding: 0.375rem;
@@ -122,9 +123,11 @@ nav {
       &:hover {
         background-color: transparent;
       }
+
       &.router-link-active {
         background-color: transparent;
       }
+
       margin: 2.75rem 0 0.25rem 0;
     }
 
@@ -140,11 +143,12 @@ nav {
       transition: background-color 0.15s ease-out;
 
       &:hover {
-        background-color: $main-color-95;
+        background-color: $light-bg-secondary-hover;
       }
 
+      &:active,
       &.router-link-active {
-        background-color: $main-color-90;
+        background-color: $light-bg-secondary;
       }
 
       p {
