@@ -103,6 +103,7 @@ nav {
   nav {
     position: sticky;
     top: 0;
+    flex-shrink: 0;
     background-color: transparent;
     border-top: none;
 
