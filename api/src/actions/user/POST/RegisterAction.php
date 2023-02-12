@@ -10,7 +10,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use api\services\UserService as UserService;
 use api\services\utils\FormatterAPI;
 
-final class UserAction
+final class RegisterAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {

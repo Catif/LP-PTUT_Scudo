@@ -37,7 +37,7 @@ $app->get('/api/users', actions\user\GET\UserAction::class); // OK
 $app->get('/api/users/{id}', actions\user\GET\UserByIdAction::class);  // ok
 
 // POST
-$app->post('/api/user', actions\user\POST\UserAction::class);
+$app->post('/api/register', actions\user\POST\RegisterAction::class);
 
 
 // PATCH
