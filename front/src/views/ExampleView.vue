@@ -1,5 +1,6 @@
 <script setup>
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
+import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
 
 import ResourceCard from '@/components/ResourceCard.vue';
 
@@ -21,9 +22,10 @@ var resource = {
     <ResourceCard :user="user" :resource="resource" />
     <ResourceCard :user="user" :resource="resource" />
   </MainFeed>
-  <!-- <aside>
-    sza
-  </aside> -->
+  <AsideFeed>
+    <ResourceCard :user="user" :resource="resource" />
+    <ResourceCard :user="user" :resource="resource" />
+  </AsideFeed>
 </template>
 
 
