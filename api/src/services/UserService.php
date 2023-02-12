@@ -27,19 +27,19 @@ final class UserService
 
   public function getUserByID($id): ?array
   {
-  
-      $user = User::select([
-        'id_user',
-        'fullname',
-        'username',
-        'email',
-        'password',
-        'biography',
-        'phone',
-        'role',
-        'created_at',
-        'updated_at'
-      ])->findOrFail($id);
+
+    $user = User::select([
+      'id_user',
+      'fullname',
+      'username',
+      'email',
+      'password',
+      'biography',
+      'phone',
+      'role',
+      'created_at',
+      'updated_at'
+    ])->findOrFail($id);
 
 
     return $user->toArray();
@@ -47,6 +47,13 @@ final class UserService
 
   public function insertUser(array $property)
   {
+    if (empty($property['fullname']) || empty($property['username']) || empty($property['email']) || empty($property['password']) || empty($property['biography']) || empty($property['phone']) || empty($property['image']) || empty($property['role'])) {
+      throw new \Exception("Missing property");
+    }
+    if (!filter_var($property['email'], FILTER_VALIDATE_EMAIL)) {
+      throw new \Exception("Invalid email");
+    }
+
     $modelsUser = new User();
     $modelsUser->fullname = $property['fullname'];
     $modelsUser->username = $property['username'];
@@ -61,7 +68,4 @@ final class UserService
 
     return $modelsUser;
   }
-
-
-
 }
