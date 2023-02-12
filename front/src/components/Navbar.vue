@@ -101,9 +101,10 @@ nav {
 
 @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
   nav {
+    position: sticky;
+    top: 0;
     background-color: transparent;
     border-top: none;
-    top: 0;
 
     height: 100%;
     width: $navigation-bar-min-width;
