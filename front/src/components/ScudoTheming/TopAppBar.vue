@@ -32,6 +32,10 @@ header {
 
 section {
   display: flex;
+
+  &:last-child {
+    flex-grow: 1;
+  }
 }
 
 h1 {
