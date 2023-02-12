@@ -29,7 +29,7 @@ final class UserByIdAction
       $ressources[] = [
         'id' => $resource['id_resource'],
         'type' => $resource['type'],
-        'url' => [
+        'urls' => [
           'api' => '/api/resource/' . $resource['id_resource'],
           'file' => $resource['filename']
         ],
@@ -57,10 +57,10 @@ final class UserByIdAction
     ];
 
     $data = [
-      'Filtre' => 'UserById',
-      'Result' => [
-        'User' => $user,
-        'Resources' => $ressources
+      'request' => '/api/user/' . $args['id'],
+      'result' => [
+        'user' => $user,
+        'resources' => $ressources
       ]
     ];
 
