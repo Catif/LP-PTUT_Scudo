@@ -22,13 +22,13 @@ final class UserAction
             $data = [
                 'error' => $e->getMessage()
             ];
-            return FormatterAPI::formatResponse($rq, $rs, $data, 400);
+            return FormatterAPI::formatResponse($rq, $rs, $data, 400); // 400 = Bad Request
             return $rs;
         }
 
-
-        $rs->getBody()->write(json_encode($modelUser));
-
-        return $rs;
+        $data = [
+            'user' => $modelUser
+        ];
+        return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     }
 }
