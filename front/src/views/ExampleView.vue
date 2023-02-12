@@ -1,4 +1,6 @@
 <script setup>
+import MainFeed from '../components/ScudoTheming/MainFeed.vue';
+
 import ResourceCard from '@/components/ResourceCard.vue';
 
 var user = {
@@ -8,17 +10,20 @@ var user = {
 var resource = {
   title: 'En vacances !!',
   description: 'Lorem Elsass ipsum Spätzle Salu bissame leo elementum knack Oberschaeffolsheim risus, kougelhopf mollis Verdammi eget chambon hop nüdle Carola adipiscing amet nullam aliquam libero, ac quam, sagittis hopla knepfle tristique.',
-  image: 'https://www.dynamique-mag.com/wp-content/uploads/894ed90a3cce65ec6aa1f61b351a1364.jpg'
+  image: 'https://thumbs.dreamstime.com/b/l-%C3%AEle-d%C3%A9serte-avec-le-palmier-sur-la-plage-35138358.jpg'
 }
 </script>
 
 <template>
-  <main>
+  <MainFeed>
     <ResourceCard :user="user" :resource="resource" />
-  </main>
-  <aside>
+    <ResourceCard :user="user" :resource="resource" />
+    <ResourceCard :user="user" :resource="resource" />
+    <ResourceCard :user="user" :resource="resource" />
+  </MainFeed>
+  <!-- <aside>
     sza
-  </aside>
+  </aside> -->
 </template>
 
 
