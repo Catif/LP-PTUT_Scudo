@@ -64,7 +64,11 @@ final class UserService
     $modelsUser->image = $property['image'];
     $modelsUser->role = $property['role'];
 
-    $modelsUser->save();
+    try {
+      $modelsUser->save();
+    } catch (\Exception $e) {
+      throw new \Exception("Error while saving user");
+    }
 
     return $modelsUser;
   }
