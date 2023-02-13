@@ -5,7 +5,7 @@ import {ref} from "vue";
 
 const props = defineProps(['description'])
 
-var descriptionHidden = ref(false)
+var descriptionHidden = ref(true)
 function toggle(){
     this.descriptionHidden = !this.descriptionHidden
 }
@@ -13,27 +13,27 @@ function toggle(){
 
 <template>
 <div>
-    <template v-if="!descriptionHidden">
-    <button @click="toggle()">
+    <button :class="{ hidden: !descriptionHidden }" @click="toggle()">
             <Text class="flex"><div class="text">{{ props['description'] }}</div><Icon>chevron_right</Icon></Text>
     </button>
-    </template>
-    <template v-else>
-        <div>
+        <div :class="{ hidden: descriptionHidden }">
             <Text>{{ props['description'] }}</Text>
         </div>
-    </template>
 </div>
 </template>
 
 <style lang="scss" scoped>
+    @import "@/assets/scss/media-queries";
+    @import "@/assets/scss/colors";
+
     button{
-        width: 500px; // a changer plus tard (Mettre 100% pour la card)
+        width: 100%; // a changer plus tard (Mettre 100% pour la card)
         border: none;
-        margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
         white-space:nowrap;
+        background-color: transparent;
         cursor: pointer;
+        padding: 0;
+        color: $neutral-color-10;
         .text{
             overflow:hidden; 
             white-space:nowrap; 
@@ -41,6 +41,19 @@ function toggle(){
         }
         .flex{
             display: flex;
+        }
+    }
+
+    .hidden{
+        display: none;
+    }
+
+    @media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $aside-bar-min-width)) {
+        button, button.hidden {
+            display: none;
+        }
+        .hidden{
+            display: block;
         }
     }
 </style>
