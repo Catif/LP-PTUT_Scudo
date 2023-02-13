@@ -1,7 +1,25 @@
+<script setup>
+window.addEventListener("scroll", function () {
+
+  var element = document.getElementById("AsideContainer");
+
+  element.classList.remove('fixed')
+
+  var positionY = element.offsetTop + element.offsetHeight - window.pageYOffset - this.innerHeight + 12;
+
+  if (positionY <= 0) {
+    element.classList.add('fixed')
+  }
+
+});
+</script>
+
 <template>
   <aside>
-    <div id="container">
-      <slot></slot>
+    <div id="AsideContainer">
+      <div>
+        <slot></slot>
+      </div>
     </div>
   </aside>
 </template>
@@ -13,11 +31,11 @@ aside {
   display: none;
   width: $aside-bar-min-width;
   flex-shrink: 0;
+}
 
-  &>div {
-    position: sticky;
-    // top: 0;
-  }
+.fixed {
+  position: fixed;
+  bottom: 0;
 }
 
 @media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $aside-bar-min-width)) {
