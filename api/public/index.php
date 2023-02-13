@@ -61,7 +61,7 @@ $app->get('/api/conversations', actions\conversation\GET\ConversationAction::cla
 //     Message
 // =====================
 // POST
-
+$app->post('/api/message', actions\message\POST\MessageAction::class); // tester
 
 
 // =====================
