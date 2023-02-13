@@ -1,11 +1,11 @@
 <script setup>
 
-const props = defineProps(['to'])
+const props = defineProps(['user'])
 
 </script>
 
 <template>
-  <router-link :to="props['to']">
+  <router-link :to="'/' + props['user'].username">
     @<slot></slot>
   </router-link>
 </template>

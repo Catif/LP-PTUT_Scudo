@@ -11,7 +11,7 @@ const props = defineProps(['user', 'title'])
 
 <template>
     <section class="authorSection">
-        <ProfilePicture :src="props['user'].image" :alt="'Photo de profil de' + user.username" />
+        <ProfilePicture :src="props['user'].image" :alt="'Photo de profil de' + props['user'].username" />
         <div>
             <Title>{{ props['title'] }}</Title>
             <Text>

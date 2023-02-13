@@ -1,10 +1,10 @@
 <script setup>
 
-const props = defineProps(['src', 'alt'])
+const props = defineProps(['user'])
 
 </script>
 <template>
-  <img :src="props['src']" :alt="props['alt']">
+  <img :src="props['user'].image" :alt="'Image de ' + props['user'].username">
 </template>
 
 <style lang="scss" scoped>
@@ -17,4 +17,8 @@ img {
   object-fit: cover;
   vertical-align: bottom;
 }
+
+// Au lieu de src et alt c'est le user qui est passé, donc recup la src depuis le user et changer le alt pour profil de + le nom
+
+// Mettre autour de l'image un routeur link vers la page de l'utilisateur en utilisant le username
 </style>

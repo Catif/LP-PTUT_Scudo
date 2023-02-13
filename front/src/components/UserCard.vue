@@ -20,7 +20,7 @@ const props = defineProps({
 <template>
   <section>
     <main>
-      <ProfilePicture :src="user.image" alt="Photo de profile" />
+      <ProfilePicture :src="user.image" :alt="'Photo de profil de ' + user.image" />
       <Alert class="live" v-if="live">LIVE</Alert>
     </main>
     <aside>

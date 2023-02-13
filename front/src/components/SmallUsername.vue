@@ -1,11 +1,11 @@
 <script setup>
 
-const props = defineProps(['to'])
+const props = defineProps(['user'])
 
 </script>
 
 <template>
-  <router-link :to="props['to']">
+  <router-link :to="'/' + props['user'].username">
     @<slot></slot>
   </router-link>
 </template>
@@ -34,4 +34,6 @@ a:active {
 
   transition: none;
 }
+
+// passer le user au lieu du 'to', donc récup le username et non le to, et mettre le même lien que sur ProfilePicture
 </style>
