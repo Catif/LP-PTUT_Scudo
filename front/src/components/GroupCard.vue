@@ -1,8 +1,12 @@
 <script setup>
-import Card from '@/components/ScudoTheming/FilledCard.vue';
+import Card from '@/components/ScudoTheming/ClickableFilledCard.vue';
 import Image from '@/components/ScudoTheming/Image.vue';
 import Title from '@/components/ScudoTheming/Title.vue';
 import Icon from '@/components/ScudoTheming/Icon.vue';
+
+
+import { useUtils } from "@/stores/utils";
+const utils = useUtils();
 
 const props = defineProps(['group'])
 
@@ -10,24 +14,24 @@ const props = defineProps(['group'])
 
 <template>
     <Card>
-        <Image :src="props['group'].image" :alt="'Photo de présentation de '+ props['group'].name"/>
+        <Image :src="props['group'].image" :alt="'Photo de présentation de ' + props['group'].name" />
         <section>
             <Title>
                 {{ props['group'].name }}
             </Title>
             <Title>
-                {{ props['group'].followers }}
+                {{ utils.formatNumber(group.followers, 2) }}
                 <Icon>
-                group
+                    groups
                 </Icon>
             </Title>
-        </section> 
+        </section>
     </Card>
 </template>
 
 <style lang="scss" scoped>
- section{
+section {
     display: flex;
-    justify-content: space-between;  
- }
+    justify-content: space-between;
+}
 </style>
