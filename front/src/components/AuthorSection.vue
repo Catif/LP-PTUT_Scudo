@@ -16,7 +16,7 @@ const props = defineProps(['user', 'title'])
         <div>
             <Title>{{ props['title'] }}</Title>
             <Text>
-                <Username :to="'/user/' + props['user'].id">{{ props['user'].username }}</Username>
+                <Username :to="'/user/' + props['user']">{{ props['user'].username }}</Username>
             </Text>
         </div>
     </section>
