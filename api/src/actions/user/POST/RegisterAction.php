@@ -23,7 +23,7 @@ final class RegisterAction
             if (!is_array($body)) {
                 throw new \Exception("Missing Body");
             }
-            $modelUser = $userService->insertUser($body);
+            $array = $userService->insertUser($body);
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
@@ -33,7 +33,8 @@ final class RegisterAction
         }
 
         $data = [
-            'user' => FormatterObject::formatUser($modelUser),
+            'user' => FormatterObject::formatUser($array['user']),
+            'token' => $array['token']
         ];
         return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     }
