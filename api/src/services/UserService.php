@@ -27,22 +27,26 @@ final class UserService
 
   public function getUserByID($id): ?array
   {
+    if (empty($id)) {
+      throw new \Exception("Missing id user");
+    }
 
     $user = User::select([
       'id_user',
       'fullname',
       'username',
       'email',
-      'password',
       'biography',
       'phone',
       'role',
       'created_at',
-      'updated_at'
-    ])->findOrFail($id);
+    ])
+      ->findOrFail($id);
+
+    $resources = $user->resources()->get();
 
 
-    return $user->toArray();
+    return ['user' => $user->toArray(), 'resources' => $resources->toArray()];
   }
 
   public function insertUser(array $property)

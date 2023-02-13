@@ -19,13 +19,49 @@ final class UserByIdAction
   {
     $userService = new UserService();
     try {
-      $userById = $userService->getUserByID($args['id']);
+      $array = $userService->getUserByID($args['id']);
     } catch (RessourceNotFoundException  $e) {
       throw new HttpNotFoundException($rq, $e->getMessage());
     }
+
+    $ressources = [];
+    foreach ($array['resources'] as $resource) {
+      $ressources[] = [
+        'id' => $resource['id_resource'],
+        'type' => $resource['type'],
+        'urls' => [
+          'api' => '/api/resource/' . $resource['id_resource'],
+          'file' => $resource['filename']
+        ],
+        'title' => $resource['title'],
+        'description' => $resource['text'],
+        'localisation' => [
+          'latitude' => $resource['latitude'],
+          'longitude' => $resource['longitude'],
+        ],
+        'created_at' => $resource['created_at'],
+        'updated_at' => $resource['updated_at'],
+        'published_at' => $resource['published_at'],
+      ];
+    }
+
+    $user = [
+      'id' => $array['user']['id_user'],
+      'fullname' => $array['user']['fullname'],
+      'username' => $array['user']['username'],
+      'email' => $array['user']['email'],
+      'biography' => $array['user']['biography'],
+      'phone' => $array['user']['phone'],
+      'role' => $array['user']['role'],
+      'created_at' => $array['user']['created_at'],
+    ];
+
     $data = [
-      'Filtre' => 'UserById',
-      'Result' => $userById
+      'request' => '/api/user/' . $args['id'],
+      'result' => [
+        'user' => $user,
+        'resources' => $ressources
+      ]
     ];
 
     return FormatterAPI::formatResponse($rq, $rs, $data);
