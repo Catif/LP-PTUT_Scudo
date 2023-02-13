@@ -1,7 +1,7 @@
 <script setup>
 
 import Username from "@/components/Username.vue";
-import ProfilePicture from "@/components/ProfilePicture.vue";
+import UserPicture from "@/components/UserPicture.vue";
 import Title from "@/components/ScudoTheming/Title.vue";
 import Text from "@/components/ScudoTheming/Text.vue";
 import { processSlotOutlet } from "@vue/compiler-core";
@@ -12,11 +12,11 @@ const props = defineProps(['user', 'title'])
 
 <template>
     <section class="authorSection">
-        <ProfilePicture :user="props['user']" />
+        <UserPicture :user="props['user']" />
         <div>
             <Title>{{ props['title'] }}</Title>
             <Text>
-                <Username :to="'/user/' + props['user']">{{ props['user'].username }}</Username>
+                <Username :user="user">{{ props['user'].username }}</Username>
             </Text>
         </div>
     </section>
@@ -28,8 +28,8 @@ section {
     margin: 0.75rem;
 }
 
-img {
-    height: 3.5rem;
+a {
+    width: 3.5rem;
 }
 
 h2,

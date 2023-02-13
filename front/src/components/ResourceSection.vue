@@ -8,17 +8,18 @@ const props = defineProps(['resource', 'alt'])
 <template>
     <div class="resourceSection">
         <Alert>LIVE</Alert>
-        <Image :src="props['resource'].image" :alt="props['alt']"/>
+        <Image :src="props['resource'].image" :alt="props['alt']" />
     </div>
 </template>
 
 <style lang="scss" scoped>
-    .resourceSection{
-        position: relative;
-    }
-    div{
+.resourceSection {
+    position: relative;
+
+    div {
         position: absolute;
-        margin-top: 0.75rem;
-        margin-top: 0.75rem;
+        top: 0;
+        left: 0;
     }
+}
 </style>
