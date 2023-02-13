@@ -1,6 +1,7 @@
 <script setup>
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
 import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
+import DefaultTopAppBar from '../components/DefaultTopAppBar.vue';
 
 import ResourceCard from '@/components/ResourceCard.vue';
 import GroupCard from '@/components/SmallGroupCard.vue';
@@ -24,6 +25,7 @@ var group = {
 
 <template>
   <MainFeed>
+    <DefaultTopAppBar />
     <ResourceCard :user="user" :resource="resource" />
     <ResourceCard :user="user" :resource="resource" />
     <ResourceCard :user="user" :resource="resource" />
