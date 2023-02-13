@@ -29,7 +29,6 @@ function toggle(){
 <style lang="scss" scoped>
     button{
         width: 500px; // a changer plus tard (Mettre 100% pour la card)
-        background: white;
         border: none;
         margin-top: 1.5rem;
         margin-bottom: 1.5rem;
