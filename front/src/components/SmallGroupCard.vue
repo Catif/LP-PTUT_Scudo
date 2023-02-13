@@ -34,4 +34,8 @@ section {
     display: flex;
     justify-content: space-between;
 }
+
+img {
+    aspect-ratio: 2 / 1;
+}
 </style>
