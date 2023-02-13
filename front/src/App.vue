@@ -1,14 +1,20 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import Navbar from "@/components/Navbar.vue";
+import Navbar from "./components/Navbar.vue";
 </script>
 
 <template>
-  <header>
+  <div id="content">
     <Navbar />
-  </header>
-
-  <RouterView class="container" />
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/media-queries.scss";
+
+@media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
+  #content {
+    display: flex;
+  }
+}
+</style>

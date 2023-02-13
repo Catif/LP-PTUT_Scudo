@@ -1,6 +1,11 @@
+<script setup>
+import MainFeed from '../components/ScudoTheming/MainFeed.vue';
+import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
+</script>
+
 <template>
-  <div>
-    <h1>Bonjour monde !</h1>
-    <p>Je suis un composant Vue.js nommé <b>Test</b></p>
-  </div>
+  <MainFeed>
+  </MainFeed>
+  <AsideFeed>
+  </AsideFeed>
 </template>

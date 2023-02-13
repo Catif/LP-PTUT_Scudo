@@ -1,0 +1,79 @@
+<script setup>
+import { reactive } from 'vue';
+import IconButton from './IconButton.vue';
+
+var modal = reactive({
+    state: false
+});
+
+</script>
+
+<template>
+    <IconButton @click="modal.state = !modal.state">more_vert</IconButton>
+    <button @click="modal.state = !modal.state" :class="{ overlay: true, active: modal.state }"></button>
+    <div :class="{ open: modal.state }">
+        <slot></slot>
+    </div>
+</template>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/colors";
+
+div {
+    position: fixed;
+    z-index: 1000;
+    bottom: -100%;
+    left: 0;
+
+    box-sizing: border-box;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: .75rem;
+
+    border-top-left-radius: 2.375rem;
+    border-top-right-radius: 2.375rem;
+
+    background: $light-bg-primary;
+
+    transition: bottom 200ms ease-out;
+
+    :slotted(a) {
+        padding: .75rem;
+
+        color: $light-text-primary;
+
+        text-decoration: none;
+    }
+
+    &.open {
+        bottom: 0;
+    }
+}
+
+.overlay {
+    border: none;
+    padding: 0;
+    margin: 0;
+
+    position: fixed;
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 999;
+    cursor: pointer;
+    transition: visibility 200ms ease-out, background-color 200ms ease-out;
+}
+
+.overlay.active {
+    background-color: rgba(0, 0, 0, 0.3);
+    visibility: visible;
+}
+</style>
