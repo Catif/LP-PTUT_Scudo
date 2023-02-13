@@ -22,7 +22,7 @@ const props = defineProps({
   <Card>
     <section>
       <main>
-        <ProfilePicture :src="user.image" alt="Photo de profile" />
+        <ProfilePicture :user="props['user']" />
         <Alert class="live" v-if="live">LIVE</Alert>
       </main>
       <aside>

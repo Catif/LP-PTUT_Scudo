@@ -4,6 +4,7 @@ import Username from "@/components/Username.vue";
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import Title from "@/components/ScudoTheming/Title.vue";
 import Text from "@/components/ScudoTheming/Text.vue";
+import { processSlotOutlet } from "@vue/compiler-core";
 
 const props = defineProps(['user', 'title'])
 
@@ -11,11 +12,11 @@ const props = defineProps(['user', 'title'])
 
 <template>
     <section class="authorSection">
-        <ProfilePicture :src="props['user'].image" :alt="'Photo de profil de' + user.username" />
+        <ProfilePicture :user="props['user']" />
         <div>
             <Title>{{ props['title'] }}</Title>
             <Text>
-                <Username :to="'/user/' + props['user'].id">{{ props['user'].username }}</Username>
+                <Username :to="'/user/' + props['user']">{{ props['user'].username }}</Username>
             </Text>
         </div>
     </section>

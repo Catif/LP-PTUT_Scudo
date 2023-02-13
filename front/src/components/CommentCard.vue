@@ -12,9 +12,9 @@ const props = defineProps(['user', 'comment'])
 <template>
     <Card>
         <div class="content">
-        <ProfilePicture :src="props['user'].image" alt="profil"/>
+        <ProfilePicture :user="props['user']" />
         <section>
-            <SmallText><Username :to="props['user'].username">{{ props['user'].username }}</Username></SmallText>
+            <SmallText><Username :to="props['user']">{{ props['user'].username }}</Username></SmallText>
             <Text>{{ props['comment'] }}</Text>
         </section>
         </div>

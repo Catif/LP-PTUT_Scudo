@@ -1,27 +1,23 @@
 <?php
 
-namespace api\actions\user\POST;
+namespace api\actions\message\POST;
 
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 
-use api\services\UserService as UserService;
+use api\services\MessageService;
 use api\services\utils\FormatterAPI;
 
-final class RegisterAction
+final class MessageAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
-        $userService = new UserService;
+        $messageService = new MessageService;
         $body = $rq->getParsedBody();
-
         try {
-            if (!is_array($body)) {
-                throw new \Exception("Missing Body");
-            }
-            $modelUser = $userService->insertUser($body);
+            $modelMessage = $messageService->insertMessage($body);
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
@@ -31,7 +27,7 @@ final class RegisterAction
         }
 
         $data = [
-            'user' => $modelUser
+            'user' => $modelMessage
         ];
         return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     }
