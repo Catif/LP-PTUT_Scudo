@@ -2,7 +2,7 @@ driver=mysql
 charset=utf8
 collation=utf8_unicode_ci
 
-username=root          # Nom de connexion
-password=              # Mot de passe de connexion
-host=localhost         # Adresse du serveur
-database=LP-PTUT_Scudo # Nom de la base de données
+username=root
+password=
+host=localhost
+database=LP-PTUT_Scudo
