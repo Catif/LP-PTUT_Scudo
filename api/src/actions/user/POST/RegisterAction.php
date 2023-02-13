@@ -23,7 +23,6 @@ final class RegisterAction
                 'error' => $e->getMessage()
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 400); // 400 = Bad Request
-            return $rs;
         }
 
         $data = [

@@ -2,7 +2,7 @@
 
 namespace api\models;
 
-class User extends \Illuminate\Database\Eloquent\Model
+class Conversation extends \Illuminate\Database\Eloquent\Model
 {
 
   protected  $table = 'User';

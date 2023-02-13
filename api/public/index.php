@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory as Appfactory;
 
-use  api\actions as actions;
+use api\actions as actions;
 
 require __DIR__ . '/../vendor/autoload.php';
 
