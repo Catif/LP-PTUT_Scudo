@@ -6,6 +6,6 @@ import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
 <template>
   <MainFeed>
   </MainFeed>
-  <AsideFeed>
-  </AsideFeed>
+  <!-- <AsideFeed>
+  </AsideFeed> -->
 </template>
