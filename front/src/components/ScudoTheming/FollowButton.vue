@@ -18,7 +18,7 @@ import Icon from "@/components/ScudoTheming/Icon.vue";
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 210px;
+  width: 100%;
   border-radius: 18px;
   overflow: hidden;
   gap: 4px;
