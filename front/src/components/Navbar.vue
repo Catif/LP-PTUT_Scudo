@@ -61,6 +61,8 @@ nav {
 
   border-top: 1px solid $light-border;
 
+  overflow: auto;
+
   .desktop,
   .title,
   #search {
@@ -107,7 +109,7 @@ nav {
     background-color: transparent;
     border-top: none;
 
-    height: 100%;
+    height: 100vh;
     width: $navigation-bar-min-width;
 
     flex-direction: column;
