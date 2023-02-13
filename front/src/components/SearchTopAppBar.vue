@@ -13,7 +13,7 @@ function switchMode() {
 <template>
   <TopAppBar :back="true">
     <Search id="search" :small="true" />
-    <ModalBottomSheet>
+    <ModalBottomSheet icon="more_vert">
       <router-link to="create-group">
         <Icon>groups</Icon>Créer un groupe
       </router-link>

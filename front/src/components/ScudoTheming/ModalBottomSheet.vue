@@ -6,10 +6,14 @@ var modal = reactive({
     state: false
 });
 
+
+
+const props = defineProps(['icon'])
+
 </script>
 
 <template>
-    <IconButton @click="modal.state = !modal.state">more_vert</IconButton>
+    <IconButton @click="modal.state = !modal.state">{{ icon }}</IconButton>
     <button @click="modal.state = !modal.state" :class="{ overlay: true, active: modal.state }"></button>
     <div :class="{ open: modal.state }">
         <slot></slot>
@@ -18,15 +22,18 @@ var modal = reactive({
 
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
+@import "@/assets/scss/media-queries";
 
 div {
     position: fixed;
     z-index: 1000;
     bottom: -100%;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
 
     box-sizing: border-box;
     width: 100%;
+    max-width: $content-min-width;
 
     display: flex;
     flex-direction: column;
@@ -84,7 +91,6 @@ div {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0);
     z-index: 999;
-    cursor: pointer;
     transition: visibility 200ms ease-out, background-color 200ms ease-out;
 }
 

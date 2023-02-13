@@ -21,7 +21,6 @@ const props = defineProps(["back", "title"]);
 
 header {
   display: flex;
-  justify-content: space-between;
 
   border-bottom: 1px solid $light-border;
 
@@ -35,6 +34,7 @@ section {
 
   &:last-child {
     flex-grow: 1;
+    justify-content: end;
   }
 }
 
