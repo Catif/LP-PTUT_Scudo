@@ -1,6 +1,6 @@
 <script setup>
 import Card from "./ScudoTheming/Card.vue";
-import ProfileStat from "./UserStat.vue";
+import UserStat from "./UserStat.vue";
 import FollowButton from "./ScudoTheming/FollowButton.vue";
 import Text from "./ScudoTheming/Text.vue";
 import Image from "./ScudoTheming/Image.vue";
@@ -18,7 +18,7 @@ const props = defineProps({
     <Image :src="group.image" :alt="'Photo de couverture de' + props['group'].name" />
     <aside>
       <div class="stats">
-        <ProfileStat :number="group.followers" type="followers" />
+        <UserStat :number="group.followers" type="followers" />
       </div>
       <FollowButton />
     </aside>

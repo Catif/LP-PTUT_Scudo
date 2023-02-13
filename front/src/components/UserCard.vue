@@ -1,7 +1,7 @@
 <script setup>
 import Card from "./ScudoTheming/Card.vue";
-import ProfilePicture from "./ProfilePicture.vue";
-import ProfileStat from "./UserStat.vue";
+import UserPicture from "./UserPicture.vue";
+import UserStat from "./UserStat.vue";
 import Alert from "./ScudoTheming/Alert.vue";
 import FollowButton from "./ScudoTheming/FollowButton.vue";
 import Text from "./ScudoTheming/Text.vue";
@@ -22,13 +22,13 @@ const props = defineProps({
   <Card>
     <section>
       <main>
-        <ProfilePicture :user="props['user']" />
+        <UserPicture :user="props['user']" />
         <Alert class="live" v-if="live">LIVE</Alert>
       </main>
       <aside>
         <div class="stats">
-          <ProfileStat :number="user.following" type="suivis" />
-          <ProfileStat :number="user.followers" type="followers" />
+          <UserStat :number="user.following" type="suivis" />
+          <UserStat :number="user.followers" type="followers" />
         </div>
         <FollowButton />
       </aside>
