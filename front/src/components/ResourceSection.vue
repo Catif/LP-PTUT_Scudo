@@ -1,12 +1,24 @@
 <script setup>
-import ClickableCard from '@/components/ScudoTheming/ClickableCard.vue';
 import Image from '@/components/ScudoTheming/Image.vue';
-import Text from '@/components/ScudoTheming/Text.vue';
-import AuthorSection from '@/components/AuthorSection.vue';
+import Alert from '@/components/ScudoTheming/Alert.vue';
 
 const props = defineProps(['resource', 'alt'])
 </script>
 
 <template>
-    <Image :src="props['resource'].image" :alt="props['alt']"/>
+    <div class="resourceSection">
+        <Alert>LIVE</Alert>
+        <Image :src="props['resource'].image" :alt="props['alt']"/>
+    </div>
 </template>
+
+<style lang="scss" scoped>
+    .resourceSection{
+        position: relative;
+    }
+    div{
+        position: absolute;
+        margin-top: 0.75rem;
+        margin-top: 0.75rem;
+    }
+</style>

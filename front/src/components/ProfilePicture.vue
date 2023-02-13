@@ -1,10 +1,12 @@
 <script setup>
 
-const props = defineProps(['src', 'alt'])
+const props = defineProps(['user'])
 
 </script>
 <template>
-  <img :src="props['src']" :alt="props['alt']">
+  <RouterLink :to="'/' + props['user'].username">
+    <img :src="props['user'].image" :alt="'Photo de profil de ' + props['user'].username">
+  </RouterLink>
 </template>
 
 <style lang="scss" scoped>
