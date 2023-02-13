@@ -6,7 +6,7 @@ const props = defineProps(["back", "title"]);
 <template>
   <header :class="{ backless: !props['back'] }">
     <section>
-      <IconButton v-if="props['back']"> arrow_back </IconButton>
+      <IconButton v-if="props['back']" @click="$router.back"> arrow_back </IconButton>
       <h1>{{ title }}</h1>
     </section>
     <section>
@@ -32,6 +32,10 @@ header {
 
 section {
   display: flex;
+
+  &:last-child {
+    flex-grow: 1;
+  }
 }
 
 h1 {
@@ -43,7 +47,7 @@ h1 {
   margin: 0;
 }
 
-@media screen and (min-width: calc($navigation-bar-min-width + $content-min-witdh)) {
+@media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
   header {
     border-bottom: none;
   }

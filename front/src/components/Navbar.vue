@@ -5,7 +5,7 @@ import Text from "./ScudoTheming/Text.vue";
 import Image from "./ScudoTheming/Image.vue";
 
 // Import Navbar components
-import Search from "./Navbar_Search.vue";
+import Search from "./SearchInput.vue";
 
 // Import Route
 import { useRoute } from "vue-router";

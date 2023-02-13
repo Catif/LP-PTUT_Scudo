@@ -40,12 +40,28 @@ div {
 
     transition: bottom 200ms ease-out;
 
-    :slotted(a) {
+    :slotted(a),
+    :slotted(button) {
+
+        line-height: 1.5rem;
+
         padding: .75rem;
 
+        font-size: 1rem;
+        text-align: left;
+        text-decoration: none;
+
+        border: none;
+
+        background: transparent;
         color: $light-text-primary;
 
-        text-decoration: none;
+        cursor: pointer;
+
+        span {
+            margin-right: .75rem;
+        }
+
     }
 
     &.open {

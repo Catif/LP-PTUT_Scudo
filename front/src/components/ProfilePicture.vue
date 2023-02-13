@@ -17,3 +17,4 @@ img {
   object-fit: cover;
   vertical-align: bottom;
 }
+</style>

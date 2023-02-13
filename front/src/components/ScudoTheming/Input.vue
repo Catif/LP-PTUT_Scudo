@@ -32,13 +32,17 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  small: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 defineEmits(["update:value"]);
 </script>
 
 <template>
-  <div v-bind:class="{ border: props.border }">
+  <div v-bind:class="{ border: props.border, small: props.small }">
     <template v-if="props.label">
       <label v-bind:class="{ active: props.value.length > 0 }" :for="props.name">{{ props.label }}</label>
     </template>
@@ -97,6 +101,7 @@ div {
   input {
     border: none;
     background-color: transparent;
+    line-height: 1.5rem;
     font-size: 1rem;
     padding: 1rem;
 
@@ -105,6 +110,11 @@ div {
     &:focus {
       outline: none;
     }
+  }
+
+  &.small input {
+    line-height: 1rem;
+    padding: .375rem .75rem;
   }
 }
 </style>
