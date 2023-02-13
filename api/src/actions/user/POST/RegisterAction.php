@@ -8,7 +8,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 
 use api\services\UserService as UserService;
+
 use api\services\utils\FormatterAPI;
+use api\services\utils\FormatterObject;
 
 final class RegisterAction
 {
@@ -31,7 +33,7 @@ final class RegisterAction
         }
 
         $data = [
-            'user' => $modelUser
+            'user' => FormatterObject::formatUser($modelUser),
         ];
         return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     }
