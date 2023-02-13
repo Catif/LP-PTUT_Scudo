@@ -34,6 +34,4 @@ a:active {
 
   transition: none;
 }
-
-// passer le user au lieu du 'to', donc récup le username et non le to, et mettre le même lien que sur ProfilePicture
 </style>
