@@ -36,7 +36,7 @@ const searchElement = ref("");
   line-height: 1.5rem;
 
   &.small {
-    background-color: $neutral-color-95;
+    background-color: $light-bg-secondary-hover;
     margin: 0.625rem 0;
   }
 
