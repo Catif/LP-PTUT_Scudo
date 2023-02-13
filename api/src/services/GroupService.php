@@ -36,4 +36,24 @@ final class GroupService
 
     return $group->toArray();
   }
+
+  public function insertGroup(array $property)
+  {
+    if (empty($property['name']) || empty($property['description']) || empty($property['image'])) {
+      throw new \Exception("Missing property");
+    }
+
+    $modelsGroup= new Group();
+    $modelsGroup->name = $property['name'];
+    $modelsGroup->description = $property['description'];
+    $modelsGroup->image = $property['image'];
+
+    try {
+      $modelsGroup->save();
+    } catch (\Exception $e) {
+      throw new \Exception("Error while saving group");
+    }
+
+    return $modelsGroup;
+  }
 }

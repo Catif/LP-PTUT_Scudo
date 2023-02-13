@@ -69,10 +69,12 @@ $app->get('/api/conversations', actions\conversation\GET\ConversationAction::cla
 // =====================
 // GET
 $app->get('/api/resources', actions\resource\GET\ResourceAction::class); // ok
+$app->get('/api/resource/{id}', actions\resource\GET\ResourceByIdAction::class); // tester
+
 
 // POST
 
-
+$app->post('/api/resource', actions\resource\POST\ResourceAction::class); // tester
 
 // PATCH
 
@@ -82,9 +84,10 @@ $app->get('/api/resources', actions\resource\GET\ResourceAction::class); // ok
 // =====================
 // GET
 $app->get('/api/groups', actions\group\GET\GroupAction::class); // ok
+$app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class); // tester
 
 // POST
-
+$app->post('/api/group', actions\group\POST\GroupAction::class); // ok
 
 
 // PATCH

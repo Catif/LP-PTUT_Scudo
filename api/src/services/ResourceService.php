@@ -49,4 +49,23 @@ final class ResourceService
 
     return $resource->toArray();
   }
+
+  public function insertResource(array $property)
+  {
+    $modelsUser = new Resource();
+  
+    $modelsUser->id_user = $property['id_user'];
+    $modelsUser->filename = $property['filename'];
+    $modelsUser->title = $property['title'];
+    $modelsUser->text = $property['text'];
+    $modelsUser->longitude = $property['longitude'];
+    $modelsUser->latitude = $property['latitude'];
+    $modelsUser->type = $property['type'];
+    $modelsUser->is_private = $property['is_private'];
+
+    $modelsUser->save();
+
+    return $modelsUser;
+  }
+
 }
