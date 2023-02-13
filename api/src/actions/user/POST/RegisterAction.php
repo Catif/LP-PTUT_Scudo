@@ -16,7 +16,11 @@ final class RegisterAction
     {
         $userService = new UserService;
         $body = $rq->getParsedBody();
+
         try {
+            if (!is_array($body)) {
+                throw new \Exception("Missing Body");
+            }
             $modelUser = $userService->insertUser($body);
         } catch (\Exception $e) {
             $data = [
