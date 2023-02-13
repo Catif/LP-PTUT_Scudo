@@ -105,7 +105,7 @@ class FormatterObject
     }
 
     return [
-      'ressource' => self::formatResource($resource),
+      'resource' => self::formatResource($resource),
       'comments' => $formatedComments,
     ];
   }
