@@ -5,7 +5,7 @@ const props = defineProps(['user'])
 </script>
 <template>
   <RouterLink :to="'/' + props['user'].username">
-    <img :src="props['user'].image" :alt="'Image de ' + props['user'].username">
+    <img :src="props['user'].image" :alt="'Photo de profil de ' + props['user'].username">
   </RouterLink>
 </template>
 
