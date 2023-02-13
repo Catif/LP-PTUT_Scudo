@@ -23,7 +23,7 @@ header {
   display: flex;
   justify-content: space-between;
 
-  border-bottom: 1px solid $neutral-color-80;
+  border-bottom: 1px solid $light-border;
 
   &.backless {
     padding-left: 0.75rem;

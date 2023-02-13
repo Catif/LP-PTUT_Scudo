@@ -11,28 +11,34 @@ const props = defineProps(['user', 'title'])
 
 <template>
     <section class="authorSection">
-        <ProfilePicture :src="props['user'].image" alt="profil"/>
+        <ProfilePicture :src="props['user'].image" :alt="'Photo de profil de' + user.username" />
         <div>
             <Title>{{ props['title'] }}</Title>
-            <Text><Username :to="props['user'].username">{{ props['user'].username }}</Username></Text>
+            <Text>
+                <Username :to="'/user/' + props['user'].id">{{ props['user'].username }}</Username>
+            </Text>
         </div>
     </section>
 </template>
 
 <style lang="scss" scoped>
-    section{
-        display: flex;
-        margin: 0.75rem;
-    }
-    img{
-        height: 3.5rem;
-    }
-    h2, p{
-        margin: 0px 0.75rem 0;
-    }
-    div{
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
+section {
+    display: flex;
+    margin: 0.75rem;
+}
+
+img {
+    height: 3.5rem;
+}
+
+h2,
+p {
+    margin: 0px 0.75rem 0;
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
 </style>

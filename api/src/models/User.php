@@ -1,12 +1,13 @@
 <?php
 
 namespace api\models;
+
 class User extends \Illuminate\Database\Eloquent\Model
 {
 
   protected  $table = 'User';
   protected  $primaryKey = 'id_user';
-  
+
   public $timestamps = true;
 
 
@@ -18,5 +19,10 @@ class User extends \Illuminate\Database\Eloquent\Model
   public function follows(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
     return $this->belongsToMany('api\models\User', 'User_Follow', 'id_user_follow', 'id_user');
+  }
+
+  public function resources(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany('api\models\Resource', 'id_user');
   }
 }

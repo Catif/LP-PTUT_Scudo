@@ -1,26 +1,130 @@
-$main-color-10: #003828; // containeur:active dark
-$main-color-20: #003828; // containeur:hover dark
-$main-color-30: #00513c; // containeur dark
-$main-color-40: #006c50; // button light
-$main-color-50: #008766; // button:hover light
-$main-color-60: #00a47c; // button:active dark & light
-$main-color-70: #00c293; // button:hover dark
-$main-color-80: #34dfad; // button dark
-$main-color-90: #7bf9cb; // containeur light
-$main-color-95: #bcffe2; // containeur:hover light
-$main-color-98: #e7fff2; // containeur:active light
+// LIGHT
 
-$alert-color-40: #c00012; // alert light
-$alert-color-80: #ffb4ab; // alert dark
+// BACKGROUND
 
-$neutral-color-10: #151D19; // bg dark - textlight
-$neutral-color-20: #29322e; // containerTransparent:active dark
-$neutral-color-30: #404944; // containerTransparent:hover dark
-$neutral-color-40: #57615B; // button light
-$neutral-color-50: #707974; // button:hover light
-$neutral-color-60: #89938D; // button:active dark & light
-$neutral-color-70: #A4ADA7; // button:hover dark
-$neutral-color-80: #BFC9C2; // button dark
-$neutral-color-90: #dbe5de; // containerTransparent:hover light
-$neutral-color-95: #e9f3ec; // containerTransparent:active light
-$neutral-color-98: #F2FCF5; // bg light - textdark
+$light-bg-primary : #f4fff7;
+$light-bg-primary-hover : #eaf6ee;
+$light-bg-primary-active : #becec6;
+
+$light-bg-secondary : #cfe9da;
+$light-bg-secondary-hover : #ddf7e8;
+$light-bg-secondary-active : #e7fff2;
+
+
+// TEXTE
+
+$light-text-primary : #002116;
+$light-text-primary-hover : #003828;
+$light-text-primary-active : #004431;
+
+$light-text-secondary : #4c6358;
+$light-text-secondary-hover : #647c71;
+$light-text-secondary-active : #7e968a;
+
+
+// BUTTON / ALERT
+$light-bg-button : #006c4f;
+$light-bg-button-hover : #008865;
+$light-bg-button-active : #00a47b;
+
+$light-bg-alert : #ba1a1a;
+// $light-bg-alert-hover : n'existe pas
+// $light-bg-alert-active : n'existe pas
+
+$light-text-button-alert : $light-bg-primary;
+// $light-text-secondary-hover : n'existe pas
+// $light-text-secondary-active : n'existe pas
+
+
+// BORDURE
+
+$light-border : $light-text-secondary;
+
+
+
+// DARK
+
+  // BACKGROUND
+
+  $dark-bg-primary : #191c1a;
+  $dark-bg-primary-hover : #212422;
+  $dark-bg-primary-active : #444945;
+
+  $dark-bg-secondary : #354b41;
+  $dark-bg-secondary-hover : #2a4036;
+  $dark-bg-secondary-active : #1f352b;
+
+
+  // TEXTE
+
+  $dark-text-primary : #5dfcc6;
+  $dark-text-primary-hover : #36dfab;
+  $dark-text-primary-active : #00c291;
+
+  $dark-text-secondary : #b3ccbf;
+  $dark-text-secondary-hover : #98b1a4;
+  $dark-text-secondary-active : #7e968a;
+
+
+  // BUTTON / ALERT
+  $dark-bg-button : #36dfab;
+  $dark-bg-button-hover : #00c291;
+  $dark-bg-button-active : #00a47b;
+
+  $dark-bg-alert : #ffb4ab;
+  // $dark-bg-alert-hover : n'existe pas
+  // $dark-bg-alert-active : n'existe pas
+
+  $dark-text-button-alert : $dark-bg-primary;
+  // $dark-text-secondary-hover : n'existe pas
+  // $dark-text-secondary-active : n'existe pas
+
+
+  // BORDURE
+
+  $dark-border : $dark-text-secondary;
+
+  
+
+
+// DARK
+
+  // BACKGROUND
+
+  // $light-bg-primary : #191c1a;
+  // $light-bg-primary-hover : #212422;
+  // $light-bg-primary-active : #444945;
+
+  // $light-bg-secondary : #354b41;
+  // $light-bg-secondary-hover : #2a4036;
+  // $light-bg-secondary-active : #1f352b;
+
+
+  // // TEXTE
+
+  // $light-text-primary : #5dfcc6;
+  // $light-text-primary-hover : #36dfab;
+  // $light-text-primary-active : #00c291;
+
+  // $light-text-secondary : #b3ccbf;
+  // $light-text-secondary-hover : #98b1a4;
+  // $light-text-secondary-active : #7e968a;
+
+
+  // // BUTTON / ALERT
+  // $light-bg-button : #36dfab;
+  // $light-bg-button-hover : #00c291;
+  // $light-bg-button-active : #00a47b;
+
+  // $light-bg-alert : #ffb4ab;
+  // // $light-bg-alert-hover : n'existe pas
+  // // $light-bg-alert-active : n'existe pas
+
+  // $light-text-button-alert : $light-bg-primary;
+  // // $light-text-secondary-hover : n'existe pas
+  // // $light-text-secondary-active : n'existe pas
+
+
+  // // BORDURE
+
+  // $light-border : $light-text-secondary;

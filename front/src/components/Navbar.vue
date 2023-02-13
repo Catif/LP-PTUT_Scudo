@@ -27,7 +27,7 @@ const elementsNav = [
 <template>
   <nav>
     <router-link to="/" id="logo">
-      <Image src="/assets/img/logo-short_light.svg" alt="Logo" />
+      <Image src="/assets/img/logo-short_dark.svg" alt="Logo" />
     </router-link>
 
     <Search id="search" />
@@ -57,7 +57,11 @@ nav {
   justify-content: space-around;
   align-items: center;
 
-  background-color: $neutral-color-98;
+  background-color: $light-bg-primary;
+
+  border-top: 1px solid $light-border;
+
+  overflow: auto;
 
   .desktop,
   .title,
@@ -85,7 +89,7 @@ nav {
   }
 
   a {
-    color: $neutral-color-10;
+    color: $light-text-primary;
     text-decoration: none;
 
     padding: 0.375rem;
@@ -99,10 +103,13 @@ nav {
 
 @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
   nav {
-    background-color: transparent;
+    position: sticky;
     top: 0;
+    flex-shrink: 0;
+    background-color: transparent;
+    border-top: none;
 
-    height: 100%;
+    height: 100vh;
     width: $navigation-bar-min-width;
 
     flex-direction: column;
@@ -143,11 +150,12 @@ nav {
       transition: background-color 0.15s ease-out;
 
       &:hover {
-        background-color: $main-color-95;
+        background-color: $light-bg-secondary-hover;
       }
 
+      &:active,
       &.router-link-active {
-        background-color: $main-color-90;
+        background-color: $light-bg-secondary;
       }
 
       p {

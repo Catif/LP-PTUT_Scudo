@@ -64,14 +64,14 @@ div {
   margin: 1.25rem 0;
 
   &.border {
-    border: 1px solid $neutral-color-90;
+    border: 1px solid $light-border;
     border-radius: 0.25rem;
   }
 
   label {
     position: absolute;
     left: 0.5rem;
-    color: $neutral-color-50;
+    color: $light-text-secondary;
     top: 50%;
     padding: 0 0.5rem;
     transform: translate(0, -50%);
@@ -80,7 +80,7 @@ div {
     transition: all 0.1s ease-out;
 
     &.active {
-      color: $neutral-color-10;
+      color: $light-text-primary;
       top: 0px;
       left: 6px;
       font-size: 0.9rem;
@@ -93,7 +93,7 @@ div {
         width: 100%;
         height: 100%;
         z-index: -1;
-        background-color: $neutral-color-98;
+        background-color: $light-bg-primary;
       }
     }
   }

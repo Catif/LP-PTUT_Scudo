@@ -36,8 +36,7 @@ div {
     border-top-left-radius: 2.375rem;
     border-top-right-radius: 2.375rem;
 
-    background: $neutral-color-98;
-    // background: $neutral-color-90;
+    background: $light-bg-primary;
 
     transition: bottom 200ms ease-out;
 
@@ -55,7 +54,7 @@ div {
         border: none;
 
         background: transparent;
-        color: $neutral-color-10;
+        color: $light-text-primary;
 
         cursor: pointer;
 

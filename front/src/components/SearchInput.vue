@@ -30,7 +30,7 @@ const searchElement = ref("");
 
   width: 100%;
 
-  background-color: $main-color-95;
+  background-color: $light-bg-secondary-hover;
   border-radius: 18px;
 
   line-height: 1.5rem;
