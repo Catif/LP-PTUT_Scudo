@@ -26,12 +26,13 @@ var group = {
   <MainFeed>
     <ResourceCard :user="user" :resource="resource" />
     <ResourceCard :user="user" :resource="resource" />
+    <ResourceCard :user="user" :resource="resource" :group="group" />
+    <ResourceCard :user="user" :resource="resource" />
+    <ResourceCard :user="user" :resource="resource" :group="group"/>
+    <ResourceCard :user="user" :resource="resource" :group="group"/>
     <ResourceCard :user="user" :resource="resource" />
     <ResourceCard :user="user" :resource="resource" />
-    <ResourceCard :user="user" :resource="resource" />
-    <ResourceCard :user="user" :resource="resource" />
-    <ResourceCard :user="user" :resource="resource" />
-    <ResourceCard :user="user" :resource="resource" />
+    <ResourceCard :user="user" :resource="resource" :group="group"/>
   </MainFeed>
   <AsideFeed>
     <GroupCard :group="group" />
