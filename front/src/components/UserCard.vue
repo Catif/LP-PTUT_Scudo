@@ -1,6 +1,6 @@
 <script setup>
 import ProfilePicture from "./ProfilePicture.vue";
-import ProfileStat from "./ScudoTheming/ProfileStat.vue";
+import ProfileStat from "./UserStat.vue";
 import Alert from "./ScudoTheming/Alert.vue";
 import FollowButton from "./ScudoTheming/FollowButton.vue";
 import Text from "./ScudoTheming/Text.vue";
