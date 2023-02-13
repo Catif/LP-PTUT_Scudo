@@ -4,7 +4,6 @@ import Username from "@/components/Username.vue";
 import ProfilePicture from "@/components/ProfilePicture.vue";
 import Title from "@/components/ScudoTheming/Title.vue";
 import Text from "@/components/ScudoTheming/Text.vue";
-import { processSlotOutlet } from "@vue/compiler-core";
 
 const props = defineProps(['user', 'title'])
 
