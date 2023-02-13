@@ -16,7 +16,7 @@ const props = defineProps(['user', 'title'])
         <div>
             <Title>{{ props['title'] }}</Title>
             <Text>
-                <Username :to="'/user/' + props['user']">{{ props['user'].username }}</Username>
+                <Username :user="user">{{ props['user'].username }}</Username>
             </Text>
         </div>
     </section>
@@ -28,8 +28,8 @@ section {
     margin: 0.75rem;
 }
 
-img {
-    height: 3.5rem;
+a {
+    width: 3.5rem;
 }
 
 h2,
