@@ -3,7 +3,7 @@ import MainFeed from '../components/ScudoTheming/MainFeed.vue';
 import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
 
 import ResourceCard from '@/components/ResourceCard.vue';
-import GroupCard from '@/components/GroupCard.vue';
+import GroupCard from '@/components/SmallGroupCard.vue';
 
 var user = {
   id: 12,

@@ -18,5 +18,6 @@ img {
   border-radius: 1.125rem;
   object-fit: cover;
   vertical-align: bottom;
+  width: 100%;
 }
 </style>
