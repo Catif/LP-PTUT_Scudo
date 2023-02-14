@@ -12,6 +12,7 @@ class Authorization extends \Illuminate\Database\Eloquent\Model
   protected  $primaryKey = 'token';
 
   public $timestamps = true;
+  const UPDATED_AT = null; // null, car la table n'a pas de colonne updated_at
 
   public function user()
   {
