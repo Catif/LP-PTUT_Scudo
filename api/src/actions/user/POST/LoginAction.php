@@ -12,7 +12,7 @@ use api\services\UserService as UserService;
 use api\services\utils\FormatterAPI;
 use api\services\utils\FormatterObject;
 
-final class RegisterAction
+final class LoginAction
 {
   public function __invoke(Request $rq, Response $rs, array $args): Response
   {
@@ -27,17 +27,25 @@ final class RegisterAction
         throw new \Exception("Missing properties");
       }
 
-      $password = UserService::getPassword($body);
-      if (!password_verify($body['password'], $password['password'])) {
+      if (filter_var($body['username'], FILTER_VALIDATE_EMAIL)) {
+        $userFind = UserService::getPassword('email', $body['username']);
+      } else {
+        $userFind = UserService::getPassword('username', $body['username']);
+      }
+
+      if (!password_verify($body['password'], $userFind['password'])) {
         throw new \Exception('Password incorrect');
       }
-      $user = UserService::getUserByID($password['id_user']);
+
+      $user = UserService::getUserByID($userFind['id_user']);
+
+      AuthorizationService::deleteAllAuthorization($user['user']);
       $token = AuthorizationService::createAuthorization($user['user'])->token;
 
 
       $data = [
         'user' => FormatterObject::formatUser($user['user']),
-        'token' => $array['token']
+        'token' => $token
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     } catch (\Exception $e) {

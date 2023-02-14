@@ -58,9 +58,13 @@ final class UserService
     return ['user' => $user, 'resources' => $resources->toArray()];
   }
 
-  static public function getPassword(array $property)
+  static public function getPassword($type, $username)
   {
-    $user = User::select(['id_user', 'password'])->where('email', $property['email'])->orWhere('username', $property['username'])->findOrFail();
+    try {
+      return User::select(['id_user', 'password'])->where($type, $username)->firstOrFail();
+    } catch (Exception $e) {
+      throw new \Exception("User does not exist");
+    }
   }
 
   static public function register(array $property)
