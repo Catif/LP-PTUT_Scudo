@@ -35,6 +35,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 //        User
 // =====================
 // GET
+
 $app->get('/api/users', actions\user\GET\UserAction::class); // OK
 $app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class);  // ok
 
