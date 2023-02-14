@@ -101,6 +101,5 @@ $app->run();
 
 // Faker
 
-// FakerGeneration::FakeUser();
-// FakerGeneration::FakeProfessional();
+$user = FakerGeneration::FakeUser();
 // FakerGeneration::FakerResource();
