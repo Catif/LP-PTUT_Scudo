@@ -20,8 +20,14 @@ const props = defineProps(["back", "title"]);
 @import "@/assets/scss/media-queries";
 
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
   display: flex;
 
+  background-color: $light-bg-primary;
   border-bottom: 1px solid $light-border;
 
   &.backless {
@@ -49,6 +55,7 @@ h1 {
 
 @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
   header {
+    position: static;
     border-bottom: none;
   }
 }
