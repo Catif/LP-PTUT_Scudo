@@ -6,7 +6,7 @@ import RecordDisplay from '../components/ScudoTheming/RecordDisplay.vue';
 
 <template>
   <MainFeed>
-    <RecordDisplay />
+    <RecordDisplay :id="$route.params.id" />
   </MainFeed>
   <!-- <AsideFeed  :large="false">
   </AsideFeed> -->

@@ -13,6 +13,11 @@ const router = createRouter({
       name: "settings",
       component: () => import("@/views/ExampleView.vue"),
     },
+    {
+      path: "/record/:id",
+      name: "record",
+      component: () => import("@/views/RecordView.vue"),
+    },
   ],
 });
 
