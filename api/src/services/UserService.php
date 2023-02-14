@@ -22,20 +22,19 @@ final class UserService
     throw new \Exception("Missing email and username");
   }
 
-  static public function getUsers(): array
+  static public function getUsers()
   {
     return User::select([
       'id_user',
       'fullname',
       'username',
       'email',
-      'password',
       'biography',
       'phone',
       'role',
       'created_at',
       'updated_at'
-    ])->get()->toArray();
+    ])->get();
   }
 
   static public function getUserByID($id): ?array
