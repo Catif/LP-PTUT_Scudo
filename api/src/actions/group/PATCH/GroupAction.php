@@ -1,6 +1,6 @@
 <?php
 
-namespace api\actions\group\POST;
+namespace api\actions\group\PATCH;
 
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -15,13 +15,17 @@ final class GroupAction
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
         $groupService = new GroupService;
-        $body = $rq->getParsedBody();
 
+        $body = $rq->getBody();
+        foreach($body as $bod){
+            $test[] = $body;
+        }
+        var_dump($test);
         try {
-            if (!is_array($body)) {
+            if (!is_array($rq)) {
                 throw new \Exception("Missing Body");
             }
-            $modelGroup = $groupService->insertGroup($args['id_user'],$body);
+            $modelGroup = $groupService->updateGroup($args['id'],$test);
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()

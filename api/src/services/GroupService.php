@@ -37,13 +37,14 @@ final class GroupService
     return $group;
   }
 
-  public function insertGroup(array $property)
+  public function insertGroup($id ,array $property)
   {
     if (empty($property['name']) || empty($property['description']) || empty($property['image'])) {
       throw new \Exception("Missing property");
     }
-
+    
     $modelsGroup= new Group();
+    $modelsGroup->users()->attach($id);
     $modelsGroup->name = $property['name'];
     $modelsGroup->description = $property['description'];
     $modelsGroup->image = $property['image'];
@@ -55,5 +56,17 @@ final class GroupService
     }
 
     return $modelsGroup;
+  }
+
+  public function updateGroup(int $id,array $property){
+    if((empty($property['name']) || empty($property['description']) || empty($property['image']))){
+      throw new \Exception("Missing property");
+    }
+    $modelsGroup = Group::find($id);
+    $modelsGroup->name = $property['name'];
+    $modelsGroup->description = $property['description'];
+    $modelsGroup->image = $property['image'];
+
+    $modelsGroup->save();
   }
 }

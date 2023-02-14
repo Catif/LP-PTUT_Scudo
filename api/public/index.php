@@ -20,6 +20,8 @@ $db->bootEloquent(); /* établir la connexion */
 $app = AppFactory::create();
 $app->addRoutingMiddleware();
 
+
+
 // Default route
 $app->get('/', function (Request $request, Response $response, $args) {
   $response->getBody()->write("Hello world!");
@@ -84,13 +86,13 @@ $app->post('/api/resource', actions\resource\POST\ResourceAction::class); // tes
 // =====================
 // GET
 $app->get('/api/groups', actions\group\GET\GroupAction::class); // ok
-$app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class); // tester
+$app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class); // tester // ajouter un token // tester la validation du follow
 
 // POST
 $app->post('/api/group', actions\group\POST\GroupAction::class); // ok
 
 
-// PATCH
-
+// UPDATE
+$app->patch('/api/group/{id}', actions\group\PATCH\GroupAction::class); // ok
 
 $app->run();
