@@ -12,10 +12,13 @@ window.addEventListener("scroll", function () {
   }
 
 });
+
+const props = defineProps(['large'])
+
 </script>
 
 <template>
-  <aside>
+  <aside :class="{ large: props.large }">
     <div id="AsideContainer">
       <div>
         <slot></slot>
@@ -29,8 +32,12 @@ window.addEventListener("scroll", function () {
 
 aside {
   display: none;
-  width: $aside-bar-min-width;
   flex-shrink: 0;
+  width: $aside-bar-min-width;
+
+  &.large {
+    width: $content-min-width;
+  }
 }
 
 .fixed {
@@ -38,8 +45,14 @@ aside {
   bottom: 0;
 }
 
-@media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $aside-bar-min-width)) {
-  aside {
+@media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $aside-bar-min-width + 24px)) {
+  aside:not(.large) {
+    display: block;
+  }
+}
+
+@media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $content-min-width + 24px)) {
+  aside.large {
     display: block;
   }
 }
