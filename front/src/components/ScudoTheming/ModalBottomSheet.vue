@@ -3,7 +3,8 @@ import { reactive } from 'vue';
 import IconButton from './IconButton.vue';
 
 var modal = reactive({
-    state: false
+    state: false,
+    temp: false,
 });
 
 
@@ -15,7 +16,7 @@ const props = defineProps(['icon'])
 <template>
     <IconButton @click="modal.state = !modal.state">{{ icon }}</IconButton>
     <button @click="modal.state = !modal.state" :class="{ overlay: true, active: modal.state }"></button>
-    <div :class="{ open: modal.state }">
+    <div :class="{ open: modal.state , red: modal.temp}">
         <slot></slot>
     </div>
 </template>
@@ -23,7 +24,9 @@ const props = defineProps(['icon'])
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
 @import "@/assets/scss/media-queries";
-
+.red{
+    background-color: red;
+}
 div {
     position: fixed;
     z-index: 1000;
