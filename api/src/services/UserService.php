@@ -72,23 +72,11 @@ final class UserService
 
   static public function register(array $property)
   {
-
-    if (empty($property['username']) || empty($property['email']) || empty($property['password']) || empty($property['biography']) || empty($property['image']) || empty($property['role'])) {
-      throw new \Exception("Missing property");
-    }
-    if (!filter_var($property['email'], FILTER_VALIDATE_EMAIL)) {
-      throw new \Exception("Invalid email");
-    }
-
-    if (self::exist($property)) {
-      throw new \Exception("User already exist");
-    }
-
     $user = new User();
     $user->fullname = $property['fullname'];
     $user->username = $property['username'];
     $user->email = $property['email'];
-    $user->password = password_hash($property['password'], PASSWORD_BCRYPT, ['cost' => 12]);
+    $user->password = $property['password'];
     $user->biography = $property['biography'];
     $user->phone = $property['phone'];
     $user->image = $property['image'];
@@ -100,12 +88,6 @@ final class UserService
       throw new \Exception("Error while saving user");
     }
 
-    try {
-      $token = AuthorizationService::createAuthorization($user)->token;
-    } catch (\Exception $e) {
-      throw new \Exception("Error while linking token to user");
-    }
-
-    return ['user' => $user, 'token' => $token];
+    return $user;
   }
 }
