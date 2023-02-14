@@ -4,12 +4,25 @@ namespace api\services;
 
 
 use api\models\User as User;
-
-
+use Exception;
 
 final class UserService
 {
-  public function getUser(): array
+  static public function exist($property): bool
+  {
+    if (!empty($property['email']) && !empty($property['username'])) {
+      return User::where('email', $property['email'])->orWhere('username', $property['username'])->exists();
+    }
+    if (!empty($property['email'])) {
+      return User::where('email', $property['email'])->exists();
+    }
+    if (!empty($property['username'])) {
+      return User::where('username', $property['username'])->exists();
+    }
+    throw new \Exception("Missing email and username");
+  }
+
+  static public function getUsers(): array
   {
     return User::select([
       'id_user',
@@ -25,12 +38,8 @@ final class UserService
     ])->get()->toArray();
   }
 
-  public function getUserByID($id): ?array
+  static public function getUserByID($id): ?array
   {
-    if (empty($id)) {
-      throw new \Exception("Missing id user");
-    }
-
     $user = User::select([
       'id_user',
       'fullname',
@@ -46,23 +55,25 @@ final class UserService
     $resources = $user->resources()->get();
 
 
-    return ['user' => $user->toArray(), 'resources' => $resources->toArray()];
+    return ['user' => $user, 'resources' => $resources->toArray()];
   }
 
-  public function insertUser(array $property)
+  static public function getPassword($type, $username)
   {
-    if (empty($property['fullname']) || empty($property['username']) || empty($property['email']) || empty($property['password']) || empty($property['biography']) || empty($property['phone']) || empty($property['image']) || empty($property['role'])) {
-      throw new \Exception("Missing property");
+    try {
+      return User::select(['id_user', 'password'])->where($type, $username)->firstOrFail();
+    } catch (Exception $e) {
+      throw new \Exception("User does not exist");
     }
-    if (!filter_var($property['email'], FILTER_VALIDATE_EMAIL)) {
-      throw new \Exception("Invalid email");
-    }
+  }
 
+  static public function register(array $property)
+  {
     $user = new User();
     $user->fullname = $property['fullname'];
     $user->username = $property['username'];
     $user->email = $property['email'];
-    $user->password = password_hash($property['password'], PASSWORD_BCRYPT, ['cost' => 12]);
+    $user->password = $property['password'];
     $user->biography = $property['biography'];
     $user->phone = $property['phone'];
     $user->image = $property['image'];
@@ -74,13 +85,6 @@ final class UserService
       throw new \Exception("Error while saving user");
     }
 
-    try {
-      $authorizationService = new AuthorizationService();
-      $token = $authorizationService->createAuthorization($user)->token;
-    } catch (\Exception $e) {
-      throw new \Exception("Error while linking token to user");
-    }
-
-    return ['user' => $user, 'token' => $token];
+    return $user;
   }
 }
