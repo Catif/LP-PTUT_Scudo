@@ -6,16 +6,21 @@ namespace api\services;
 use api\models\Authorization;
 use api\models\User;
 
+use Ramsey\Uuid\Uuid;
+
 use Exception;
 
 final class AuthorizationService
 {
-  public function createToken(User $user)
+  public function createAuthorization(User $user)
   {
     try {
-      $token = new Authorization();
-      $token->user()->attache($user);
-      $token->save();
+      $authorization = new Authorization();
+      $authorization->token = Uuid::uuid4()->toString();
+      $authorization->id_user = $user->id_user;
+      $authorization->save();
+
+      return $authorization;
     } catch (Exception $e) {
       throw new Exception("Error save token");
     }

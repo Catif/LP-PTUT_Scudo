@@ -75,8 +75,8 @@ final class UserService
     }
 
     try {
-      $Authorization = new AuthorizationService();
-      $token = $Authorization->createToken($user);
+      $authorizationService = new AuthorizationService();
+      $token = $authorizationService->createAuthorization($user)->token;
     } catch (\Exception $e) {
       throw new \Exception("Error while linking token to user");
     }
