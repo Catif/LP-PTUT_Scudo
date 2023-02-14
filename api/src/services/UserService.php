@@ -63,7 +63,12 @@ final class UserService
     return ['user' => $user->toArray(), 'resources' => $resources->toArray()];
   }
 
+  static public function login(array $property)
   {
+    if (empty($property['username']) ||  empty($property['password'])) {
+      throw new \Exception('Missing property');
+    }
+  }
 
   static public function register(array $property)
   {
