@@ -3,37 +3,98 @@
 import Icon from "./ScudoTheming/Icon.vue";
 import Text from "./ScudoTheming/Text.vue";
 import Image from "./ScudoTheming/Image.vue";
+import ModalBottomSheet from "./ScudoTheming/ModalBottomSheet.vue";
 
 // Import Navbar components
 import Search from "./SearchInput.vue";
 
 // Import Route
 import { useRoute } from "vue-router";
+import { ref } from "vue";
 const route = useRoute();
 
 // Create elementsNav array
 const elementsNav = [
   // Mobile + Desktop
-  { name: "Home", path: "/", icon: "home", title: "Accueil", mobile: true },
-  { name: "Upload", path: "/upload", icon: "add_circle", title: "Publier", mobile: true },
+  // { name: "Home", path: "/", icon: "home", title: "Accueil", mobile: true },
+  // { name: "Upload", path: "/upload", icon: "add_circle", title: "Publier", mobile: true },
   { name: "Conversation", path: "/conversation", icon: "chat_bubble", title: "Conversations", mobile: true },
 
   // Desktop
   { name: "Profil", path: "/profile", icon: "account_circle", title: "Profil", mobile: false },
   { name: "Params", path: "/settings", icon: "settings", title: "Paramètres", mobile: false },
 ];
+
+const publishOpen = ref(true);
+
+function togglePublish() {
+  publishOpen.value = !publishOpen.value;
+}
+
+function closePublish() {
+  publishOpen.value = false;
+}
 </script>
 
 <template>
   <nav>
-    <router-link to="/" id="logo">
+    <router-link to="/" id="logo" @click="closePublish">
       <Image src="/assets/img/logo-short_dark.svg" alt="Logo" />
     </router-link>
 
-    <Search id="search" />
+    <Search id="search" @click="closePublish" />
 
+    <!-- ACCUEIL -->
+    <router-link key="Home" to="/" class="mobile" @click="closePublish">
+      <Text>
+        <Icon :active="route.path == '/'">home</Icon><span class="title">Accueil</span>
+      </Text>
+    </router-link>
+
+
+    <!-- BOUTON PUBLIER -->
+    <Text class="add mobile">
+      <ModalBottomSheet icon="add_circle">
+        <router-link to="/start-video/private">
+          <Icon>videocam</Icon>Filmer pour moi
+        </router-link>
+        <router-link to="/start-video/public">
+          <Icon>cell_tower</Icon>Filmer & Diffuser
+        </router-link><router-link to="/upload">
+          <Icon>upload</Icon>Mettre en ligne une vidéo
+        </router-link>
+      </ModalBottomSheet>
+      <!-- <span class="title">Publier</span> -->
+    </Text>
+    <button :class="{ add: true, desktop: true, open: publishOpen }" @click="togglePublish">
+      <Text>
+        <Icon>add_circle</Icon>
+        <span class="title">Publier</span>
+      </Text>
+      <div class="sousmenu">
+        <router-link key="Film" to="/start-video/private" class="desktop">
+          <Text>
+            <Icon>videocam</Icon><span class="title">Filmer pour
+              moi</span>
+          </Text>
+        </router-link>
+        <router-link key="FilmAndPublish" to="/start-video/public" class="desktop">
+          <Text>
+            <Icon>cell_tower</Icon><span class="title">Filmer &
+              Diffuser</span>
+          </Text>
+        </router-link>
+        <router-link key="Upload" to="/upload" class="desktop">
+          <Text>
+            <Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
+          </Text>
+        </router-link>
+      </div>
+    </button>
+
+    <!-- AUTRES BOUTONS -->
     <router-link v-for="el in elementsNav" :key="el.name" :to="el.path"
-      v-bind:class="{ mobile: el.mobile, desktop: !el.mobile }">
+      v-bind:class="{ mobile: el.mobile, desktop: !el.mobile }" @click="closePublish">
       <Text>
         <Icon :active="route.path == el.path">{{ el.icon }}</Icon><span class="title">{{ el.title }}</span>
       </Text>
@@ -49,6 +110,7 @@ nav {
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 100;
 
   width: 100%;
 
@@ -85,6 +147,29 @@ nav {
     p {
       line-height: 1.5rem;
       margin: 0;
+      text-align: start;
+    }
+
+    background-color: transparent;
+    border: none;
+  }
+
+  .add {
+    height: 3.5rem;
+    overflow: hidden;
+
+    transition: height 150ms ease-out, border-radius 150ms ease-out;
+
+    &.open {
+      height: 12.5rem;
+    }
+
+    &.mobile {
+      margin: 0;
+    }
+
+    &.desktop {
+      display: none;
     }
   }
 
@@ -97,6 +182,28 @@ nav {
 
     &:visited {
       color: inherit;
+    }
+  }
+
+  .sousmenu {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    padding-bottom: .75rem;
+
+    a {
+      margin: 0 .75rem;
+      width: auto;
+
+      padding: 0 .375rem;
+
+      .material-symbols-rounded {
+        margin: 0;
+      }
+
+      &:last-child {
+        margin-bottom: .75rem;
+      }
     }
   }
 }
@@ -117,6 +224,17 @@ nav {
     padding: 0.75rem;
     align-items: flex-start;
     justify-content: flex-start;
+
+    .add {
+
+      &.mobile {
+        display: none;
+      }
+
+      &.desktop {
+        display: block;
+      }
+    }
 
     .desktop,
     #logo {
@@ -142,20 +260,32 @@ nav {
       display: flex;
     }
 
-    a {
+    a,
+    button {
       padding: 0;
       width: 100%;
       border-radius: 18px;
       margin: 0;
       transition: background-color 0.15s ease-out;
 
-      &:hover {
+      &:hover,
+      &.add.open {
         background-color: $light-bg-secondary-hover;
+      }
+
+      &.add.open {
+        border-radius: 1.75rem;
       }
 
       &:active,
       &.router-link-active {
         background-color: $light-bg-secondary;
+      }
+
+      .sousmenu {
+        .title {
+          line-height: 2.25rem;
+        }
       }
 
       p {
