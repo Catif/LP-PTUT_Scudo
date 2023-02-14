@@ -9,7 +9,21 @@ use api\models\User as User;
 
 final class UserService
 {
-  public function getUser(): array
+  static public function exist($property): bool
+  {
+    if (!empty($property['email']) && !empty($property['username'])) {
+      return User::where('email', $property['email'])->orWhere('username', $property['username'])->exists();
+    }
+    if (!empty($property['email'])) {
+      return User::where('email', $property['email'])->exists();
+    }
+    if (!empty($property['username'])) {
+      return User::where('username', $property['username'])->exists();
+    }
+    throw new \Exception("Missing email and username");
+  }
+
+  static public function getUsers(): array
   {
     return User::select([
       'id_user',
@@ -25,7 +39,7 @@ final class UserService
     ])->get()->toArray();
   }
 
-  public function getUserByID($id): ?array
+  static public function getUserByID($id): ?array
   {
     if (empty($id)) {
       throw new \Exception("Missing id user");
@@ -49,13 +63,20 @@ final class UserService
     return ['user' => $user->toArray(), 'resources' => $resources->toArray()];
   }
 
-  public function insertUser(array $property)
   {
-    if (empty($property['fullname']) || empty($property['username']) || empty($property['email']) || empty($property['password']) || empty($property['biography']) || empty($property['phone']) || empty($property['image']) || empty($property['role'])) {
+
+  static public function register(array $property)
+  {
+
+    if (empty($property['username']) || empty($property['email']) || empty($property['password']) || empty($property['biography']) || empty($property['image']) || empty($property['role'])) {
       throw new \Exception("Missing property");
     }
     if (!filter_var($property['email'], FILTER_VALIDATE_EMAIL)) {
       throw new \Exception("Invalid email");
+    }
+
+    if (self::exist($property)) {
+      throw new \Exception("User already exist");
     }
 
     $user = new User();
@@ -75,8 +96,7 @@ final class UserService
     }
 
     try {
-      $authorizationService = new AuthorizationService();
-      $token = $authorizationService->createAuthorization($user)->token;
+      $token = AuthorizationService::createAuthorization($user)->token;
     } catch (\Exception $e) {
       throw new \Exception("Error while linking token to user");
     }

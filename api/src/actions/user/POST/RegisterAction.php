@@ -16,14 +16,14 @@ final class RegisterAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
-        $userService = new UserService;
         $body = $rq->getParsedBody();
 
         try {
             if (!is_array($body)) {
                 throw new \Exception("Missing Body");
             }
-            $array = $userService->insertUser($body);
+
+            $array = UserService::register($body);
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()

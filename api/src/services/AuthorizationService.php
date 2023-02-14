@@ -12,7 +12,7 @@ use Exception;
 
 final class AuthorizationService
 {
-  public function createAuthorization(User $user)
+  static public function createAuthorization(User $user)
   {
     try {
       $authorization = new Authorization();
