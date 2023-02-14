@@ -1,21 +1,25 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, inject } from 'vue';
 import IconButton from './IconButton.vue';
 
+
+const props = defineProps(['bus'])
+const bus = inject('bus')
+
 var modal = reactive({
-    state: false
+    state: false,
+    temp: false,
 });
 
-
-
-const props = defineProps(['icon'])
+bus.on(props['bus'], function() {
+    modal.state = true;
+})
 
 </script>
 
 <template>
-    <IconButton @click="modal.state = !modal.state">{{ icon }}</IconButton>
     <button @click="modal.state = !modal.state" :class="{ overlay: true, active: modal.state }"></button>
-    <div :class="{ open: modal.state }">
+    <div :class="{ open: modal.state , red: modal.temp}">
         <slot></slot>
     </div>
 </template>
@@ -23,7 +27,9 @@ const props = defineProps(['icon'])
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
 @import "@/assets/scss/media-queries";
-
+.red{
+    background-color: red;
+}
 div {
     position: fixed;
     z-index: 1000;
