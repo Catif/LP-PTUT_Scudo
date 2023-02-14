@@ -80,11 +80,22 @@ function openLive() {
   connection.join(props.resource.id);
 }
 
+function openVideo() {
+  console.log(`http://localhost:3000/api/video?video=${props.resource.filename}`);
+  videoSrc.value = `http://localhost:3000/api/video?video=${props.resource.filename}`
+}
+
+
 onMounted(() => {
-  openLive()
+  if (props.resource.type == 'live') {
+    openLive()
+  } else if (props.resource.type == 'video') {
+    openVideo()
+  }
 })
 </script>
 
 <template>
-  <video id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
+  <video v-if="resource.type == 'live'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
+  <video v-if="resource.type == 'video'" id="remoteStream" autoplay muted controls :src="videoSrc"></video>
 </template>
