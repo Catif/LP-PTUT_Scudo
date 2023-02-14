@@ -18,7 +18,7 @@ function changeState(){
 </script>
 
 <template>
-  <TopAppBar :back="back" :title="title">
+  <TopAppBar :back="back" :title="title" :mobileOnly="true">
     <IconButton>search</IconButton>
     <IconButton>account_circle</IconButton>
     <IconButton @click="changeState">more_vert</IconButton>
