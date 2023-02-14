@@ -16,7 +16,7 @@ function switchMode() {
   <TopAppBar :back="back" :title="title">
     <IconButton>search</IconButton>
     <IconButton>account_circle</IconButton>
-    <ModalBottomSheet>
+    <ModalBottomSheet icon="more_vert">
       <router-link to="create-group">
         <Icon>groups</Icon>Créer un groupe
       </router-link>
