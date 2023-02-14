@@ -62,7 +62,7 @@ final class UserService
     $user->fullname = $property['fullname'];
     $user->username = $property['username'];
     $user->email = $property['email'];
-    $user->password = $property['password'];
+    $user->password = password_hash($property['password'], PASSWORD_BCRYPT, ['cost' => 12]);
     $user->biography = $property['biography'];
     $user->phone = $property['phone'];
     $user->image = $property['image'];
