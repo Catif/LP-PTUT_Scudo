@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final class GroupService
 {
-  public function getGroup(): array
+  public function getGroups()
   {
     return Group::select([
       'id_group',
@@ -17,10 +17,10 @@ final class GroupService
       'description',
       'image',
       'created_at'
-      ])->get()->toArray();
+      ])->get();
   }
 
-  public function getGroupById($id): ?array
+  public function getGroupById($id)
   {
     try {
       $group = Group::select([
@@ -34,7 +34,7 @@ final class GroupService
         new Exception("error getGroupById");
     }
 
-    return $group->toArray();
+    return $group;
   }
 
   public function insertGroup(array $property)
