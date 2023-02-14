@@ -11,7 +11,7 @@ const props = defineProps(['user', 'resource', 'group'])
 <template>
     <ClickableFilledCard>
             <Text v-if="props['group']"><Icon>groups</Icon> {{ props['group'].name }}</Text>
-        <ResourceSection :resource="props['resource']" :alt="'Vidéo' + props['resource'].title + 'de ' + props['user'].username" />
+        <ResourceSection :resource="props['resource']" :user="props['user']" />
         <AuthorSection :user="props['user']" :title="props['resource'].title" />
         <Text>
             {{ props['resource'].description }}
