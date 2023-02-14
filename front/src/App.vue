@@ -1,5 +1,9 @@
 <script setup>
+import { provide } from "vue";
 import Navbar from "./components/Navbar.vue";
+import mitt from 'mitt';
+const bus = mitt();
+provide('bus', bus)
 </script>
 
 <template>
