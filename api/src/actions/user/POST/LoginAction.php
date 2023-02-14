@@ -2,7 +2,7 @@
 
 namespace api\actions\user\POST;
 
-
+use api\services\AuthorizationService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -23,10 +23,20 @@ final class RegisterAction
         throw new \Exception("Missing Body");
       }
 
-      $array = UserService::login($body);
+      if (empty($body['username']) || empty($body['password'])) {
+        throw new \Exception("Missing properties");
+      }
+
+      $password = UserService::getPassword($body);
+      if (!password_verify($body['password'], $password['password'])) {
+        throw new \Exception('Password incorrect');
+      }
+      $user = UserService::getUserByID($password['id_user']);
+      $token = AuthorizationService::createAuthorization($user['user'])->token;
+
 
       $data = [
-        'user' => FormatterObject::formatUser($array['user']),
+        'user' => FormatterObject::formatUser($user['user']),
         'token' => $array['token']
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created

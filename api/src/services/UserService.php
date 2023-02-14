@@ -4,8 +4,7 @@ namespace api\services;
 
 
 use api\models\User as User;
-
-
+use Exception;
 
 final class UserService
 {
@@ -41,10 +40,6 @@ final class UserService
 
   static public function getUserByID($id): ?array
   {
-    if (empty($id)) {
-      throw new \Exception("Missing id user");
-    }
-
     $user = User::select([
       'id_user',
       'fullname',
@@ -60,14 +55,12 @@ final class UserService
     $resources = $user->resources()->get();
 
 
-    return ['user' => $user->toArray(), 'resources' => $resources->toArray()];
+    return ['user' => $user, 'resources' => $resources->toArray()];
   }
 
-  static public function login(array $property)
+  static public function getPassword(array $property)
   {
-    if (empty($property['username']) ||  empty($property['password'])) {
-      throw new \Exception('Missing property');
-    }
+    $user = User::select(['id_user', 'password'])->where('email', $property['email'])->orWhere('username', $property['username'])->findOrFail();
   }
 
   static public function register(array $property)
