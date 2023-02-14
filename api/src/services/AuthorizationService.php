@@ -25,4 +25,13 @@ final class AuthorizationService
       throw new Exception("Error save token");
     }
   }
+
+  static public function deleteAllAuthorization(User $user)
+  {
+    try {
+      Authorization::where('id_user', $user->id_user)->delete();
+    } catch (Exception $e) {
+      throw new Exception("Error delete token");
+    }
+  }
 }
