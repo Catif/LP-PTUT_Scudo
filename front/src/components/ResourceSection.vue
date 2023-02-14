@@ -5,9 +5,9 @@ import Alert from '@/components/ScudoTheming/Alert.vue';
 const props = defineProps(['resource', 'user'])
 
 var alt = '';
-if(props['resource'].type === 'live'){
+if (props['resource'].type === 'live') {
     alt = 'Live de ' + props['user'].username;
-}else{
+} else {
     alt = 'Vidéo de ' + props['user'].username;
 }
 </script>
@@ -30,6 +30,4 @@ if(props['resource'].type === 'live'){
         left: 0;
     }
 }
-
-//Passer le user à la place du alt partout ou on utilise ResourceSection 
 </style>
