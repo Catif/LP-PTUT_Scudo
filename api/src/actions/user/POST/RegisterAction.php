@@ -8,7 +8,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 
 use api\services\UserService as UserService;
+
 use api\services\utils\FormatterAPI;
+use api\services\utils\FormatterObject;
 
 final class RegisterAction
 {
@@ -21,7 +23,7 @@ final class RegisterAction
             if (!is_array($body)) {
                 throw new \Exception("Missing Body");
             }
-            $modelUser = $userService->insertUser($body);
+            $array = $userService->insertUser($body);
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
@@ -31,7 +33,8 @@ final class RegisterAction
         }
 
         $data = [
-            'user' => $modelUser
+            'user' => FormatterObject::formatUser($array['user']),
+            'token' => $array['token']
         ];
         return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     }
