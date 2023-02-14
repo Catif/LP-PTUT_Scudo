@@ -1,10 +1,12 @@
 <script setup>
 
-const props = defineProps(['src', 'alt'])
+const props = defineProps(['user'])
 
 </script>
 <template>
-  <img :src="props['src']" :alt="props['alt']">
+  <RouterLink :to="'/' + props['user'].username">
+    <img :src="props['user'].image" :alt="'Photo de profil de ' + props['user'].username">
+  </RouterLink>
 </template>
 
 <style lang="scss" scoped>
@@ -16,4 +18,6 @@ img {
   border-radius: 1.125rem;
   object-fit: cover;
   vertical-align: bottom;
+  width: 100%;
 }
+</style>

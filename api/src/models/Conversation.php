@@ -7,7 +7,7 @@ class Conversation extends \Illuminate\Database\Eloquent\Model
 
   protected  $table = 'User';
   protected  $primaryKey = 'id_user';
-  
+
   public $timestamps = false;
 
   public function resources(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

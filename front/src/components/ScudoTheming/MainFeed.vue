@@ -11,10 +11,17 @@
 
 main {
   flex-grow: 1;
+  padding-top: 3.5rem;
 }
 
 #container {
-  width: $content-min-width;
+  max-width: $content-min-width;
   margin: auto;
+}
+
+@media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
+  main {
+    padding-top: 0;
+  }
 }
 </style>

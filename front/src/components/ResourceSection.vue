@@ -1,12 +1,33 @@
 <script setup>
-import ClickableCard from '@/components/ScudoTheming/ClickableCard.vue';
 import Image from '@/components/ScudoTheming/Image.vue';
-import Text from '@/components/ScudoTheming/Text.vue';
-import AuthorSection from '@/components/AuthorSection.vue';
+import Alert from '@/components/ScudoTheming/Alert.vue';
 
-const props = defineProps(['resource', 'alt'])
+const props = defineProps(['resource', 'user'])
+
+var alt = '';
+if (props['resource'].type === 'live') {
+    alt = 'Live de ' + props['user'].username;
+} else {
+    alt = 'Vidéo de ' + props['user'].username;
+}
 </script>
 
 <template>
-    <Image :src="props['resource'].image" :alt="props['alt']"/>
+    <div class="resourceSection">
+        <Alert v-if="props['resource'].type === 'live'">LIVE</Alert>
+        <Image :src="props['resource'].image" :alt="alt" />
+    </div>
 </template>
+
+<style lang="scss" scoped>
+.resourceSection {
+    position: relative;
+    z-index: 1;
+
+    div {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+</style>

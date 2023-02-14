@@ -6,7 +6,7 @@ const props = defineProps(["back", "title"]);
 <template>
   <header :class="{ backless: !props['back'] }">
     <section>
-      <IconButton v-if="props['back']"> arrow_back </IconButton>
+      <IconButton v-if="props['back']" @click="$router.back"> arrow_back </IconButton>
       <h1>{{ title }}</h1>
     </section>
     <section>
@@ -20,9 +20,14 @@ const props = defineProps(["back", "title"]);
 @import "@/assets/scss/media-queries";
 
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
 
+  background-color: $light-bg-primary;
   border-bottom: 1px solid $light-border;
 
   &.backless {
@@ -32,6 +37,11 @@ header {
 
 section {
   display: flex;
+
+  &:last-child {
+    flex-grow: 1;
+    justify-content: end;
+  }
 }
 
 h1 {
@@ -43,8 +53,9 @@ h1 {
   margin: 0;
 }
 
-@media screen and (min-width: calc($navigation-bar-min-width + $content-min-witdh)) {
+@media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
   header {
+    position: static;
     border-bottom: none;
   }
 }

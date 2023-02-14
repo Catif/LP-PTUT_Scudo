@@ -1,6 +1,6 @@
 <script setup>
-import ProfilePicture from "./ProfilePicture.vue";
-import ProfileStat from "./ScudoTheming/ProfileStat.vue";
+import UserPicture from "./UserPicture.vue";
+import UserStat from "./ScudoTheming/UserStat.vue";
 import Alert from "./ScudoTheming/Alert.vue";
 import FollowButton from "./ScudoTheming/FollowButton.vue";
 import Text from "./ScudoTheming/Text.vue";
@@ -20,11 +20,11 @@ const props = defineProps({
 <template>
   <section>
     <main>
-      <ProfilePicture :src="user.image" alt="Photo de profile" />
+      <UserPicture :src="user.image" :alt="'Photo de profil de ' + user.image" />
       <Alert class="live" v-if="live">LIVE</Alert>
     </main>
     <aside>
-      <ProfileStat class="stat" :number="user.following" type="suivis" />
+      <UserStat class="stat" :number="user.following" type="suivis" />
       <FollowButton />
     </aside>
     <Text class="biography">{{ user.biography }}</Text>
@@ -66,6 +66,7 @@ section {
     .stat {
       flex-grow: 1;
     }
+
     .followButton {
       flex-grow: 1;
     }

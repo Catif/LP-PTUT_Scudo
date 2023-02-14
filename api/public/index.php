@@ -40,6 +40,7 @@ $app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class);  // ok
 
 // POST
 $app->post('/api/register', actions\user\POST\RegisterAction::class);
+$app->post('/api/login', actions\user\POST\LoginAction::class);
 
 
 // PATCH
@@ -63,7 +64,7 @@ $app->get('/api/conversations', actions\conversation\GET\ConversationAction::cla
 //     Message
 // =====================
 // POST
-
+$app->post('/api/message', actions\message\POST\MessageAction::class); // tester
 
 
 // =====================

@@ -1,32 +1,45 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, inject } from 'vue';
 import IconButton from './IconButton.vue';
 
+
+const props = defineProps(['bus'])
+const bus = inject('bus')
+
 var modal = reactive({
-    state: false
+    state: false,
+    temp: false,
 });
+
+bus.on(props['bus'], function() {
+    modal.state = true;
+})
 
 </script>
 
 <template>
-    <IconButton @click="modal.state = !modal.state">more_vert</IconButton>
     <button @click="modal.state = !modal.state" :class="{ overlay: true, active: modal.state }"></button>
-    <div :class="{ open: modal.state }">
+    <div :class="{ open: modal.state , red: modal.temp}">
         <slot></slot>
     </div>
 </template>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
-
+@import "@/assets/scss/media-queries";
+.red{
+    background-color: red;
+}
 div {
     position: fixed;
     z-index: 1000;
     bottom: -100%;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
 
     box-sizing: border-box;
     width: 100%;
+    max-width: $content-min-width;
 
     display: flex;
     flex-direction: column;
@@ -40,12 +53,28 @@ div {
 
     transition: bottom 200ms ease-out;
 
-    :slotted(a) {
+    :slotted(a),
+    :slotted(button) {
+
+        line-height: 1.5rem;
+
         padding: .75rem;
 
+        font-size: 1rem;
+        text-align: left;
+        text-decoration: none;
+
+        border: none;
+
+        background: transparent;
         color: $light-text-primary;
 
-        text-decoration: none;
+        cursor: pointer;
+
+        span {
+            margin-right: .75rem;
+        }
+
     }
 
     &.open {
@@ -68,7 +97,6 @@ div {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0);
     z-index: 999;
-    cursor: pointer;
     transition: visibility 200ms ease-out, background-color 200ms ease-out;
 }
 
