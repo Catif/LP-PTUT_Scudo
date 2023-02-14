@@ -58,22 +58,29 @@ final class UserService
       throw new \Exception("Invalid email");
     }
 
-    $modelsUser = new User();
-    $modelsUser->fullname = $property['fullname'];
-    $modelsUser->username = $property['username'];
-    $modelsUser->email = $property['email'];
-    $modelsUser->password = $property['password'];
-    $modelsUser->biography = $property['biography'];
-    $modelsUser->phone = $property['phone'];
-    $modelsUser->image = $property['image'];
-    $modelsUser->role = $property['role'];
+    $user = new User();
+    $user->fullname = $property['fullname'];
+    $user->username = $property['username'];
+    $user->email = $property['email'];
+    $user->password = password_hash($property['password'], PASSWORD_BCRYPT, ['cost' => 12]);
+    $user->biography = $property['biography'];
+    $user->phone = $property['phone'];
+    $user->image = $property['image'];
+    $user->role = $property['role'];
 
     try {
-      $modelsUser->save();
+      $user->save();
     } catch (\Exception $e) {
       throw new \Exception("Error while saving user");
     }
 
-    return $modelsUser;
+    try {
+      $authorizationService = new AuthorizationService();
+      $token = $authorizationService->createAuthorization($user)->token;
+    } catch (\Exception $e) {
+      throw new \Exception("Error while linking token to user");
+    }
+
+    return ['user' => $user, 'token' => $token];
   }
 }

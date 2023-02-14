@@ -16,16 +16,13 @@ final class GroupAction
     {
         $groupService = new GroupService;
 
-        $body = $rq->getBody();
-        foreach($body as $bod){
-            $test[] = $body;
-        }
-        var_dump($test);
+        $body = $rq->getParsedBody();
+
         try {
             if (!is_array($rq)) {
                 throw new \Exception("Missing Body");
             }
-            $modelGroup = $groupService->updateGroup($args['id'],$test);
+            $modelGroup = $groupService->updateGroup($args['id'],$body);
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
@@ -37,6 +34,7 @@ final class GroupAction
         $data = [
             'group' => $modelGroup
         ];
-        return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
+        $rq->getBody()->write(json_encode($modelGroup));
+        return  $rq;// 201 = Created
     }
 }
