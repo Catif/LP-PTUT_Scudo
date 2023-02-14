@@ -9,7 +9,7 @@ var stream_id = props.id;
 // Variable de configuration
 // ===========================
 
-var videoSrc = ref(null);
+const videoSrc = ref(null);
 
 var mediaRecorder;
 var segmentLengthInMs = 500;
@@ -37,7 +37,6 @@ connection.sdpConstraints.mandatory = {
 connection.onstream = function (event) {
   // console.log(document.getElementById("localVideo"));
   videoSrc.value = event.stream;
-  console.log('test');
 
   // Création d'un MediaRecorder pour l'enregistrement
   mediaRecorder = new MediaRecorder(event.stream);
