@@ -3,11 +3,10 @@
 declare(strict_types=1);
 
 use api\actions as actions;
-use api\services\UserService;
-use api\services\ResourceService;
+use api\services\utils\FakerGeneration;
 use api\services\utils\FormatterAPI;
-use Slim\Factory\AppFactory as Appfactory;
 
+use Slim\Factory\AppFactory as Appfactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -99,33 +98,8 @@ $app->post('/api/group', actions\group\POST\GroupAction::class); // ok
 $app->run();
 
 
+// Faker
 
-
-// Fake data generation
-
-$faker = Faker\Factory::create();
-$fakerFR = Faker\Factory::create('fr_FR');
-
-// User
-$role = ["user","professional"];
-
-$newUser = new UserService;
-
-$data = [
-    'fullname' => "$faker->firstName $faker->lastName",
-    'username' => $faker->userName(),
-    'email' => $faker->email(),
-    'password' => password_hash("1234", PASSWORD_DEFAULT),
-    'biography' => $faker->paragraph(),
-    'phone' => $fakerFR->mobileNumber(),
-    'image' => $faker->imageUrl(500, 500),
-    'role' => $role[rand(0,1)]
-];
-
-$newUser->insertUser($data);
-
-// Resource
-$newResource = new ResourceService;
-
-
-
+// FakerGeneration::FakeUser();
+// FakerGeneration::FakeProfessional();
+// FakerGeneration::FakerResource();
