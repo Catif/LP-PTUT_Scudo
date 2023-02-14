@@ -14,7 +14,15 @@ var user = {
 var resource = {
   title: 'En vacances !!',
   description: 'Lorem Elsass ipsum Spätzle Salu bissame leo elementum knack Oberschaeffolsheim risus, kougelhopf mollis Verdammi eget chambon hop nüdle Carola adipiscing amet nullam aliquam libero, ac quam, sagittis hopla knepfle tristique.',
-  image: 'https://thumbs.dreamstime.com/b/l-%C3%AEle-d%C3%A9serte-avec-le-palmier-sur-la-plage-35138358.jpg'
+  image: 'https://thumbs.dreamstime.com/b/l-%C3%AEle-d%C3%A9serte-avec-le-palmier-sur-la-plage-35138358.jpg',
+  type: 'live',
+}
+
+var resource1 = {
+  title: 'Au travail !!',
+  description: 'Lorem Elsass ipsum Spätzle Salu bissame leo elementum knack Oberschaeffolsheim risus, kougelhopf mollis Verdammi eget chambon hop nüdle Carola adipiscing amet nullam aliquam libero, ac quam, sagittis hopla knepfle tristique.',
+  image: 'https://upload.itg.fr/files/salaries-francais-quete-sens-travail.jpg',
+  type: 'video',
 }
 var group = {
   name: 'CGT 54',
@@ -28,12 +36,13 @@ var group = {
     <DefaultTopAppBar />
     <ResourceCard :user="user" :resource="resource" />
     <ResourceCard :user="user" :resource="resource" />
+    <ResourceCard :user="user" :resource="resource1" :group="group" />
     <ResourceCard :user="user" :resource="resource" />
-    <ResourceCard :user="user" :resource="resource" />
-    <ResourceCard :user="user" :resource="resource" />
-    <ResourceCard :user="user" :resource="resource" />
-    <ResourceCard :user="user" :resource="resource" />
-    <ResourceCard :user="user" :resource="resource" />
+    <ResourceCard :user="user" :resource="resource" :group="group"/>
+    <ResourceCard :user="user" :resource="resource" :group="group"/>
+    <ResourceCard :user="user" :resource="resource1" />
+    <ResourceCard :user="user" :resource="resource1" />
+    <ResourceCard :user="user" :resource="resource" :group="group"/>
   </MainFeed>
   <AsideFeed>
     <GroupCard :group="group" />

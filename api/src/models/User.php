@@ -25,4 +25,9 @@ class User extends \Illuminate\Database\Eloquent\Model
   {
     return $this->hasMany('api\models\Resource', 'id_user');
   }
+
+  public function authorization()
+  {
+    return $this->hasOne('api\models\Authorization', 'id_user');
+  }
 }
