@@ -10,7 +10,9 @@ const props = defineProps(['user', 'resource', 'group'])
 
 <template>
     <ClickableFilledCard>
-            <Text v-if="props['group']"><Icon>groups</Icon> {{ props['group'].name }}</Text>
+        <RouterLink :to="'/group/' + props['group'].id" v-if="props['group']">
+            <Text><Icon>groups</Icon> {{ props['group'].name }}</Text>
+        </RouterLink>
         <ResourceSection :resource="props['resource']" :user="props['user']" />
         <AuthorSection :user="props['user']" :title="props['resource'].title" />
         <Text>
@@ -19,5 +21,11 @@ const props = defineProps(['user', 'resource', 'group'])
     </ClickableFilledCard>
 </template>
 <style lang="scss" scoped>
-
+a{
+    text-decoration: none;
+    p{
+        margin: 0;
+        padding: 0.75rem;
+    }
+}
 </style>
