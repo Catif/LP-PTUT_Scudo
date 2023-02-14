@@ -32,11 +32,11 @@ final class RegisterAction
 
             $properties = [
                 'fullname' => empty($body['fullname']) ? '' : $body['fullname'],
-                'username' => $body['username'],
+                'username' => empty($body['username']) ? '' : $body['username'],
                 'email' => $body['username'],
                 'password' => password_hash($body['password'], PASSWORD_BCRYPT, ['cost' => 12]),
-                'biography' => $body['biography'],
-                'phone' => $body['phone'],
+                'biography' => empty($body['biography']) ? 'Hello Scudo !' : $body['biography'],
+                'phone' => empty($body['phone']) ? '' : $body['phone'],
                 'image' =>  '',
                 'role' => $body['role']
             ];
