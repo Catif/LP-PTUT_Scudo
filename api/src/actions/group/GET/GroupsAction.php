@@ -10,7 +10,7 @@ use api\services\GroupService as GroupService;
 use api\services\utils\FormatterAPI;
 use api\services\utils\FormatterObject;
 
-final class GroupAction
+final class GroupsAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
@@ -22,10 +22,8 @@ final class GroupAction
         }
 
         $data = [
-            'type' => 'Table',
             'count' => count($listGroup),
-
-            'User' => $listGroup
+            'group' =>$listGroup
         ];
 
         return FormatterAPI::formatResponse($rq, $rs, $data);

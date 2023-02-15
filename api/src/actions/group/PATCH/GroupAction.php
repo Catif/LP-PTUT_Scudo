@@ -9,20 +9,23 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 use api\services\GroupService as GroupService;
 use api\services\utils\FormatterAPI;
+use api\services\utils\FormatterObject;
 
 final class GroupAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
-        $groupService = new GroupService;
-
         $body = $rq->getParsedBody();
-
         try {
-            if (!is_array($rq)) {
+            if (!is_array($body)) {
                 throw new \Exception("Missing Body");
             }
-            $modelGroup = $groupService->updateGroup($args['id'],$body);
+            $modelGroup = GroupService::updateGroup($args['id'],$body);
+
+            $data = [
+                'group' => FormatterObject::formatGroup($modelGroup)
+            ];
+            return  FormatterAPI::formatResponse($rq, $rs, $data);// 201 = Created
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
@@ -31,10 +34,6 @@ final class GroupAction
             return $rs;
         }
 
-        $data = [
-            'group' => $modelGroup
-        ];
-        $rq->getBody()->write(json_encode($modelGroup));
-        return  $rq;// 201 = Created
+
     }
 }

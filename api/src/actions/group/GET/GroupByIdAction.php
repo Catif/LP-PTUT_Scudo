@@ -36,6 +36,7 @@ final class GroupByIdAction
     
     $data = [
       'Filtre' => 'groupById',
+      'count' => count($groupById),
       'Result' => [
         'group' => FormatterObject::formatGroup($groupById),
         'following' => $etatFollowing
