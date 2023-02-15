@@ -49,8 +49,7 @@ final class UserService
       'role',
       'created_at',
       'updated_at'
-    ])
-      ->findOrFail($id);
+    ])->findOrFail($id);
 
     $resources = $user->resources()->get();
 
