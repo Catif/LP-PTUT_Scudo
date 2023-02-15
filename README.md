@@ -76,8 +76,8 @@ const conf = {
 
 Allez dans le dossier /front et copiez le fichier .env.example en .env et remplisser les informations de connexion à l'API.
 
-```js
-VITE_API_URL = "http://localhost:8000"; // Adresse de l'API
+```bash
+VITE_API_URL='http://localhost:8000' # Adresse de l'API
 ```
 
 #### Commandes
