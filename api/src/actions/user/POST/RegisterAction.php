@@ -58,10 +58,10 @@ final class RegisterAction
     {
         return [
             'fullname' => empty($properties['fullname']) ? '' : $properties['fullname'],
-            'username' => empty($properties['username']) ? '' : $properties['username'],
+            'username' => $properties['username'],
             'email' => $properties['email'],
             'password' => password_hash($properties['password'], PASSWORD_BCRYPT, ['cost' => 12]),
-            'biography' => empty($properties['biography']) ? 'Hello Scudo !' : $properties['biography'],
+            'biography' => 'Hello Scudo !',
             'phone' => empty($properties['phone']) ? '' : $properties['phone'],
             'image' =>  '',
             'role' => $properties['role']
