@@ -25,7 +25,7 @@ const elementsNav = [
   { name: "Params", path: "/settings", icon: "settings", title: "Paramètres", mobile: false },
 ];
 
-const publishOpen = ref(true);
+const publishOpen = ref(false);
 
 function togglePublish() {
   publishOpen.value = !publishOpen.value;
