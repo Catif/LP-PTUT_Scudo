@@ -2,9 +2,9 @@
 
 namespace api\services;
 
-
+use api\errors\exceptions\RessourceNotFoundException;
 use Ramsey\Uuid\Uuid;
-use api\models\Resource as Resource;
+use api\models\Resource;
 use api\models\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -29,27 +29,14 @@ final class ResourceService
     ])->get()->toArray();
   }
 
-  static public function getResourceByID($id): ?array
+  static public function getResourceByID($id): Resource
   {
     try {
-      $resource = Resource::select([
-        'id_resource',
-        'filename',
-        'title',
-        'text',
-        'longitude',
-        'latitude',
-        'type',
-        'isPrivate',
-        'created_at',
-        'update_at',
-        'published_at'
-      ])->findOrFail($id);
-    } catch (ModelNotFoundException $e) {
-      new Exception("error UserByID");
+      return Resource::findOrFail($id);
+    } catch (Exception $e) {
+      echo ($e->getMessage());
+      throw new Exception("error UserByID");
     }
-
-    return $resource->toArray();
   }
 
   static public function insertResource(array $property, User $user)
@@ -61,6 +48,7 @@ final class ResourceService
     $resource->text = $property['text'];
     $resource->type = $property['type'];
     $resource->is_private = $property['is_private'];
+
     if ($property['is_private'] == 0) {
       $resource->published_at = date('Y-m-d H:i:s');
     }
@@ -68,5 +56,11 @@ final class ResourceService
     $user->resources()->save($resource);
 
     return $resource;
+  }
+
+  static public function shareResourceToGroup($id_resource, $id_group)
+  {
+    $resource = Resource::findOrFail($id_resource);
+    $resource->groups()->attach($id_group);
   }
 }

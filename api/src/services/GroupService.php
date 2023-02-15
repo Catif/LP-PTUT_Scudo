@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final class GroupService
 {
-  public function getGroup(): array
+  static public function getGroup(): array
   {
     return Group::select([
       'id_group',
@@ -17,33 +17,25 @@ final class GroupService
       'description',
       'image',
       'created_at'
-      ])->get()->toArray();
+    ])->get()->toArray();
   }
 
-  public function getGroupById($id): ?array
+  static public function getGroupById($id): Group
   {
     try {
-      $group = Group::select([
-        'id_group',
-        'name',
-        'description',
-        'image',
-        'created_at'
-      ])->findOrFail($id);
+      return Group::findOrFail($id);
     } catch (ModelNotFoundException $e) {
-        new Exception("error getGroupById");
+      new Exception("error getGroupById");
     }
-
-    return $group->toArray();
   }
 
-  public function insertGroup(array $property)
+  static public function insertGroup(array $property)
   {
     if (empty($property['name']) || empty($property['description']) || empty($property['image'])) {
       throw new \Exception("Missing property");
     }
 
-    $modelsGroup= new Group();
+    $modelsGroup = new Group();
     $modelsGroup->name = $property['name'];
     $modelsGroup->description = $property['description'];
     $modelsGroup->image = $property['image'];

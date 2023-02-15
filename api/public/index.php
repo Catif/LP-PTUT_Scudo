@@ -77,10 +77,10 @@ $app->get('/api/resource/{id}', actions\resource\GET\ResourceByIdAction::class);
 
 
 // POST
-
 $app->post('/api/resource', actions\resource\POST\ResourceAction::class); // tester
+$app->post('/api/resource/{id_resource}/group/{id_group}', actions\resource\POST\ResourceGroupShareAction::class);
 
-// PATCH
+// Méthode PATCH impossible en PHP
 
 
 // =====================
