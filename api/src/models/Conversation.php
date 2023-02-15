@@ -2,8 +2,11 @@
 
 namespace api\models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
 class Conversation extends \Illuminate\Database\Eloquent\Model
 {
+  use HasUuids;
 
   protected  $table = 'User';
   protected  $primaryKey = 'id_user';

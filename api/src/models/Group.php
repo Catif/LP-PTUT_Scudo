@@ -1,9 +1,11 @@
 <?php
 
 namespace api\models;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Group extends \Illuminate\Database\Eloquent\Model
 {
+  use HasUuids;
 
   protected  $table = 'Group';
   protected  $primaryKey = 'id_group';

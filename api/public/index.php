@@ -6,7 +6,7 @@ use Faker\Factory;
 use api\actions as actions;
 use api\services\utils\FormatterAPI;
 
-use api\services\utils\FakerGeneration;
+use api\services\utils\FakerGenerator;
 use Slim\Factory\AppFactory as Appfactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -102,7 +102,8 @@ $app->run();
 
 // Faker
 $fakerFactory = Factory::create();
-$fakerGenerator = new FakerGeneration($fakerFactory);
+$fakerGenerator = new FakerGenerator($fakerFactory);
 
 $user = $fakerGenerator->FakeUser();
-$fakerGenerator->FakerResource($user);
+// $fakerGenerator->FakeResource($user);
+$fakerGenerator->FakeGroup($user);

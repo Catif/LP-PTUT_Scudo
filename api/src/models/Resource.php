@@ -2,9 +2,11 @@
 
 namespace api\models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Resource extends \Illuminate\Database\Eloquent\Model
 {
+  use HasUuids;
 
   protected  $table = 'Resource';
   protected  $primaryKey = 'id_resource';
@@ -16,8 +18,8 @@ class Resource extends \Illuminate\Database\Eloquent\Model
     return $this->belongsToMany('api\models\Group', 'Resource_Group', 'id_group', 'id_resource');
   }
 
-  public function user(): \Illuminate\Database\Eloquent\Relations\HasOne
+  public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
   {
-    return $this->hasOne('api\models\User', 'id_user');
+    return $this->belongsTo('api\models\User', 'id_user');
   }
 }
