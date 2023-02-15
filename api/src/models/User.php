@@ -13,12 +13,12 @@ class User extends \Illuminate\Database\Eloquent\Model
 
   public function groups(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\Group', 'User_Group', 'id_group', 'id_user');
+    return $this->belongsToMany('api\models\Group', 'User_Group', 'id_user', 'id_group');
   }
 
   public function follows(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\User', 'User_Follow', 'id_user_follow', 'id_user');
+    return $this->belongsToMany('api\models\User', 'User_Follow', 'id_user', 'id_user_follow');
   }
 
   public function resources(): \Illuminate\Database\Eloquent\Relations\HasMany

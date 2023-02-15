@@ -18,6 +18,6 @@ class Group extends \Illuminate\Database\Eloquent\Model
 
   public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\User', 'User_Group', 'id_user', 'id_group');
+    return $this->belongsToMany('api\models\User', 'User_Group', 'id_group', 'id_user');
   }
 }

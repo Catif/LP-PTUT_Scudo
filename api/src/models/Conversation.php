@@ -12,6 +12,6 @@ class Conversation extends \Illuminate\Database\Eloquent\Model
 
   public function resources(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\Resource', 'Resource_Group', 'id_resource', 'id_group');
+    return $this->belongsToMany('api\models\Resource', 'Resource_Group', 'id_group', 'id_resource');
   }
 }

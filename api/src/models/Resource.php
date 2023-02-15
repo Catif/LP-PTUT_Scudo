@@ -16,7 +16,7 @@ class Resource extends \Illuminate\Database\Eloquent\Model
     return $this->belongsToMany('api\models\Group', 'Resource_Group', 'id_group', 'id_resource');
   }
 
-  public function user(): \Illuminate\Database\Eloquent\Relations\hasOne
+  public function user(): \Illuminate\Database\Eloquent\Relations\HasOne
   {
     return $this->hasOne('api\models\User', 'id_user');
   }
