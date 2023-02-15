@@ -19,27 +19,8 @@ final class RegisterAction
         $body = $rq->getParsedBody();
 
         try {
-            if (!is_array($body)) {
-                throw new \Exception("Missing Body");
-            }
-
-            if (empty($body['username']) || empty($body['email']) || empty($body['password']) || empty($body['biography']) || empty($body['role'])) {
-                throw new \Exception("Missing properties");
-            }
-            if (!filter_var($body['email'], FILTER_VALIDATE_EMAIL)) {
-                throw new \Exception("Invalid email");
-            }
-
-            $properties = [
-                'fullname' => empty($body['fullname']) ? '' : $body['fullname'],
-                'username' => $body['username'],
-                'email' => $body['username'],
-                'password' => password_hash($body['password'], PASSWORD_BCRYPT, ['cost' => 12]),
-                'biography' => $body['biography'],
-                'phone' => $body['phone'],
-                'image' =>  '',
-                'role' => $body['role']
-            ];
+            $this->validateProperties($body);
+            $properties = $this->formatDefaultValues($body);
 
             $user = UserService::register($properties);
             $token = AuthorizationService::createAuthorization($user)->token;
@@ -55,5 +36,35 @@ final class RegisterAction
             'token' => $token
         ];
         return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
+    }
+
+
+    private function validateProperties(array $properties): void
+    {
+        if (!is_array($properties)) {
+            throw new \Exception("Missing properties");
+        }
+
+        if (empty($properties['username']) || empty($properties['email']) || empty($properties['password']) || empty($properties['biography']) || empty($properties['role'])) {
+            throw new \Exception("Missing properties");
+        }
+        if (!filter_var($properties['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new \Exception("Invalid email");
+        }
+    }
+
+
+    private function formatDefaultValues($properties)
+    {
+        return [
+            'fullname' => empty($properties['fullname']) ? '' : $properties['fullname'],
+            'username' => $properties['username'],
+            'email' => $properties['email'],
+            'password' => password_hash($properties['password'], PASSWORD_BCRYPT, ['cost' => 12]),
+            'biography' => 'Hello Scudo !',
+            'phone' => empty($properties['phone']) ? '' : $properties['phone'],
+            'image' =>  '',
+            'role' => $properties['role']
+        ];
     }
 }

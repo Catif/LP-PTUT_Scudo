@@ -18,7 +18,9 @@ $db->bootEloquent(); /* établir la connexion */
 
 
 $app = AppFactory::create();
+
 $app->addRoutingMiddleware();
+$app->addBodyParsingMiddleware();
 
 // Default route
 $app->get('/', function (Request $request, Response $response, $args) {
@@ -33,7 +35,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 //        User
 // =====================
 // GET
-$app->get('/api/users', actions\user\GET\UserAction::class); // OK
+$app->get('/api/users', actions\user\GET\UsersAction::class); // OK
 $app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class);  // ok
 
 // POST
@@ -42,6 +44,7 @@ $app->post('/api/login', actions\user\POST\LoginAction::class);
 
 
 // PATCH
+$app->patch('/api/user/{id}', actions\user\PATCH\UserAction::class);
 
 
 // =====================

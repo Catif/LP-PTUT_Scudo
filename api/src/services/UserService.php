@@ -22,20 +22,19 @@ final class UserService
     throw new \Exception("Missing email and username");
   }
 
-  static public function getUsers(): array
+  static public function getUsers($q)
   {
     return User::select([
       'id_user',
       'fullname',
       'username',
       'email',
-      'password',
       'biography',
       'phone',
       'role',
       'created_at',
       'updated_at'
-    ])->get()->toArray();
+    ])->where('username', 'LIKE', "%{$q}%")->orWhere("fullname", "LIKE", "%{$q}%")->get();
   }
 
   static public function getUserByID($id): ?array
@@ -49,8 +48,8 @@ final class UserService
       'phone',
       'role',
       'created_at',
-    ])
-      ->findOrFail($id);
+      'updated_at'
+    ])->findOrFail($id);
 
     $resources = $user->resources()->get();
 

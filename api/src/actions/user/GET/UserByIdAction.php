@@ -11,6 +11,8 @@ use api\services\utils\FormatterAPI;
 
 //Exception
 use api\errors\exceptions\RessourceNotFoundException as RessourceNotFoundException;
+use api\services\utils\FormatterObject;
+use Exception;
 use Slim\Exception\HttpNotFoundException;
 
 final class UserByIdAction
@@ -19,41 +21,19 @@ final class UserByIdAction
   {
     try {
       $array = UserService::getUserByID($args['id']);
-    } catch (RessourceNotFoundException  $e) {
-      throw new HttpNotFoundException($rq, $e->getMessage());
+    } catch (Exception  $e) {
+      $data = [
+        'error' => $e->getMessage()
+      ];
+      return FormatterAPI::formatResponse($rq, $rs, $data, 404);
     }
 
     $ressources = [];
     foreach ($array['resources'] as $resource) {
-      $ressources[] = [
-        'id' => $resource['id_resource'],
-        'type' => $resource['type'],
-        'urls' => [
-          'api' => '/api/resource/' . $resource['id_resource'],
-          'file' => $resource['filename']
-        ],
-        'title' => $resource['title'],
-        'description' => $resource['text'],
-        'localisation' => [
-          'latitude' => $resource['latitude'],
-          'longitude' => $resource['longitude'],
-        ],
-        'created_at' => $resource['created_at'],
-        'updated_at' => $resource['updated_at'],
-        'published_at' => $resource['published_at'],
-      ];
+      $ressources[] = FormatterObject::formatResource($resource);
     }
 
-    $user = [
-      'id' => $array['user']['id_user'],
-      'fullname' => $array['user']['fullname'],
-      'username' => $array['user']['username'],
-      'email' => $array['user']['email'],
-      'biography' => $array['user']['biography'],
-      'phone' => $array['user']['phone'],
-      'role' => $array['user']['role'],
-      'created_at' => $array['user']['created_at'],
-    ];
+    $user = FormatterObject::formatUser($array['user']);
 
     $data = [
       'request' => '/api/user/' . $args['id'],
