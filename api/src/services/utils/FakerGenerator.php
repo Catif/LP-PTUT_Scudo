@@ -42,13 +42,15 @@ final class FakerGenerator{
         $newGroup = new Group;
 
         $newGroup->id_group = Uuid::uuid4()->toString();
-        $newGroup->name = $this->faker->sentence(1);
+        $newGroup->name = $this->faker->word();
         $newGroup->description = $this->faker->words(15, true);
         $newGroup->image = $this->faker->imageUrl(500, 250);
 
         $newGroup->save();
 
         $newGroup->users()->attach($user, ['role' => 'owner']);
+
+        return $newGroup;
     }
 
     public function FakeResource(User $user, Group $group):void {
@@ -71,9 +73,8 @@ final class FakerGenerator{
         }
         if($user->role === "user"){
             $user->resources()->save($newResource);
+            $newResource->groups()->attach($group);
         }
 
-        
     }
-
 }

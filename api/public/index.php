@@ -105,5 +105,5 @@ $fakerFactory = Factory::create();
 $fakerGenerator = new FakerGenerator($fakerFactory);
 
 $user = $fakerGenerator->FakeUser();
-// $fakerGenerator->FakeResource($user);
-$fakerGenerator->FakeGroup($user);
+$group = $fakerGenerator->FakeGroup($user);
+$fakerGenerator->FakeResource($user,$group);
