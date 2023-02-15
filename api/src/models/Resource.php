@@ -2,8 +2,11 @@
 
 namespace api\models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
 class Resource extends \Illuminate\Database\Eloquent\Model
 {
+  use HasUuids;
 
   protected  $table = 'Resource';
   protected  $primaryKey = 'id_resource';

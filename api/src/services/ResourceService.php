@@ -61,8 +61,9 @@ final class ResourceService
     $resource->text = $property['text'];
     $resource->type = $property['type'];
     $resource->is_private = $property['is_private'];
-
-    $resource->save();
+    if ($property['is_private'] == 0) {
+      $resource->published_at = date('Y-m-d H:i:s');
+    }
 
     $user->resources()->save($resource);
 

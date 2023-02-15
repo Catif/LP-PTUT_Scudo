@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 use api\services\ResourceService;
 use api\services\utils\FormatterAPI;
+use api\services\utils\FormatterObject;
 use Exception;
 
 final class ResourceAction
@@ -28,10 +29,12 @@ final class ResourceAction
 
             $resource = ResourceService::insertResource($properties, $user);
 
+            $resourceFormated = FormatterObject::formatResource($resource);
+
             $data = [
                 'request' => '/api/resource/' . $resource->id_resource,
                 'result' => [
-                    'resource' => $resource,
+                    'resource' => $resourceFormated,
                 ]
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 201);
