@@ -22,7 +22,7 @@ final class UsersAction
 			}
 
 
-			$users = UserService::getUsers();
+			$users = UserService::getUsers($query['q']);
 			$listUsers = [];
 			foreach ($users as $user) {
 				$listUsers[] = FormatterObject::formatUser($user);
