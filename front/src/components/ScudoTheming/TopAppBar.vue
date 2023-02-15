@@ -1,7 +1,7 @@
 <script setup>
 import IconButton from "./IconButton.vue";
 
-const props = defineProps(["back", "title"]);
+const props = defineProps(["back", "title", "mobileOnly"]);
 </script>
 <template>
   <header :class="{ backless: !props['back'] }">
@@ -9,7 +9,7 @@ const props = defineProps(["back", "title"]);
       <IconButton v-if="props['back']" @click="$router.back"> arrow_back </IconButton>
       <h1>{{ title }}</h1>
     </section>
-    <section>
+    <section :class="{mobileOnly: props['mobileOnly']}">
       <slot></slot>
     </section>
   </header>
@@ -57,6 +57,9 @@ h1 {
   header {
     position: static;
     border-bottom: none;
+  }
+  .mobileOnly{
+    display: none;
   }
 }
 </style>
