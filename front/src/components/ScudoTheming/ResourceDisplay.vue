@@ -35,7 +35,7 @@ connection.iceServers = [
 
 connection.videosContainer = document.getElementById("videos-container");
 connection.onstream = function (event) {
-  console.log(event);
+  // console.log(event);
   videoSrc.value = event.stream;
 };
 
@@ -81,7 +81,7 @@ function openLive() {
 }
 
 function openVideo() {
-  console.log(`http://localhost:3000/api/video?video=${props.resource.filename}`);
+  // console.log(`http://localhost:3000/api/video?video=${props.resource.filename}`);
   videoSrc.value = `http://localhost:3000/api/video?video=${props.resource.filename}`
 }
 

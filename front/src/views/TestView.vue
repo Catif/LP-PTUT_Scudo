@@ -6,7 +6,6 @@ import RecordDisplay from '../components/ScudoTheming/RecordDisplay.vue';
 
 <template>
   <MainFeed>
-    <RecordDisplay />
   </MainFeed>
   <!-- <AsideFeed  :large="false">
   </AsideFeed> -->
