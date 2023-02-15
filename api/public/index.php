@@ -72,7 +72,7 @@ $app->post('/api/message', actions\message\POST\MessageAction::class); // tester
 //     Ressource
 // =====================
 // GET
-$app->get('/api/resources', actions\resource\GET\ResourceAction::class); // ok
+$app->get('/api/resources', actions\resource\GET\ResourcesAction::class); // ok
 $app->get('/api/resource/{id}', actions\resource\GET\ResourceByIdAction::class); // tester
 
 

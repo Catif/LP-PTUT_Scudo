@@ -10,7 +10,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use api\services\ResourceService as ResourceService;
 use api\services\utils\FormatterAPI;
 
-final class ResourceAction
+final class ResourcesAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
