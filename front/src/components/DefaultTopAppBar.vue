@@ -1,22 +1,29 @@
 <script setup>
+import { reactive, inject } from 'vue';
 import TopAppBar from "@/components/ScudoTheming/TopAppBar.vue";
 import ModalBottomSheet from "@/components/ScudoTheming/ModalBottomSheet.vue";
 import IconButton from "./ScudoTheming/IconButton.vue";
 import Icon from "./ScudoTheming/Icon.vue";
 
 const props = defineProps(['back', 'title'])
-
+const bus = inject('bus')
 function switchMode() {
   alert('fonction non créée')
+}
+
+function changeState(){
+  bus.emit('TopAppBarModal')
 }
 
 </script>
 
 <template>
-  <TopAppBar :back="back" :title="title">
+  <TopAppBar :back="back" :title="title" :mobileOnly="true">
     <IconButton>search</IconButton>
     <IconButton>account_circle</IconButton>
-    <ModalBottomSheet icon="more_vert">
+    <IconButton @click="changeState">more_vert</IconButton>
+  </TopAppBar>
+  <ModalBottomSheet bus="TopAppBarModal">
       <router-link to="create-group">
         <Icon>groups</Icon>Créer un groupe
       </router-link>
@@ -27,7 +34,6 @@ function switchMode() {
         <Icon>settings</Icon>Paramètres
       </router-link>
     </ModalBottomSheet>
-  </TopAppBar>
 </template>
 
 <style lang="scss" scoped>

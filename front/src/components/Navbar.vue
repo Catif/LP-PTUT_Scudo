@@ -10,7 +10,8 @@ import Search from "./SearchInput.vue";
 
 // Import Route
 import { useRoute } from "vue-router";
-import { ref } from "vue";
+import { ref, inject } from "vue";
+import IconButton from "./ScudoTheming/IconButton.vue";
 const route = useRoute();
 
 // Create elementsNav array
@@ -26,6 +27,7 @@ const elementsNav = [
 ];
 
 const publishOpen = ref(false);
+const bus = inject('bus');
 
 function togglePublish() {
   publishOpen.value = !publishOpen.value;
@@ -33,6 +35,10 @@ function togglePublish() {
 
 function closePublish() {
   publishOpen.value = false;
+}
+
+function changeState() {
+  bus.emit('NavBarModal')
 }
 </script>
 
@@ -54,16 +60,7 @@ function closePublish() {
 
     <!-- BOUTON PUBLIER -->
     <Text class="add mobile">
-      <ModalBottomSheet icon="add_circle">
-        <router-link to="/start-video/private">
-          <Icon>videocam</Icon>Filmer pour moi
-        </router-link>
-        <router-link to="/start-video/public">
-          <Icon>cell_tower</Icon>Filmer & Diffuser
-        </router-link><router-link to="/upload">
-          <Icon>upload</Icon>Mettre en ligne une vidéo
-        </router-link>
-      </ModalBottomSheet>
+      <IconButton @click="changeState">add_circle</IconButton>
       <!-- <span class="title">Publier</span> -->
     </Text>
     <button :class="{ add: true, desktop: true, open: publishOpen }" @click="togglePublish">
@@ -100,6 +97,16 @@ function closePublish() {
       </Text>
     </router-link>
   </nav>
+  <ModalBottomSheet bus="NavBarModal">
+    <router-link to="/start-video/private">
+      <Icon>videocam</Icon>Filmer pour moi
+    </router-link>
+    <router-link to="/start-video/public">
+      <Icon>cell_tower</Icon>Filmer & Diffuser
+    </router-link><router-link to="/upload">
+      <Icon>upload</Icon>Mettre en ligne une vidéo
+    </router-link>
+  </ModalBottomSheet>
 </template>
 
 <style lang="scss" scoped>
