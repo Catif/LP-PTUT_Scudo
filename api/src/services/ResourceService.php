@@ -11,22 +11,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final class ResourceService
 {
-  static public function getResource(): array
+  static public function getResources($page, $limit)
   {
-    return Resource::select([
-      'id_resource',
-      'id_user',
-      'filename',
-      'title',
-      'text',
-      'longitude',
-      'latitude',
-      'type',
-      'is_private',
-      'created_at',
-      'updated_at',
-      'published_at'
-    ])->get()->toArray();
+    return Resource::where('is_private', 0)->skip(($page - 1) * $limit)->take($limit)->get();
   }
 
   static public function getResourceByID($id): Resource
@@ -62,5 +49,47 @@ final class ResourceService
   {
     $resource = Resource::findOrFail($id_resource);
     $resource->groups()->attach($id_group);
+  }
+
+  static public function updateResource(Resource $resource, array $properties)
+  {
+    $changed = false;
+    if ($properties['is_private'] == 0 && $resource->is_private == 1) {
+      $resource->published_at = date('Y-m-d H:i:s');
+      $resource->is_private = 0;
+      $changed = true;
+    }
+    if ($properties['is_private'] == 1 && $resource->is_private == 0) {
+      $resource->published_at = null;
+      $resource->is_private = 1;
+      $changed = true;
+    }
+    if ($properties['filename'] != null) {
+      $resource->filename = $properties['filename'];
+      $changed = true;
+    }
+    if ($properties['type'] != null) {
+      $resource->type = $properties['type'];
+      $changed = true;
+    }
+    if ($properties['title'] != null) {
+      $resource->title = $properties['title'];
+      $changed = true;
+    }
+    if ($properties['text'] != null) {
+      $resource->text = $properties['text'];
+      $changed = true;
+    }
+
+    if (!$changed) {
+      throw new Exception('No properties to update');
+    }
+
+    try {
+      $resource->save();
+    } catch (Exception $e) {
+      throw new Exception('Error while saving resource with new properties');
+    }
+    return $resource;
   }
 }
