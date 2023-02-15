@@ -35,14 +35,14 @@ export function getStatFile(file, durationTranscode) {
   });
 }
 
-export function transcodeVideo(filename) {
+export function transcodeVideo(file) {
   if (!existsSync(conf.folderOutput)) {
     mkdirSync(conf.folderOutput, { recursive: true });
   }
 
   // Path
-  let pathFileTemp = `${conf.folderTemp}/${filename}.tmp`;
-  let pathFileTranscode = `${conf.folderOutput}/${filename}.${conf.transcode.extensionFile}`;
+  let pathFileTemp = `${conf.folderTemp}/${file.filename}.tmp`;
+  let pathFileTranscode = `${conf.folderOutput}/${file.filename}.${conf.transcode.extensionFile}`;
 
   console.log("Début de la conversion");
 
@@ -60,6 +60,11 @@ export function transcodeVideo(filename) {
       let durationTranscode = Math.round(endTime - startTime) / 1000;
 
       console.log("Conversion complete");
+
+      fetch(`${conf.api_url}/api/resource/${file.id}`, {
+        method: "POST",
+        body: JSON.stringify({ type: "video" }),
+      });
 
       getStatFile(pathFileTranscode, durationTranscode);
       unlinkSync(pathFileTemp); // Delete file temp

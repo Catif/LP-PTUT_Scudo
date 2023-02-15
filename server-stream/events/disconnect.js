@@ -9,7 +9,7 @@ export default (socket, user, file) => {
     console.log("Fin d'un stream");
 
     file.tempFile.end();
-    transcodeVideo(file.filename);
+    transcodeVideo(file);
 
     // TO DO : Déconnecter tous les viewers
   } else if (user.role == "viewer") {

@@ -7,6 +7,8 @@ const conf = {
   // The port to listen on
   port: 3000,
 
+  api_url: "http://localhost:8000",
+
   // The path to the folder where the videos will be stored
   folderTemp: "./video/temp",
   folderOutput: "./video/transcode",
