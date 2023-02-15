@@ -61,10 +61,10 @@ export function transcodeVideo(file) {
 
       console.log("Conversion complete");
 
-      fetch(`${conf.api_url}/api/resource/${file.id}`, {
-        method: "POST",
-        body: JSON.stringify({ type: "video" }),
-      });
+      // fetch(`${conf.api_url}/api/resource/${file.id}`, {
+      //   method: "POST",
+      //   body: JSON.stringify({ type: "video" }),
+      // });
 
       getStatFile(pathFileTranscode, durationTranscode);
       unlinkSync(pathFileTemp); // Delete file temp
