@@ -1,5 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import FloatingAppButton from './ScudoTheming/FloatingAppButton.vue';
+import LargeIcon from './ScudoTheming/LargeIcon.vue';
 
 const props = defineProps(['id']);
 
@@ -82,12 +84,41 @@ onMounted(() => {
 
 
 <template>
-  <video id="video" autoplay muted playsinline :srcObject="videoSrc"></video>
-  <button v-if="videoSrc != null" id="stopRecord" @click="stopStream">Arrêter l'enregistrement</button>
+  <div id="record">
+    <video id="video" autoplay muted playsinline :srcObject="videoSrc"></video>
+    <FloatingAppButton v-if="videoSrc != null" @click="stopStream">
+      <LargeIcon>stop</LargeIcon>
+    </FloatingAppButton>
+  </div>
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/media-queries";
+
 video {
+  width: 100%;
+  aspect-ratio: 4 / 7;
+  object-fit: cover;
+
+  vertical-align: bottom;
+
+
   transform: scaleX(-1);
+
+  @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
+    margin: .75rem 0;
+    border-radius: 1.75rem;
+  }
+}
+
+#record {
+  position: relative;
+
+  &>button {
+    position: absolute;
+    bottom: .75rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 </style>

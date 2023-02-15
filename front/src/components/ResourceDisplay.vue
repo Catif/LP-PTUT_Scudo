@@ -87,7 +87,7 @@ function openVideo() {
 
 
 onMounted(() => {
-  if (props.resource.type == 'live') {
+  if (props.resource.type == 'stream') {
     openLive()
   } else if (props.resource.type == 'video') {
     openVideo()
@@ -96,6 +96,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <video v-if="resource.type == 'live'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
+  <video v-if="resource.type == 'stream'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
   <video v-if="resource.type == 'video'" id="remoteStream" autoplay muted controls :src="videoSrc"></video>
 </template>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/media-queries";
+
+video {
+  width: 100%;
+  aspect-ratio: 4 / 7;
+  object-fit: cover;
+
+  vertical-align: bottom;
+
+  @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
+    margin: .75rem 0;
+    border-radius: 1.75rem;
+  }
+}
+</style>

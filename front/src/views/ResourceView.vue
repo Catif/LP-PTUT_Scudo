@@ -1,7 +1,7 @@
 <script setup>
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
 import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
-import ResourceDisplay from '../components/ScudoTheming/ResourceDisplay.vue';
+import ResourceDisplay from '../components/ResourceDisplay.vue';
 
 var type = 'video';
 
