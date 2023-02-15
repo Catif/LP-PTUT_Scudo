@@ -81,6 +81,7 @@ $app->post('/api/resource', actions\resource\POST\ResourceAction::class); // tes
 $app->post('/api/resource/{id_resource}/group/{id_group}', actions\resource\POST\ResourceGroupShareAction::class);
 
 // Méthode PATCH impossible en PHP
+$app->post('/api/resource/{id}', actions\resource\PATCH\ResourceAction::class);
 
 
 // =====================

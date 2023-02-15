@@ -14,11 +14,8 @@ final class ResourceAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
-        $resourceService = new ResourceService;
-        $comments = $resourceService->getResource();
+        $comments = ResourceService::getResource();
         $data = [
-            'type' => 'Table',
-            'count' => count($comments),
             'Resource' => $comments
         ];
 
