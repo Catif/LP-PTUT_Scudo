@@ -23,19 +23,11 @@ final class UserService
     throw new \Exception("Email ou username non renseigné.");
   }
 
-  static public function getUsers($q)
+  static public function getUsers($q, $pagination)
   {
-    $users = User::select([
-      'id_user',
-      'fullname',
-      'username',
-      'email',
-      'biography',
-      'phone',
-      'role',
-      'created_at',
-      'updated_at'
-    ])->where('username', 'LIKE', "%{$q}%")->orWhere("fullname", "LIKE", "%{$q}%")->get();
+    $users = User::where('username', 'LIKE', "%{$q}%")->orWhere("fullname", "LIKE", "%{$q}%")
+      ->skip(($pagination['page'] - 1) * $pagination['limit'])->take($pagination['limit'])
+      ->get();
 
     if ($users == null) {
       throw new \Exception("Aucun utilisateur trouvé.");
@@ -50,6 +42,15 @@ final class UserService
       return User::findOrFail($id);
     } catch (Exception $e) {
       throw new \Exception("Utilisateur introuvable.");
+    }
+  }
+
+  static public function getResourcesByUser($user, $page, $limit)
+  {
+    try {
+      return $user->resources()->skip(($page - 1) * $limit)->take($limit)->get();
+    } catch (Exception $e) {
+      throw new \Exception("Aucune ressource trouvée.");
     }
   }
 
@@ -84,9 +85,38 @@ final class UserService
     return $user;
   }
 
-  static public function followUser(User $user, User $userToFollow)
+  static public function editUser(User $user, array $property)
+  {
+    if ($property['image'] != null) {
+      $user->image = $property['image'];
+    }
+    if ($property['biography'] != null) {
+      $user->biography = $property['biography'];
+    }
+    if ($property['password'] != null) {
+      $user->password = password_hash($property['password'], PASSWORD_BCRYPT, ['cost' => 12]);
+    }
+    if ($property['username'] != null) {
+      $user->username = $property['username'];
+    }
+
+
+    try {
+      $user->save();
+    } catch (\Exception $e) {
+      throw new \Exception("Erreur pendant la modification de l'utilisateur.");
+    }
+
+    return $user;
+  }
+
+  static public function follow(User $user, User $userToFollow)
   {
     $idUserFollow = $userToFollow->id_user;
+
+    if ($user->id_user === $userToFollow->id_user) {
+      throw new Exception("Vous ne pouvez pas vous suivre vous même.");
+    }
 
     if (UserService::isFollowing($user, $userToFollow)) {
       throw new Exception("Vous suivez déjà cet utilisateur.");
@@ -95,7 +125,7 @@ final class UserService
     $user->follows()->attach($idUserFollow);
   }
 
-  static public function unfollowUser(User $user, User $userToUnfollow)
+  static public function unfollow(User $user, User $userToUnfollow)
   {
     $idUserFollow = $userToUnfollow->id_user;
 
@@ -114,7 +144,7 @@ final class UserService
   {
     $idUserFollow = $userToCheck->id_user;
 
-    if ($user->follows()->where('id_user_follow', $idUserFollow)->exists()) {
+    if ($user->follows()->where('id_user_followed', $idUserFollow)->exists()) {
       return true;
     }
 
