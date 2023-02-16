@@ -22,7 +22,7 @@ final class AuthorizationService
 
       return $authorization;
     } catch (Exception $e) {
-      throw new Exception("Error save token");
+      throw new Exception("Le token n'a pas pu être créé.");
     }
   }
 
@@ -31,7 +31,7 @@ final class AuthorizationService
     try {
       Authorization::where('id_user', $user->id_user)->delete();
     } catch (Exception $e) {
-      throw new Exception("Error delete token");
+      throw new Exception("Le token n'a pas pu être supprimé.");
     }
   }
 }

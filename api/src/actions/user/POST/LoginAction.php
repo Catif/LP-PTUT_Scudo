@@ -20,11 +20,11 @@ final class LoginAction
 
     try {
       if (!is_array($body)) {
-        throw new \Exception("Missing Body");
+        throw new \Exception("Aucune information reçu.");
       }
 
       if (empty($body['username']) || empty($body['password'])) {
-        throw new \Exception("Missing properties");
+        throw new \Exception("Les propriétés username et password sont obligatoires.");
       }
 
       if (filter_var($body['username'], FILTER_VALIDATE_EMAIL)) {
@@ -34,17 +34,18 @@ final class LoginAction
       }
 
       if (!password_verify($body['password'], $userFind['password'])) {
-        throw new \Exception('Password incorrect');
+        throw new \Exception('Mot de passe incorrect.');
       }
+
 
       $user = UserService::getUserByID($userFind['id_user']);
 
-      AuthorizationService::deleteAllAuthorization($user['user']);
-      $token = AuthorizationService::createAuthorization($user['user'])->token;
+      AuthorizationService::deleteAllAuthorization($user);
+      $token = AuthorizationService::createAuthorization($user)->token;
 
 
       $data = [
-        'user' => FormatterObject::formatUser($user['user']),
+        'user' => FormatterObject::formatUser($user),
         'token' => $token
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
