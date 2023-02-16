@@ -40,6 +40,7 @@ function changeClassConfirmPassword(){
 <template>
 <MainFeed>
         <Title>Inscrivez-vous !</Title>
+        <form action="/api/register" method="post">
         <Text>
                 <label for="role" class="form-control">Profil professionnel</label>
                 <input @click="togglePro" id="role" name="role" type="checkbox"/>
@@ -52,6 +53,7 @@ function changeClassConfirmPassword(){
         <Input id="confirmPassword" type="password" name="confirmPassword" :required='true' label="Confirmer votre mot de passe"
          v-model:value="form.confirmPassword" :class="classConfirmPassword" v-on:input="changeClassConfirmPassword"/>
         <Button>S'inscrire</Button>
+        </form>
 </MainFeed>
 </template>
 
@@ -119,4 +121,17 @@ button{
         margin-left: 0;
         border: 1px solid $light-bg-button;
 }
+
+div.border.default{
+       border: 2px solid purple; 
+}
+
+div.border.wrong{
+       border: 2px solid red; 
+}
+
+div.border.right{
+       border: 2px solid green; 
+}
+
 </style>
