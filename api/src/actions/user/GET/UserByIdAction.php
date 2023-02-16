@@ -23,13 +23,23 @@ final class UserByIdAction
     $header = $rq->getHeaders();
     try {
       $token = Authorization::findOrFail($header['API-Token'][0]);
-      $userToken = $token->user()->first();
+      $userToken = $token->user()->firstOrFail();
       $userSearch = UserService::getUserByID($args['id']);
     } catch (Exception  $e) {
       $data = [
         'error' => $e->getMessage()
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 404);
+    }
+
+    $owner = false;
+    $following = false;
+
+    if ($userToken->id_user == $userSearch->id_user) {
+      $owner = true;
+      $following = true;
+    } elseif (UserService::isFollowing($userToken->id_user, $userSearch->id_user)) {
+      $following = true;
     }
 
 
@@ -39,6 +49,8 @@ final class UserByIdAction
       'request' => '/api/user/' . $args['id'],
       'result' => [
         'user' => $user,
+        'owner' => $owner,
+        'following' => $following,
       ]
     ];
 
