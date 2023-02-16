@@ -105,6 +105,8 @@ $fakerFactory = Factory::create();
 $fakerGenerator = new FakerGenerator($fakerFactory);
 
 // Création des users
+
+echo "<br/><br/>================= LOADING DATA GENERATION =================<br/>";
 for($u = 0; $u < 25; $u++){
   $user = $fakerGenerator->FakeUser();
   for($ur = 0; $ur < 5; $ur++){
@@ -126,7 +128,8 @@ for($u = 0; $u < 25; $u++){
       }
     }
   }
-  for($y = 0; $y < 2; $y++){
-    $fakerGenerator->FakeFollow($user, $y);
+  if($u > 4){
+    $fakerGenerator->FakeFollow($user, $u);
   }
 }
+echo "================= DATA GENERATION DONE =================<br/>";

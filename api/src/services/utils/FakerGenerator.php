@@ -36,6 +36,8 @@ final class FakerGenerator{
     
         $newUser->save();
 
+        echo "Fake user generated !<br/>";
+
         return $newUser;
     }
 
@@ -50,6 +52,8 @@ final class FakerGenerator{
         $newGroup->save();
 
         $newGroup->users()->attach($user, ['role' => 'owner']);
+
+        echo "Fake group generated !<br/>";
 
         return $newGroup;
     }
@@ -75,9 +79,10 @@ final class FakerGenerator{
 
         if($user->role === "user"){
             $user->resources()->save($newResource);
+            echo "Fake resource generated !<br/>";
             return $newResource;
         }else{
-            echo ("Data unregistered due to User role : Professional");
+            echo ("Data unregistered due to User role : Professional<br/>");
             return null;
         }
         
@@ -105,9 +110,10 @@ final class FakerGenerator{
         if($user->role === "user"){
             $user->resources()->save($newGroupResource);
             $newGroupResource->groups()->attach($group);
+            echo "Fake group resource generated !<br/>";
             return $newGroupResource;
         }else{
-            echo ("[GROUP RESOURCE] Data unregistered due to User role : Professional");
+            echo ("[GROUP RESOURCE] Data unregistered due to User role : Professional<br/>");
             return null;
         }
 
@@ -124,6 +130,8 @@ final class FakerGenerator{
 
         $newComment->save();
 
+        echo "Fake comment generated !<br/>";
+
         // $user->comments()->save($newComment);
         // $resource->comments()->save($newComment);
     }
@@ -134,9 +142,11 @@ final class FakerGenerator{
 
         $userFollowed = $uuids[rand(0, $max)];
 
-        while($user->id_user === $userFollowed){
-            echo "A user cannot follow himself !";
+        if($user->id_user === $userFollowed){
+            echo "A user cannot follow himself !<br/>";
         }
+
+        echo "Fake follow generated !<br/>";
 
         $user->follows()->attach($userFollowed);
     }
