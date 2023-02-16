@@ -5,6 +5,7 @@ namespace api\services;
 
 use api\models\User as User;
 use Exception;
+use Ramsey\Uuid\Uuid;
 
 final class UserService
 {
@@ -69,6 +70,7 @@ final class UserService
   static public function register(array $property)
   {
     $user = new User();
+    $user->id_user = Uuid::uuid4()->toString();
     $user->fullname = $property['fullname'];
     $user->username = $property['username'];
     $user->email = $property['email'];

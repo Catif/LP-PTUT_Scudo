@@ -43,7 +43,6 @@ final class GroupService
     if (empty($property['name']) || empty($property['description']) || empty($property['image'])) {
       throw new \Exception("un ou plusieur parametre n'existe pas quand on veut ajouter un groupe");
     }
-    
     $modelsGroup= new Group();
     $modelsGroup->id_group = Uuid::uuid4()->toString();
     $modelsGroup->name = $property['name'];

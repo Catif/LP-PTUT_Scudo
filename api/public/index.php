@@ -75,16 +75,16 @@ $app->post('/api/message', actions\message\POST\MessageAction::class); // tester
 //     Ressource
 // =====================
 // GET
-$app->get('/api/resources', actions\resource\GET\ResourceAction::class); // ok
+$app->get('/api/resources', actions\resource\GET\ResourcesAction::class); // ok
 $app->get('/api/resource/{id}', actions\resource\GET\ResourceByIdAction::class); // tester
 
 
 // POST
-
 $app->post('/api/resource', actions\resource\POST\ResourceAction::class); // tester
+$app->post('/api/resource/{id_resource}/group/{id_group}', actions\resource\POST\ResourceGroupShareAction::class);
 
-// PATCH
-
+// Méthode PATCH impossible en PHP
+$app->post('/api/resource/{id}', actions\resource\PATCH\ResourceAction::class);
 
 // =====================
 //     Groupe
