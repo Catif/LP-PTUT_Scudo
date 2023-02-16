@@ -8,9 +8,11 @@ class Group extends \Illuminate\Database\Eloquent\Model
 {
   use HasUuids;
 
+  use HasUuids;
+
   protected  $table = 'Group';
   protected  $primaryKey = 'id_group';
-  
+
   public $timestamps = true;
 
 
