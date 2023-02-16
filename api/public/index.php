@@ -46,6 +46,8 @@ $app->post('/api/login', actions\user\POST\LoginAction::class);
 // PATCH
 $app->patch('/api/user/{id}', actions\user\PATCH\UserAction::class);
 
+// DELETE
+$app->delete('/api/disconnect', actions\user\DELETE\DisconnectAction::class);
 
 // =====================
 //     Conversation
