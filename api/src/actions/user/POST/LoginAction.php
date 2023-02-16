@@ -37,14 +37,15 @@ final class LoginAction
         throw new \Exception('Password incorrect');
       }
 
+
       $user = UserService::getUserByID($userFind['id_user']);
 
-      AuthorizationService::deleteAllAuthorization($user['user']);
-      $token = AuthorizationService::createAuthorization($user['user'])->token;
+      AuthorizationService::deleteAllAuthorization($user);
+      $token = AuthorizationService::createAuthorization($user)->token;
 
 
       $data = [
-        'user' => FormatterObject::formatUser($user['user']),
+        'user' => FormatterObject::formatUser($user),
         'token' => $token
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
