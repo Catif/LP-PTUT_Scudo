@@ -1,6 +1,7 @@
 <?php
-
 namespace api\models;
+use Ramsey\Uuid\Nonstandard\Uuid;
+
 
 class User extends \Illuminate\Database\Eloquent\Model
 {

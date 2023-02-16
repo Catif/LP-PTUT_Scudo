@@ -109,6 +109,15 @@ $app->delete('/api/group/{id}/unfollow', actions\group\DELETE\GroupUnfollowActio
 
 // UPDATE
 
+// =====================
+//     Comment
+// =====================
+
+// POST
+$app->post('/api/comment/{id_resource}', api\actions\comment\POST\CommentAction::class); 
+
 $app->run();
+
+
 
 
