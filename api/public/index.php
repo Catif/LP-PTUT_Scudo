@@ -93,5 +93,14 @@ $app->post('/api/group', actions\group\POST\GroupAction::class); // ok
 
 // PATCH
 
+// =====================
+//     Comment
+// =====================
+
+// POST
+$app->post('/api/comment', actions\comment\POST\CommentAction::class); // tester
+
 
 $app->run();
+
+

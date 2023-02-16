@@ -3,38 +3,38 @@
 namespace api\services;
 
 
-use api\models\Comment as Comment;
+use api\models\Comment;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Ramsey\Uuid\Uuid;
 
 final class CommentService
 {
-  public function getComment(): array
-  {
-    return Comment::select([
-      'id_comment',
-      'id_user',
-      'id_resource',
-      'content',
-      'created_at'
-      ])->get()->toArray();
-  }
 
-  public function getCommentById($id): ?array
+  static public function insertComment($user ,$resource, array $property)
   {
+
+
     try {
-      $comment = Comment::select([
-        'id_comment',
-        'id_user',
-        'id_resource',
-        'content',
-        'created_at'
-      ])->findOrFail($id);
-    } catch (ModelNotFoundException $e) {
-        new Exception("error getCommentById");
-    }
+      if (empty($property['content'])) {
+        throw new \Exception("Le commentaire est vide");
+      }
+      
+      $modelsComment= new Comment();
+      $modelsComment->id_comment = Uuid::uuid4()->toString();
+      $modelsComment->id_user = $user;
+      $modelsComment->id_resource = $resource;
+      $modelsComment->content = $property['content'];
 
-    return $comment->toArray();
+      $modelsComment->save();
+
+    } catch (\Exception $e) {
+      echo($e->getMessage());
+      throw new \Exception("Erreur d'enregistrement du commentaire");
+    }
+   
+
+    return $modelsComment;
   }
   
 }
