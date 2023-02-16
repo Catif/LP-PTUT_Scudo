@@ -30,7 +30,7 @@ final class CommentAction
             }
             $modelComment = CommentService::insertComment($user,$args['id_resource'],$body);
             $data = [
-                'group' => FormatterObject::formatComment($modelComment)
+                'comment' => FormatterObject::formatComment($modelComment)
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
 
