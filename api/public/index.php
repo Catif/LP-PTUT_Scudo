@@ -37,18 +37,22 @@ $app->get('/', function (Request $request, Response $response, $args) {
 //        User
 // =====================
 // GET
-
-$app->get('/api/users', actions\user\GET\UsersAction::class); // OK
-$app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class);  // ok
+$app->get('/api/users', actions\user\GET\UsersAction::class);
+$app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class);
+$app->get('/api/user/{id}/resources', actions\user\GET\UserResourcesAction::class);
 
 // POST
 $app->post('/api/register', actions\user\POST\RegisterAction::class);
 $app->post('/api/login', actions\user\POST\LoginAction::class);
+$app->post('/api/user/{id}/follow', actions\user\POST\FollowAction::class);
 
 
 // PATCH
-$app->patch('/api/user/{id}', actions\user\PATCH\UserAction::class);
+$app->post('/api/user/edit', actions\user\PATCH\UserAction::class);
 
+// DELETE
+$app->delete('/api/disconnect', actions\user\DELETE\DisconnectAction::class);
+$app->delete('/api/user/{id}/unfollow', actions\user\DELETE\UnfollowAction::class);
 
 // =====================
 //     Conversation

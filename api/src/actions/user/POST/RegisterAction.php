@@ -42,14 +42,14 @@ final class RegisterAction
     private function validateProperties(array $properties): void
     {
         if (!is_array($properties)) {
-            throw new \Exception("Missing properties");
+            throw new \Exception("Aucune information reçu.");
         }
 
         if (empty($properties['username']) || empty($properties['email']) || empty($properties['password']) || empty($properties['biography']) || empty($properties['role'])) {
-            throw new \Exception("Missing properties");
+            throw new \Exception("Des champs sont manquantes.");
         }
         if (!filter_var($properties['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception("Invalid email");
+            throw new \Exception("L'email n'est pas valide.");
         }
     }
 
