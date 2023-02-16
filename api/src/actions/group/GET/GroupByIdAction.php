@@ -20,9 +20,8 @@ final class GroupByIdAction
   public function __invoke(Request $rq, Response $rs, array $args): Response
   {
 
-    $groupService = new GroupService();
     try {
-      $groupById = $groupService->getGroupByID($args['id']);
+      $groupById = GroupService::getGroupByID($args['id']);
     } catch (RessourceNotFoundException  $e) {
       throw new HttpNotFoundException($rq, $e->getMessage());
     }

@@ -7,6 +7,7 @@ use api\models\User as User;
 use Exception;
 use Ramsey\Uuid\Uuid;
 
+
 final class UserService
 {
   static public function exist($property): bool

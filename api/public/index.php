@@ -105,7 +105,19 @@ $app->post('/api/group/{id}', actions\group\PATCH\GroupAction::class); // ok
 $app->delete('/api/group/{id}/unfollow', actions\group\DELETE\GroupUnfollowAction::class); // ok
 
 
+// PATCH
 
 // UPDATE
 
+// =====================
+//     Comment
+// =====================
+
+// POST
+$app->post('/api/comment/{id_resource}', api\actions\comment\POST\CommentAction::class); 
+
 $app->run();
+
+
+
+

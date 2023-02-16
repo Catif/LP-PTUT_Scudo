@@ -9,6 +9,7 @@ class Comment extends \Illuminate\Database\Eloquent\Model
   protected  $primaryKey = 'id_comment';
   
   public $timestamps = true;
+  const UPDATED_AT = null;
 
 
 }
