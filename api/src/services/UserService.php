@@ -84,33 +84,40 @@ final class UserService
     return $user;
   }
 
-  static public function followUser(User $user, $id_user_follow)
+  static public function followUser(User $user, User $userToFollow)
   {
-    $userFollow = UserService::getUserByID($id_user_follow);
+    $idUserFollow = $userToFollow->id_user;
 
-    if ($user->id_user === $userFollow->id_user) {
-      throw new Exception("Vous ne pouvez pas vous suivre vous même.");
-    }
-
-    if ($user->follows()->where('id_user_follow', $id_user_follow)->exists()) {
+    if (UserService::isFollowing($user, $userToFollow)) {
       throw new Exception("Vous suivez déjà cet utilisateur.");
     }
 
-    $user->follows()->attach($id_user_follow);
+    $user->follows()->attach($idUserFollow);
   }
 
-  static public function unfollowUser(User $user, $id_user_follow)
+  static public function unfollowUser(User $user, User $userToUnfollow)
   {
-    $userFollow = UserService::getUserByID($id_user_follow);
+    $idUserFollow = $userToUnfollow->id_user;
 
-    if ($user->id_user === $userFollow->id_user) {
+    if ($user->id_user === $userToUnfollow->id_user) {
       throw new Exception("Vous ne pouvez pas vous suivre vous même.");
     }
 
-    if (!$user->follows()->where('id_user_follow', $id_user_follow)->exists()) {
+    if (!UserService::isFollowing($user, $userToUnfollow)) {
       throw new Exception("Vous ne suivez pas cet utilisateur.");
     }
 
-    $user->follows()->detach($id_user_follow);
+    $user->follows()->detach($idUserFollow);
+  }
+
+  static public function isFollowing(User $user, User $userToCheck)
+  {
+    $idUserFollow = $userToCheck->id_user;
+
+    if ($user->follows()->where('id_user_follow', $idUserFollow)->exists()) {
+      return true;
+    }
+
+    return false;
   }
 }
