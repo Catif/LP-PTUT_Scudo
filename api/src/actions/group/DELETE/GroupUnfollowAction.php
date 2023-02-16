@@ -1,6 +1,6 @@
 <?php
 
-namespace api\actions\group\POST;
+namespace api\actions\group\DELETE;
 
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -11,9 +11,9 @@ use api\services\GroupService as GroupService;
 use api\services\utils\FormatterAPI;
 
 use api\models\Authorization;
-use api\services\utils\FormatterObject;
 
-final class GroupAction
+
+final class GroupUnfollowAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
@@ -23,23 +23,12 @@ final class GroupAction
         
         $groupService = new GroupService;
         $body = $rq->getParsedBody();
+        
 
-
+        
         try {
-            if (!is_array($body)) {
-                throw new \Exception("Missing Body");
-            }
-            $modelGroup = $groupService->insertGroup($user,$body);
-            $groups[] = [];
-            foreach($modelGroup as $group){
-                $groups = $group;
-            }
-            $data = [
-                'count' => count($groups),
-                'group' => FormatterObject::formatGroup($groups)
-            ];
-            return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
 
+            $modelGroup = $groupService->deleteGroupFollow($args['id'], $user);
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
@@ -48,6 +37,9 @@ final class GroupAction
             return $rs;
         }
 
-
+        $data = [
+            'group' => $modelGroup
+        ];
+        return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     }
 }
