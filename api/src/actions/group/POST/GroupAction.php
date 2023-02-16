@@ -21,7 +21,6 @@ final class GroupAction
         $token = Authorization::find($headers['API-Token'][0]);
         $user = $token->user()->first();
         
-        $groupService = new GroupService;
         $body = $rq->getParsedBody();
 
 
@@ -29,14 +28,10 @@ final class GroupAction
             if (!is_array($body)) {
                 throw new \Exception("Missing Body");
             }
-            $modelGroup = $groupService->insertGroup($user,$body);
-            $groups[] = [];
-            foreach($modelGroup as $group){
-                $groups = $group;
-            }
+            $modelGroup = GroupService::insertGroup($user,$body);
+
             $data = [
-                'count' => count($groups),
-                'group' => FormatterObject::formatGroup($groups)
+                'group' => FormatterObject::formatGroup($modelGroup)
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
 

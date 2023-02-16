@@ -14,8 +14,7 @@ final class GroupsAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
-        $groupService = new GroupService;
-        $groups = $groupService->getGroups();
+        $groups = GroupService::getGroups();
         $listGroup = [];
         foreach($groups as $group){
             $listGroup[] =FormatterObject::formatGroup($group);

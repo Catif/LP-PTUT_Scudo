@@ -2,7 +2,7 @@
 
 namespace api\services;
 
-use Ramsey\Uuid\Uuid;
+
 use api\models\User as User;
 use Exception;
 use Ramsey\Uuid\Uuid;

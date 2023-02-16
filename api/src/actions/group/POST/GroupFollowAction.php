@@ -19,16 +19,12 @@ final class GroupFollowAction
     {
         $headers = $rq->getHeaders();
         $token = Authorization::find($headers['API-Token'][0]);
-        $user = $token->user()->first();
-        
-        $groupService = new GroupService;
-        $body = $rq->getParsedBody();
-        
+        $user = $token->user()->first();        
 
         
         try {
 
-            $modelGroup = $groupService->insertGroupFollow($args['id'], $user);
+            $modelGroup = GroupService::insertGroupFollow($args['id'], $user);
 
                     $data = [
                         'group' => $modelGroup

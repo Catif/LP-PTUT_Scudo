@@ -21,8 +21,8 @@ final class CommentService
       }
       
       $modelsComment= new Comment();
-      $modelsComment->id_comment = Uuid::uuid4()->toString();
-      $modelsComment->id_user = $user;
+      $modelsComment->id_comment = uuid::uuid4()->toString();
+      $modelsComment->id_user = $user->id_user;
       $modelsComment->id_resource = $resource;
       $modelsComment->content = $property['content'];
 

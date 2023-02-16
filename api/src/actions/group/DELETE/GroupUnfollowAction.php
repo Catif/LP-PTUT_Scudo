@@ -21,14 +21,13 @@ final class GroupUnfollowAction
         $token = Authorization::find($headers['API-Token'][0]);
         $user = $token->user()->first();
         
-        $groupService = new GroupService;
         $body = $rq->getParsedBody();
         
 
         
         try {
 
-            $modelGroup = $groupService->deleteGroupFollow($args['id'], $user);
+            $modelGroup = GroupService::deleteGroupFollow($args['id'], $user);
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
