@@ -17,8 +17,8 @@ final class AuthorizationService
     try {
       $authorization = new Authorization();
       $authorization->token = Uuid::uuid4()->toString();
-      $authorization->id_user = $user->id_user;
-      $authorization->save();
+      $user->authorization()->save($authorization);
+
 
       return $authorization;
     } catch (Exception $e) {

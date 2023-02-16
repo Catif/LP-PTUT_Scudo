@@ -22,6 +22,8 @@ $app = AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addBodyParsingMiddleware();
 
+
+
 // Default route
 $app->get('/', function (Request $request, Response $response, $args) {
   $response->getBody()->write("Hello world!");
@@ -35,6 +37,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 //        User
 // =====================
 // GET
+
 $app->get('/api/users', actions\user\GET\UsersAction::class); // OK
 $app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class);  // ok
 
@@ -72,29 +75,49 @@ $app->post('/api/message', actions\message\POST\MessageAction::class); // tester
 //     Ressource
 // =====================
 // GET
-$app->get('/api/resources', actions\resource\GET\ResourceAction::class); // ok
+$app->get('/api/resources', actions\resource\GET\ResourcesAction::class); // ok
 $app->get('/api/resource/{id}', actions\resource\GET\ResourceByIdAction::class); // tester
 
 
 // POST
-
 $app->post('/api/resource', actions\resource\POST\ResourceAction::class); // tester
+$app->post('/api/resource/{id_resource}/group/{id_group}', actions\resource\POST\ResourceGroupShareAction::class);
 
-// PATCH
-
+// Méthode PATCH impossible en PHP
+$app->post('/api/resource/{id}', actions\resource\PATCH\ResourceAction::class);
 
 // =====================
 //     Groupe
 // =====================
 // GET
-$app->get('/api/groups', actions\group\GET\GroupAction::class); // ok
-$app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class); // tester
+$app->get('/api/groups', actions\group\GET\GroupsAction::class); // ok
+$app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class); // ok
+$app->get('/api/group/{id}/resources', actions\group\GET\GroupResourceAction::class); 
 
 // POST
 $app->post('/api/group', actions\group\POST\GroupAction::class); // ok
+$app->post('/api/group/{id}/follow', actions\group\POST\GroupFollowAction::class); // ok
+
+// Méthode PATCH impossible en PHP
+$app->post('/api/group/{id}', actions\group\PATCH\GroupAction::class); // ok
+
+// DELETE
+$app->delete('/api/group/{id}/unfollow', actions\group\DELETE\GroupUnfollowAction::class); // ok
 
 
 // PATCH
 
+// UPDATE
+
+// =====================
+//     Comment
+// =====================
+
+// POST
+$app->post('/api/comment/{id_resource}', api\actions\comment\POST\CommentAction::class); 
 
 $app->run();
+
+
+
+
