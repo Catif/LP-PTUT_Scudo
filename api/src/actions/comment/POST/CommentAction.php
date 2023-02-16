@@ -22,7 +22,7 @@ final class CommentAction
         $body = $rq->getParsedBody();
 
         try {
-            $token = Authorization::find($headers['API-Token'][0]);
+            $token = Authorization::findOrFail($headers['API-Token'][0]);
             $user = $token->user()->first();
 
             if (!is_array($body)) {
