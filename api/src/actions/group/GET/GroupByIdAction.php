@@ -32,6 +32,7 @@ final class GroupByIdAction
     }
     if($roleUser == 'owner'){
       $etatFollowing = true;
+      $owner = true;
     }
     
     $data = [
@@ -39,7 +40,8 @@ final class GroupByIdAction
       'count' => count($groupById),
       'Result' => [
         'group' => FormatterObject::formatGroup($groupById),
-        'following' => $etatFollowing
+        'following' => $etatFollowing,
+        'owner' => $owner
         ]
       ];
 
