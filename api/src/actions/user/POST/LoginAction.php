@@ -20,11 +20,11 @@ final class LoginAction
 
     try {
       if (!is_array($body)) {
-        throw new \Exception("Missing Body");
+        throw new \Exception("Aucune information reçu.");
       }
 
       if (empty($body['username']) || empty($body['password'])) {
-        throw new \Exception("Missing properties");
+        throw new \Exception("Les propriétés username et password sont obligatoires.");
       }
 
       if (filter_var($body['username'], FILTER_VALIDATE_EMAIL)) {
@@ -34,7 +34,7 @@ final class LoginAction
       }
 
       if (!password_verify($body['password'], $userFind['password'])) {
-        throw new \Exception('Password incorrect');
+        throw new \Exception('Mot de passe incorrect.');
       }
 
 
