@@ -26,7 +26,7 @@ const elementsNav = [
   { name: "Params", path: "/settings", icon: "settings", title: "Paramètres", mobile: false },
 ];
 
-const publishOpen = ref(true);
+const publishOpen = ref(false);
 const bus = inject('bus');
 
 function togglePublish() {
@@ -37,7 +37,7 @@ function closePublish() {
   publishOpen.value = false;
 }
 
-function changeState(){
+function changeState() {
   bus.emit('NavBarModal')
 }
 </script>
@@ -98,15 +98,15 @@ function changeState(){
     </router-link>
   </nav>
   <ModalBottomSheet bus="NavBarModal">
-        <router-link to="/start-video/private">
-          <Icon>videocam</Icon>Filmer pour moi
-        </router-link>
-        <router-link to="/start-video/public">
-          <Icon>cell_tower</Icon>Filmer & Diffuser
-        </router-link><router-link to="/upload">
-          <Icon>upload</Icon>Mettre en ligne une vidéo
-        </router-link>
-      </ModalBottomSheet>
+    <router-link to="/start-video/private">
+      <Icon>videocam</Icon>Filmer pour moi
+    </router-link>
+    <router-link to="/start-video/public">
+      <Icon>cell_tower</Icon>Filmer & Diffuser
+    </router-link><router-link to="/upload">
+      <Icon>upload</Icon>Mettre en ligne une vidéo
+    </router-link>
+  </ModalBottomSheet>
 </template>
 
 <style lang="scss" scoped>
