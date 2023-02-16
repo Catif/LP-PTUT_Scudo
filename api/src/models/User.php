@@ -1,7 +1,5 @@
 <?php
 namespace api\models;
-use Ramsey\Uuid\Nonstandard\Uuid;
-
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
