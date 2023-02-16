@@ -5,55 +5,96 @@ import Text from '../components/ScudoTheming/Text.vue';
 import Input from '../components/ScudoTheming/Input.vue';
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
 import Button from '../components/ScudoTheming/Button.vue';
+import Alert from '../components/ScudoTheming/Alert.vue';
+
 
 var form = reactive ({
-        username: '',
-        fullname: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        phone:  '',
-        pro: false,
+	username: '',
+	fullname: '',
+	email: '',
+	password: '',
+	confirmPassword: '',
+	phone:  '',
+	pro: false,
 })
 
 function togglePro() {
-        form.pro = !form.pro;
+	form.pro = !form.pro;
 }
 
 var classConfirmPassword = ref('default');
 
 function changeClassConfirmPassword(){
-        if(form.confirmPassword === ''){
-                classConfirmPassword = 'default'
-        }
-        if(form.confirmPassword !== ''){
-                if(form.password !== form.confirmPassword){
-                        classConfirmPassword = 'wrong';
-                }else if(form.password === form.confirmPassword){
-                        classConfirmPassword = 'right';
-                }
-        }
+	if(form.confirmPassword === ''){
+		classConfirmPassword.value = 'default'
+		return null;
+	}
+
+	if(form.password !== form.confirmPassword){
+		classConfirmPassword.value = 'wrong';
+		return null;
+	}else if(form.password === form.confirmPassword){
+		classConfirmPassword.value = 'right';
+		return null;
+	}
+}
+
+var error = ref('')
+function isValidForm(){
+	if(form.username.length <= 3){
+		error.value = 'Votre pseudo doit contenir plus de 3 caractères.'
+		return null;
+	}else if(form.password.length === 0){
+		error.value = 'Veuillez entrer un mot de passe.'
+		return null;
+	}else if(form.password !== form.confirmPassword){
+		error.value = "Votre mot de passe de confirmation n'est pas le même."
+		return null;
+	}
+
+	if(form.pro){
+		API.post('/api/register', {
+			fullname: form.fullname,
+			username: form.username,
+			email: form.email,
+			password: form.password,
+			phone: form.phone,
+			role: 'professional',
+		}).then((r) => {
+			console.log(r)
+		})
+	}else{
+		API.post('/api/register', {
+			username: form.username,
+			email: form.email,
+			password: form.password,
+			role: 'individual',
+		}).then((r) => {
+			console.log(r)
+		})
+	}
 }
 
 </script>
 
 <template>
 <MainFeed>
-        <Title>Inscrivez-vous !</Title>
-        <form action="/api/register" method="post">
-        <Text>
-                <label for="role" class="form-control">Profil professionnel</label>
-                <input @click="togglePro" id="role" name="role" type="checkbox"/>
-        </Text>
-        <Input type="email" name="email" :required='true' label="Email" v-model:value="form.email"/>
-        <Input v-if="form.pro === true" name="phone" :required='true' label="Numéro de téléphone" v-model:value="form.phone"/>
-        <Input v-if="form.pro === true" name="fullname" :required='true' label="Nom complet" v-model:value="form.fullname"/>
-        <Input name="username" :required='true' label="Pseudo" v-model:value="form.username"/>
-        <Input type="password" name="password" :required='true' label="Mot de passe" v-model:value="form.password"/> 
-        <Input id="confirmPassword" type="password" name="confirmPassword" :required='true' label="Confirmer votre mot de passe"
-         v-model:value="form.confirmPassword" :class="classConfirmPassword" v-on:input="changeClassConfirmPassword"/>
-        <Button>S'inscrire</Button>
-        </form>
+	<Alert id="error" v-if="error !== ''">{{ error }}</Alert>
+	<Title>Inscrivez-vous !</Title>
+	<form action="/api/register" method="post" @submit.prevent="isValidForm">
+		<Text>
+			<label for="role" class="form-control">Profil professionnel</label>
+			<input @click="togglePro" id="role" name="role" type="checkbox"/>
+		</Text>
+		<Input type="email" name="email" :required='true' label="Email" v-model:value="form.email"/>
+		<Input v-if="form.pro === true" name="phone" :required='true' label="Numéro de téléphone" v-model:value="form.phone"/>
+		<Input v-if="form.pro === true" name="fullname" :required='true' label="Nom complet" v-model:value="form.fullname"/>
+		<Input name="username" :required='true' label="Pseudo" v-model:value="form.username"/>
+		<Input type="password" name="password" :required='true' label="Mot de passe" v-model:value="form.password"/> 
+		<Input id="confirmPassword" type="password" name="confirmPassword" :required='true' label="Confirmer votre mot de passe"
+			v-model:value="form.confirmPassword" :class="classConfirmPassword" v-on:input="changeClassConfirmPassword"/>
+		<Button>S'inscrire</Button>
+	</form>
 </MainFeed>
 </template>
 
@@ -117,21 +158,26 @@ input[type="checkbox"] {
   }
 }
 button{
-        width: 100%;
-        margin-left: 0;
-        border: 1px solid $light-bg-button;
+	width: 100%;
+	margin-left: 0;
+	border: 1px solid $light-bg-button;
 }
 
 div.border.default{
-       border: 2px solid purple; 
+	border: 1px solid purple; 
 }
 
 div.border.wrong{
-       border: 2px solid red; 
+	border: 1px solid red; 
 }
 
 div.border.right{
-       border: 2px solid green; 
+	border: 1px solid green; 
 }
 
+#error{
+	margin-left: 0;
+	width: 100%;
+	text-align: center;
+}
 </style>

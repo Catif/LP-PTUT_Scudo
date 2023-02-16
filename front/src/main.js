@@ -28,7 +28,8 @@ window.API = axios.create({
   defaults: {
     headers: {
       common: {
-        "X-Requested-With": "XMLHttpRequest",
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
       },
     },
   },
