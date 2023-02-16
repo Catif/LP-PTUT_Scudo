@@ -6,6 +6,7 @@ use Faker\Factory;
 use api\models\User;
 use api\models\Group;
 use Ramsey\Uuid\Uuid;
+use api\models\Comment;
 use api\models\Resource;
 
 final class FakerGenerator{
@@ -38,7 +39,7 @@ final class FakerGenerator{
         return $newUser;
     }
 
-    public function FakeGroup(User $user){
+    public function FakeGroup(User $user):Group {
         $newGroup = new Group;
 
         $newGroup->id_group = Uuid::uuid4()->toString();
@@ -53,13 +54,13 @@ final class FakerGenerator{
         return $newGroup;
     }
 
-    public function FakeResource(User $user, Group $group):void {
+    public function FakeResource(User $user):?Resource {
         $newResource = new Resource;
 
         $type = ["stream","video","text"];
         
         $newResource->id_resource = Uuid::uuid4()->toString();
-        $newResource->type = $type[rand(0,1)];
+        $newResource->type = $type[rand(0,2)];
         $newResource->title = $this->faker->sentence(3);
         $newResource->text = $this->faker->words(25, true);
         $newResource->longitude = $this->faker->longitude();
@@ -71,10 +72,72 @@ final class FakerGenerator{
         } elseif($newResource->type === "video"){
             $newResource->filename = "test";
         }
+
         if($user->role === "user"){
             $user->resources()->save($newResource);
-            $newResource->groups()->attach($group);
+            return $newResource;
+        }else{
+            echo ("Data unregistered due to User role : Professional");
+            return null;
+        }
+        
+    }
+
+    public function FakeGroupResource(User $user, Group $group):?Resource {
+        $newGroupResource = new Resource;
+
+        $type = ["stream","video","text"];
+        
+        $newGroupResource->id_resource = Uuid::uuid4()->toString();
+        $newGroupResource->type = $type[rand(0,2)];
+        $newGroupResource->title = $this->faker->sentence(3);
+        $newGroupResource->text = $this->faker->words(25, true);
+        $newGroupResource->longitude = $this->faker->longitude();
+        $newGroupResource->latitude = $this->faker->latitude();
+        $newGroupResource->is_private = 1;
+        
+        if($newGroupResource->type === "stream"){
+            $newGroupResource->filename = "test";
+        } elseif($newGroupResource->type === "video"){
+            $newGroupResource->filename = "test";
         }
 
+        if($user->role === "user"){
+            $user->resources()->save($newGroupResource);
+            $newGroupResource->groups()->attach($group);
+            return $newGroupResource;
+        }else{
+            echo ("[GROUP RESOURCE] Data unregistered due to User role : Professional");
+            return null;
+        }
+
+    }
+
+    public function FakeComment(User $user, Resource $resource){
+        $newComment = new Comment;
+
+        $newComment->id_comment = Uuid::uuid4()->toString();
+        $newComment->content = $this->faker->text(225);
+
+        $newComment->id_user = $user->id_user;
+        $newComment->id_resource = $resource->id_resource;
+
+        $newComment->save();
+
+        // $user->comments()->save($newComment);
+        // $resource->comments()->save($newComment);
+    }
+
+    public function FakeFollow(User $user, int $max):void {
+        $uuids = [];
+        $uuids = User::select(['id_user'])->get();
+
+        $userFollowed = $uuids[rand(0, $max)];
+
+        while($user->id_user === $userFollowed){
+            echo "A user cannot follow himself !";
+        }
+
+        $user->follows()->attach($userFollowed);
     }
 }

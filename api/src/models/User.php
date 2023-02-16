@@ -20,12 +20,17 @@ class User extends \Illuminate\Database\Eloquent\Model
 
   public function follows(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\User', 'User_Follow', 'id_user', 'id_user_follow');
+    return $this->belongsToMany('api\models\User', 'User_Follow', 'id_user', 'id_user_followed');
   }
 
   public function resources(): \Illuminate\Database\Eloquent\Relations\HasMany
   {
     return $this->hasMany('api\models\Resource', 'id_user');
+  }
+
+  public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany('api\models\Comment', 'id_user');
   }
 
   public function authorization()
