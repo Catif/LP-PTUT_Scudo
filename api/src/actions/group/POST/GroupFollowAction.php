@@ -13,7 +13,7 @@ use api\services\utils\FormatterAPI;
 use api\models\Authorization;
 use api\services\utils\FormatterObject;
 
-final class GroupAction
+final class GroupFollowAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
@@ -23,23 +23,17 @@ final class GroupAction
         
         $groupService = new GroupService;
         $body = $rq->getParsedBody();
+        
 
-
+        
         try {
-            if (!is_array($body)) {
-                throw new \Exception("Missing Body");
-            }
-            $modelGroup = $groupService->insertGroup($user,$body);
-            $groups[] = [];
-            foreach($modelGroup as $group){
-                $groups = $group;
-            }
-            $data = [
-                'count' => count($groups),
-                'group' => FormatterObject::formatGroup($groups)
-            ];
-            return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
 
+            $modelGroup = $groupService->insertGroupFollow($args['id'], $user);
+
+                    $data = [
+                        'group' => $modelGroup
+                        ];
+        return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
