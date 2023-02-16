@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Group extends \Illuminate\Database\Eloquent\Model
 {
+  use HasUuids;
+
+  use HasUuids;
 
   use HasUuids;
 

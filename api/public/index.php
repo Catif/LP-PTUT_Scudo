@@ -22,6 +22,8 @@ $app = AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addBodyParsingMiddleware();
 
+
+
 // Default route
 $app->get('/', function (Request $request, Response $response, $args) {
   $response->getBody()->write("Hello world!");
@@ -92,14 +94,22 @@ $app->post('/api/resource/{id}', actions\resource\PATCH\ResourceAction::class);
 //     Groupe
 // =====================
 // GET
-$app->get('/api/groups', actions\group\GET\GroupAction::class); // ok
-$app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class); // tester
+$app->get('/api/groups', actions\group\GET\GroupsAction::class); // ok
+$app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class); // ok
+$app->get('/api/group/{id}/resources', actions\group\GET\GroupResourceAction::class); 
 
 // POST
 $app->post('/api/group', actions\group\POST\GroupAction::class); // ok
+$app->post('/api/group/{id}/follow', actions\group\POST\GroupFollowAction::class); // ok
+
+// Méthode PATCH impossible en PHP
+$app->post('/api/group/{id}', actions\group\PATCH\GroupAction::class); // ok
+
+// DELETE
+$app->delete('/api/group/{id}/unfollow', actions\group\DELETE\GroupUnfollowAction::class); // ok
 
 
-// PATCH
 
+// UPDATE
 
 $app->run();
