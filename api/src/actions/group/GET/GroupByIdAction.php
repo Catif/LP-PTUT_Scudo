@@ -30,9 +30,14 @@ final class GroupByIdAction
     foreach($followings as $following){
       $roleUser = $following['role'];
     }
+    
+    $etatFollowing = false;
+    $owner = false;
     if($roleUser == 'owner'){
       $etatFollowing = true;
       $owner = true;
+    } elseif($roleUser == 'member') {
+      $etatFollowing = true;
     }
     
     $data = [
