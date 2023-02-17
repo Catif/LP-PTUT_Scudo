@@ -15,7 +15,7 @@ final class UnfollowAction
   {
     $header = $rq->getHeaders();
     try {
-      $token = Authorization::findOrFail($header['API-Token'][0]);
+      $token = Authorization::findOrFail($header['Authorization'][0]);
       $userToken = $token->user()->first();
       $userSearch = UserService::getUserByID($args['id']);
 

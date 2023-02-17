@@ -18,9 +18,8 @@ final class GroupFollowAction
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
         $headers = $rq->getHeaders();
-        $token = Authorization::findOrFail($headers['API-Token'][0]);
+        $token = Authorization::findOrFail($headers['Authorization'][0]);
         $user = $token->user()->first();
-
 
         try {
 

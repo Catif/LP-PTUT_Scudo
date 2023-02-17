@@ -18,7 +18,7 @@ final class GroupAction
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
         $headers = $rq->getHeaders();
-        $token = Authorization::find($headers['API-Token'][0]);
+        $token = Authorization::find($headers['Authorization'][0]);
         $user = $token->user()->first();
 
         $body = $rq->getParsedBody();
