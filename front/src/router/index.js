@@ -19,7 +19,7 @@ const router = createRouter({
       component: () => import("@/views/RegisterView.vue"),
     },
     {
-      path: "/record",
+      path: "/record/:accessibility",
       name: "record",
       component: () => import("@/views/RecordView.vue"),
     },
