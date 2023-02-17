@@ -18,18 +18,20 @@ final class GroupFollowAction
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
         $headers = $rq->getHeaders();
-        $token = Authorization::findOrFail($headers['API-Token'][0]);
-        $user = $token->user()->first();        
+        $token = Authorization::findOrFail($headers['Authorization'][0]);
+        $user = $token->user()->first();
 
-        
         try {
 
             $modelGroup = GroupService::insertGroupFollow($args['id'], $user);
 
-                    $data = [
-                        'group' => $modelGroup
-                        ];
-        return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
+            $data = [
+
+                'result' => [
+                    'group' => $modelGroup
+                ]
+            ];
+            return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
@@ -37,7 +39,5 @@ final class GroupFollowAction
             return FormatterAPI::formatResponse($rq, $rs, $data, 400); // 400 = Bad Request
             return $rs;
         }
-
-
     }
 }

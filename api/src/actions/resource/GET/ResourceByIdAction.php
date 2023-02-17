@@ -1,5 +1,4 @@
 <?php
-
 namespace api\actions\resource\GET;
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -12,6 +11,7 @@ use api\services\utils\FormatterAPI;
 //Exception
 use api\errors\exceptions\RessourceNotFoundException as RessourceNotFoundException;
 use api\models\Authorization;
+use api\services\utils\FormatterObject;
 use Exception;
 use Slim\Exception\HttpNotFoundException;
 
@@ -36,12 +36,16 @@ final class ResourceByIdAction
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 401);
     }
+    $allComment[] = [];
+    foreach($array['comment'] as $comment){
+      $allComment[] = FormatterObject::formatComment($comment);
+    }
 
     
     $data = [
       'result' => [
-        'resource' => $array['resource'],
-        'comment' => $array['comment']
+        'resource' => FormatterObject::formatResource( $array['resource']),
+        'comments' => $allComment
       ]
 
     ];

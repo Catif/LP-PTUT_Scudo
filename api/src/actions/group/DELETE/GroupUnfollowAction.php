@@ -18,13 +18,13 @@ final class GroupUnfollowAction
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
         $headers = $rq->getHeaders();
-        $token = Authorization::find($headers['API-Token'][0]);
+        $token = Authorization::find($headers['Authorization'][0]);
         $user = $token->user()->first();
-        
-        $body = $rq->getParsedBody();
-        
 
-        
+        $body = $rq->getParsedBody();
+
+
+
         try {
 
             $modelGroup = GroupService::deleteGroupFollow($args['id'], $user);
@@ -37,7 +37,10 @@ final class GroupUnfollowAction
         }
 
         $data = [
-            'group' => $modelGroup
+
+            'result' => [
+                'group' => $modelGroup
+            ]
         ];
         return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     }
