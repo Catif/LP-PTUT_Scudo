@@ -15,7 +15,7 @@ final class DisconnectAction
   {
     $header = $rq->getHeaders();
     try {
-      $token = Authorization::findOrFail($header['API-Token'][0]);
+      $token = Authorization::findOrFail($header['Authorization'][0]);
       $user = $token->user()->first();
 
       AuthorizationService::deleteAllAuthorization($user);

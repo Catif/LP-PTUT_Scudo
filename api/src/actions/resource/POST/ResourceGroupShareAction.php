@@ -20,7 +20,7 @@ final class ResourceGroupShareAction
         $headers = $rq->getHeaders();
 
         try {
-            Authorization::findOrFail($headers['API-Token'][0]);
+            Authorization::findOrFail($headers['Authorization'][0]);
 
             $resource = ResourceService::getResourceByID($args['id_resource']);
             $group = GroupService::getGroupByID($args['id_group']);

@@ -22,7 +22,7 @@ final class UserByIdAction
   {
     $header = $rq->getHeaders();
     try {
-      $token = Authorization::findOrFail($header['API-Token'][0]);
+      $token = Authorization::findOrFail($header['Authorization'][0]);
       $userToken = $token->user()->firstOrFail();
       $userSearch = UserService::getUserByID($args['id']);
     } catch (Exception  $e) {
