@@ -6,13 +6,21 @@ import Input from '../components/ScudoTheming/Input.vue';
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
 import Button from '../components/ScudoTheming/Button.vue';
 import Alert from '../components/ScudoTheming/Alert.vue';
+import { useSessionStore } from '@/stores/session.js';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const API = inject("api");
+const Session = useSessionStore();
+
+if (Session.data.token !== '') {
+	router.push('/')
+}
 
 var form = reactive({
-	username: 'test',
+	username: 'ugodu88',
 	fullname: '',
-	email: 'test@example.fr',
+	email: 'ugo@example.fr',
 	password: 'test',
 	confirmPassword: 'test',
 	phone: '',
@@ -61,8 +69,9 @@ function isValidForm() {
 			password: form.password,
 			phone: form.phone,
 			role: 'professional',
-		}).then((r) => {
-			console.log(r)
+		}).then((result) => {
+			Session.setSession(result.data.token)
+			router.push('/')
 		})
 	} else {
 		console.log(form.username);
@@ -73,8 +82,9 @@ function isValidForm() {
 			email: form.email,
 			password: form.password,
 			role: 'individual',
-		}).then((r) => {
-			console.log(r)
+		}).then((result) => {
+			Session.setSession(result.data.token)
+			router.push('/')
 		})
 	}
 }

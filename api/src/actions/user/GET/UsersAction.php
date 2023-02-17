@@ -37,7 +37,10 @@ final class UsersAction
 					'next' => '/api/users/?q=' . $search . '&page=' . ($pagination['page'] + 1) . '&limit=' . $pagination['limit'],
 				],
 				'count' => count($users),
-				'users' => $listUsers
+
+				'result' => [
+					'users' => $listUsers
+				]
 			];
 
 			return FormatterAPI::formatResponse($rq, $rs, $data);

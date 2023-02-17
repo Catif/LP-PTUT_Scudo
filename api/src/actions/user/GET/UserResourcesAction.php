@@ -36,7 +36,10 @@ final class UserResourcesAction
 					'next' => $rq->getUri()->getPath() . '?page=' . ($pagination['page'] + 1) . '&limit=' . $pagination['limit']
 				],
 				'count' => count($listResources),
-				'users' => $listResources
+
+				'result' => [
+					'users' => $listResources
+				]
 			];
 
 			return FormatterAPI::formatResponse($rq, $rs, $data);

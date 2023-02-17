@@ -18,9 +18,9 @@ final class GroupAction
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
         $headers = $rq->getHeaders();
-        $token = Authorization::find($headers['API-Token'][0]);
+        $token = Authorization::find($headers['Authorization'][0]);
         $user = $token->user()->first();
-        
+
         $body = $rq->getParsedBody();
 
 
@@ -28,10 +28,12 @@ final class GroupAction
             if (!is_array($body)) {
                 throw new \Exception("Missing Body");
             }
-            $modelGroup = GroupService::insertGroup($user,$body);
+            $modelGroup = GroupService::insertGroup($user, $body);
 
             $data = [
-                'group' => FormatterObject::formatGroup($modelGroup)
+                'result' => [
+                    'group' => FormatterObject::formatGroup($modelGroup)
+                ]
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
 
@@ -42,7 +44,5 @@ final class GroupAction
             return FormatterAPI::formatResponse($rq, $rs, $data, 400); // 400 = Bad Request
             return $rs;
         }
-
-
     }
 }

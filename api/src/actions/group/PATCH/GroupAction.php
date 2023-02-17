@@ -20,12 +20,15 @@ final class GroupAction
             if (!is_array($body)) {
                 throw new \Exception("Missing Body");
             }
-            $modelGroup = GroupService::updateGroup($args['id'],$body);
+            $modelGroup = GroupService::updateGroup($args['id'], $body);
 
             $data = [
-                'group' => FormatterObject::formatGroup($modelGroup)
+
+                'result' => [
+                    'group' => FormatterObject::formatGroup($modelGroup)
+                ]
             ];
-            return  FormatterAPI::formatResponse($rq, $rs, $data);// 201 = Created
+            return  FormatterAPI::formatResponse($rq, $rs, $data); // 201 = Created
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
@@ -33,7 +36,5 @@ final class GroupAction
             return FormatterAPI::formatResponse($rq, $rs, $data, 400); // 400 = Bad Request
             return $rs;
         }
-
-
     }
 }

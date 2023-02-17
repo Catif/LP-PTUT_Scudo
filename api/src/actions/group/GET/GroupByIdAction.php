@@ -26,28 +26,28 @@ final class GroupByIdAction
       throw new HttpNotFoundException($rq, $e->getMessage());
     }
     $followings = $groupById->users()->where('User_Group.id_user', $args['id'])->get();
-    foreach($followings as $following){
+    foreach ($followings as $following) {
       $roleUser = $following['role'];
     }
-    
+
     $etatFollowing = false;
     $owner = false;
-    if($roleUser == 'owner'){
+    if ($roleUser == 'owner') {
       $etatFollowing = true;
       $owner = true;
-    } elseif($roleUser == 'member') {
+    } elseif ($roleUser == 'member') {
       $etatFollowing = true;
     }
-    
+
     $data = [
       'Filtre' => 'groupById',
       'count' => count($groupById),
-      'Result' => [
+      'result' => [
         'group' => FormatterObject::formatGroup($groupById),
         'following' => $etatFollowing,
         'owner' => $owner
-        ]
-      ];
+      ]
+    ];
 
     return FormatterAPI::formatResponse($rq, $rs, $data);
   }

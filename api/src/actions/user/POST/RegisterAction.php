@@ -32,8 +32,11 @@ final class RegisterAction
         }
 
         $data = [
-            'user' => FormatterObject::formatUser($user),
-            'token' => $token
+
+            'result' => [
+                'user' => FormatterObject::formatUser($user),
+                'token' => $token
+            ]
         ];
         return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     }
@@ -45,9 +48,22 @@ final class RegisterAction
             throw new \Exception("Aucune information reçu.");
         }
 
-        if (empty($properties['username']) || empty($properties['email']) || empty($properties['password']) || empty($properties['role'])) {
-            throw new \Exception("Des champs sont manquantes.");
+
+        if ($properties['role'] !== 'individual' && $properties['role'] !== 'professional') {
+            throw new \Exception("Le role n'est pas valide.");
         }
+
+        if ($properties['role'] === 'indevidual') {
+            if (empty($properties['username']) || empty($properties['email']) || empty($properties['password']) || empty($properties['role'])) {
+                throw new \Exception("Des champs sont manquantes.");
+            }
+        }
+        if ($properties['role'] === 'professional') {
+            if (empty($properties['fullname']) || empty($properties['username']) || empty($properties['email']) || empty($properties['password']) || empty($properties['phone']) || empty($properties['role'])) {
+                throw new \Exception("Des champs sont manquantes.");
+            }
+        }
+
         if (!filter_var($properties['email'], FILTER_VALIDATE_EMAIL)) {
             throw new \Exception("L'email n'est pas valide.");
         }

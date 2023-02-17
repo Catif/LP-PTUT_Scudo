@@ -25,7 +25,7 @@ final class ResourceAction
             return FormatterAPI::formatResponse($rq, $rs, $data, 400);
         }
         try {
-            $token = Authorization::findOrFail($header['API-Token'][0]);
+            $token = Authorization::findOrFail($header['Authorization'][0]);
             $user = $token->user()->first();
             $resource = ResourceService::getResourceByID($args['id']);
             if ($resource->id_user != $user->id_user) {
@@ -36,7 +36,10 @@ final class ResourceAction
             }
             $newResource = ResourceService::updateResource($resource, $body);
             $data = [
-                'Resource' => FormatterObject::formatResource($newResource)
+
+                'result' => [
+                    'Resource' => FormatterObject::formatResource($newResource)
+                ]
             ];
 
             return FormatterAPI::formatResponse($rq, $rs, $data);

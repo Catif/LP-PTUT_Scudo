@@ -21,26 +21,26 @@ final class GroupResourceAction
   {
     $query = $rq->getQueryParams();
     try {
-        $page = isset($query['page']) ? $query['page'] : 1 ;
-      $groupResource = GroupService::getResource($args['id'],$page, $query['limit']);
+      $page = isset($query['page']) ? $query['page'] : 1;
+      $groupResource = GroupService::getResource($args['id'], $page, $query['limit']);
     } catch (Exception  $e) {
-        $data = [
-            'error' => $e->getMessage()
-        ];
-        return FormatterAPI::formatResponse($rq,$rs, $data, 404);
+      $data = [
+        'error' => $e->getMessage()
+      ];
+      return FormatterAPI::formatResponse($rq, $rs, $data, 404);
     }
-    
+
     $listResources = [];
-    foreach($groupResource as $resource){
-        $listResources[] = FormatterObject::formatResource($resource);
+    foreach ($groupResource as $resource) {
+      $listResources[] = FormatterObject::formatResource($resource);
     }
     $data = [
       'Filtre' => 'groupResource',
       'count' => count($listResources),
-      'Result' => [
+      'result' => [
         'groupResource' =>  $listResources
-        ]
-      ];
+      ]
+    ];
 
     return FormatterAPI::formatResponse($rq, $rs, $data);
   }

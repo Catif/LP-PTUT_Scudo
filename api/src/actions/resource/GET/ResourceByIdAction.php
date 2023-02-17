@@ -24,7 +24,7 @@ final class ResourceByIdAction
     try {
       $resource = ResourceService::getResourceByID($args['id']);
       if ($resource->is_private == 1) {
-        $token = Authorization::findOrFail($header['API-Token'][0]);
+        $token = Authorization::findOrFail($header['Authorization'][0]);
         $user = $token->user()->first();
         if ($resource->id_user != $user->id_user) {
           throw new Exception("You don't have permission to acces this resource");
@@ -37,7 +37,7 @@ final class ResourceByIdAction
       return FormatterAPI::formatResponse($rq, $rs, $data, 401);
     }
     $data = [
-      'Result' => $resource
+      'result' => $resource
     ];
 
     return FormatterAPI::formatResponse($rq, $rs, $data);

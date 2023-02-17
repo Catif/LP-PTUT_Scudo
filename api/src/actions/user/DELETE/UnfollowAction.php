@@ -15,14 +15,17 @@ final class UnfollowAction
   {
     $header = $rq->getHeaders();
     try {
-      $token = Authorization::findOrFail($header['API-Token'][0]);
+      $token = Authorization::findOrFail($header['Authorization'][0]);
       $userToken = $token->user()->first();
       $userSearch = UserService::getUserByID($args['id']);
 
       UserService::unfollow($userToken, $userSearch);
 
       $data = [
-        'result' => "Vous suivez désormais {$userSearch->username}"
+
+        'result' => [
+          'result' => "Vous suivez désormais {$userSearch->username}"
+        ]
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     } catch (\Exception $e) {

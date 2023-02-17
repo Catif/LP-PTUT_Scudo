@@ -29,7 +29,10 @@ final class ResourcesAction
 
             $data = [
                 'count' => count($resources),
-                'Resource' => $listResources
+
+                'result' => [
+                    'Resource' => $listResources
+                ]
             ];
 
             return FormatterAPI::formatResponse($rq, $rs, $data);
