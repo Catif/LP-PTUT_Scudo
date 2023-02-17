@@ -22,7 +22,7 @@ final class ResourceAction
         $body = $rq->getParsedBody();
 
         try {
-            $token = Authorization::find($headers['API-Token'][0]);
+            $token = Authorization::find($headers['Authorization'][0]);
             $properties = $this->formatResource($body);
 
             $user = $token->user()->first();
