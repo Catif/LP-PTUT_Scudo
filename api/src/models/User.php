@@ -1,9 +1,11 @@
 <?php
-
 namespace api\models;
+
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends \Illuminate\Database\Eloquent\Model
 {
+  use HasUuids;
 
   protected  $table = 'User';
   protected  $primaryKey = 'id_user';
@@ -18,7 +20,7 @@ class User extends \Illuminate\Database\Eloquent\Model
 
   public function follows(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\User', 'User_Follow', 'id_user_follow', 'id_user');
+    return $this->belongsToMany('api\models\User', 'User_Follow', 'id_user', 'id_user_followed');
   }
 
   public function resources(): \Illuminate\Database\Eloquent\Relations\HasMany

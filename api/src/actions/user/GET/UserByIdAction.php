@@ -11,6 +11,7 @@ use api\services\utils\FormatterAPI;
 
 //Exception
 use api\errors\exceptions\RessourceNotFoundException as RessourceNotFoundException;
+use api\models\Authorization;
 use api\services\utils\FormatterObject;
 use Exception;
 use Slim\Exception\HttpNotFoundException;
@@ -19,8 +20,11 @@ final class UserByIdAction
 {
   public function __invoke(Request $rq, Response $rs, array $args): Response
   {
+    $header = $rq->getHeaders();
     try {
-      $array = UserService::getUserByID($args['id']);
+      $token = Authorization::findOrFail($header['API-Token'][0]);
+      $userToken = $token->user()->firstOrFail();
+      $userSearch = UserService::getUserByID($args['id']);
     } catch (Exception  $e) {
       $data = [
         'error' => $e->getMessage()
@@ -28,18 +32,25 @@ final class UserByIdAction
       return FormatterAPI::formatResponse($rq, $rs, $data, 404);
     }
 
-    $ressources = [];
-    foreach ($array['resources'] as $resource) {
-      $ressources[] = FormatterObject::formatResource($resource);
+    $owner = false;
+    $following = false;
+
+    if ($userToken->id_user == $userSearch->id_user) {
+      $owner = true;
+      $following = true;
+    } elseif (UserService::isFollowing($userToken->id_user, $userSearch->id_user)) {
+      $following = true;
     }
 
-    $user = FormatterObject::formatUser($array['user']);
+
+    $user = FormatterObject::formatUser($userSearch);
 
     $data = [
       'request' => '/api/user/' . $args['id'],
       'result' => [
         'user' => $user,
-        'resources' => $ressources
+        'owner' => $owner,
+        'following' => $following,
       ]
     ];
 

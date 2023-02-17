@@ -104,7 +104,7 @@ div {
     line-height: 1.5rem;
     font-size: 1rem;
     padding: 1rem;
-
+    z-index: 2;
     width: 100%;
 
     &:focus {
