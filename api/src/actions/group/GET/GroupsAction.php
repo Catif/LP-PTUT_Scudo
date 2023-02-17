@@ -16,13 +16,16 @@ final class GroupsAction
     {
         $groups = GroupService::getGroups();
         $listGroup = [];
-        foreach($groups as $group){
-            $listGroup[] =FormatterObject::formatGroup($group);
+        foreach ($groups as $group) {
+            $listGroup[] = FormatterObject::formatGroup($group);
         }
 
         $data = [
             'count' => count($listGroup),
-            'group' =>$listGroup
+
+            'result' => [
+                'group' => $listGroup
+            ]
         ];
 
         return FormatterAPI::formatResponse($rq, $rs, $data);

@@ -45,8 +45,11 @@ final class LoginAction
 
 
       $data = [
-        'user' => FormatterObject::formatUser($user),
-        'token' => $token
+
+        'result' => [
+          'user' => FormatterObject::formatUser($user),
+          'token' => $token
+        ]
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     } catch (\Exception $e) {

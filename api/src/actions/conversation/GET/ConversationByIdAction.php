@@ -25,7 +25,7 @@ final class ConversationByIdAction
     }
     $data = [
       'Filtre' => 'conversationById',
-      'Result' => $conversationById
+      'result' => $conversationById
     ];
 
     return FormatterAPI::formatResponse($rq, $rs, $data);
