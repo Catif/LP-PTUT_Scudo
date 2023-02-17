@@ -36,7 +36,10 @@ final class ResourceAction
             }
             $newResource = ResourceService::updateResource($resource, $body);
             $data = [
-                'Resource' => FormatterObject::formatResource($newResource)
+
+                'result' => [
+                    'Resource' => FormatterObject::formatResource($newResource)
+                ]
             ];
 
             return FormatterAPI::formatResponse($rq, $rs, $data);

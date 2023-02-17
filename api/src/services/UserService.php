@@ -80,6 +80,7 @@ final class UserService
     try {
       $user->save();
     } catch (\Exception $e) {
+      echo ($e->getMessage());
       throw new \Exception("Erreur pendant la création de l'utilisateur.");
     }
 

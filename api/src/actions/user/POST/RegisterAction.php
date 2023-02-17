@@ -32,8 +32,11 @@ final class RegisterAction
         }
 
         $data = [
-            'user' => FormatterObject::formatUser($user),
-            'token' => $token
+
+            'result' => [
+                'user' => FormatterObject::formatUser($user),
+                'token' => $token
+            ]
         ];
         return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     }
@@ -44,6 +47,7 @@ final class RegisterAction
         if (!is_array($properties)) {
             throw new \Exception("Aucune information reçu.");
         }
+
 
         if ($properties['role'] !== 'individual' && $properties['role'] !== 'professional') {
             throw new \Exception("Le role n'est pas valide.");

@@ -21,7 +21,10 @@ final class DisconnectAction
       AuthorizationService::deleteAllAuthorization($user);
 
       $data = [
-        'result' => "L'utilisateur a bien été déconnecté."
+
+        'result' => [
+          'result' => "L'utilisateur a bien été déconnecté."
+        ]
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     } catch (\Exception $e) {

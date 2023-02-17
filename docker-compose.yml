@@ -1,0 +1,47 @@
+version: '3'
+services:
+
+  db:
+    container_name: db
+    image: lecyp12/db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: scudo_db
+      MYSQL_USER: MYSQL_USER
+      MYSQL_PASSWORD: MYSQL_PASSWORD
+    networks:
+      - devnet
+    ports:
+      - 4201:3306
+
+  admin:
+    depends_on:
+      - db
+    container_name: admin
+    image: lecyp12/admin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+    networks:
+      - devnet
+    ports:
+      - 801:80
+
+  api:
+    depends_on:
+      - db
+    container_name: api
+    image: lecyp12/php
+    restart: always
+    networks:
+      - devnet
+    ports:
+      - 8080:80
+    volumes:
+      - ./api:/var/www/html
+
+networks:
+  devnet:

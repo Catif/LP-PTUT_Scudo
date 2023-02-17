@@ -2,9 +2,12 @@
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
 import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
 import DefaultTopAppBar from '../components/DefaultTopAppBar.vue';
-
+import Button from '../components/ScudoTheming/Button.vue';
 import ResourceCard from '@/components/ResourceCard.vue';
 import GroupCard from '@/components/SmallGroupCard.vue';
+import { useSessionStore } from '@/stores/session.js';
+
+const Session = useSessionStore();
 
 var user = {
   id: 12,
@@ -34,15 +37,16 @@ var group = {
 <template>
   <MainFeed>
     <DefaultTopAppBar />
+    <Button @click="Session.emptySession()">Se déconnecter</Button>
     <ResourceCard :user="user" :resource="resource" />
     <ResourceCard :user="user" :resource="resource" />
     <ResourceCard :user="user" :resource="resource1" :group="group" />
     <ResourceCard :user="user" :resource="resource" />
-    <ResourceCard :user="user" :resource="resource" :group="group"/>
-    <ResourceCard :user="user" :resource="resource" :group="group"/>
+    <ResourceCard :user="user" :resource="resource" :group="group" />
+    <ResourceCard :user="user" :resource="resource" :group="group" />
     <ResourceCard :user="user" :resource="resource1" />
     <ResourceCard :user="user" :resource="resource1" />
-    <ResourceCard :user="user" :resource="resource" :group="group"/>
+    <ResourceCard :user="user" :resource="resource" :group="group" />
   </MainFeed>
   <AsideFeed>
     <GroupCard :group="group" />

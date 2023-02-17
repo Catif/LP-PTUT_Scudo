@@ -22,7 +22,10 @@ final class FollowAction
       UserService::follow($userToken, $userSearch);
 
       $data = [
-        'result' => "Vous suivez désormais {$userSearch->username}"
+
+        'result' => [
+          'result' => "Vous suivez désormais {$userSearch->username}"
+        ]
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     } catch (\Exception $e) {

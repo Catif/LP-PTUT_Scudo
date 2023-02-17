@@ -37,7 +37,7 @@ final class ResourceByIdAction
       return FormatterAPI::formatResponse($rq, $rs, $data, 401);
     }
     $data = [
-      'Result' => $resource
+      'result' => $resource
     ];
 
     return FormatterAPI::formatResponse($rq, $rs, $data);

@@ -11,10 +11,14 @@ use  api\actions as actions;
 require __DIR__ . '/../vendor/autoload.php';
 
 $conf = parse_ini_file(__DIR__ . '/../conf/db.ini');
-$db = new Illuminate\Database\Capsule\Manager();
-$db->addConnection($conf); /* configuration avec nos paramètres */
-$db->setAsGlobal(); /* rendre la connexion visible dans tout le projet */
-$db->bootEloquent(); /* établir la connexion */
+try {
+  $db = new Illuminate\Database\Capsule\Manager();
+  $db->addConnection($conf); /* configuration avec nos paramètres */
+  $db->setAsGlobal(); /* rendre la connexion visible dans tout le projet */
+  $db->bootEloquent(); /* établir la connexion */
+} catch (Exception $e) {
+  echo ($e->getMessage());
+}
 
 
 $app = AppFactory::create();
@@ -22,7 +26,17 @@ $app = AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addBodyParsingMiddleware();
 
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+  return $response;
+});
 
+$app->add(function ($request, $handler) {
+  $response = $handler->handle($request);
+  return $response
+    ->withHeader('Access-Control-Allow-Origin', '*')
+    ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+});
 
 // Default route
 $app->get('/', function (Request $request, Response $response, $args) {
@@ -96,7 +110,7 @@ $app->post('/api/resource/{id}', actions\resource\PATCH\ResourceAction::class);
 // GET
 $app->get('/api/groups', actions\group\GET\GroupsAction::class); // ok
 $app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class); // ok
-$app->get('/api/group/{id}/resources', actions\group\GET\GroupResourceAction::class); 
+$app->get('/api/group/{id}/resources', actions\group\GET\GroupResourceAction::class);
 
 // POST
 $app->post('/api/group', actions\group\POST\GroupAction::class); // ok
@@ -118,10 +132,6 @@ $app->delete('/api/group/{id}/unfollow', actions\group\DELETE\GroupUnfollowActio
 // =====================
 
 // POST
-$app->post('/api/comment/{id_resource}', api\actions\comment\POST\CommentAction::class); 
+$app->post('/api/comment/{id_resource}', api\actions\comment\POST\CommentAction::class);
 
 $app->run();
-
-
-
-

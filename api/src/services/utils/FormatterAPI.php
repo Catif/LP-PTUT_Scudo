@@ -10,7 +10,10 @@ class FormatterAPI
   public static function formatResponse(Request $rq, Response $rs, $data, $status = 200, $message = null): Response
   {
     $rs = $rs->withStatus($status);
-    $rs = $rs->withHeader('Content-Type', 'application/json');
+    $rs = $rs->withHeader('Content-Type', 'application/json')
+    ->withHeader('Access-Control-Allow-Origin', '*')
+    ->withHeader('Access-Control-Allow-Methods', '*')
+    ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization');
 
     $rs->getBody()->write(json_encode($data));
 

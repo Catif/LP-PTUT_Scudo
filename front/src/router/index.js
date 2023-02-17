@@ -5,13 +5,18 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "Home",
+      name: "home",
       component: () => import("@/views/TestView.vue"),
     },
     {
       path: "/settings",
       name: "settings",
       component: () => import("@/views/ExampleView.vue"),
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: () => import("@/views/RegisterView.vue"),
     },
     {
       path: "/record",
@@ -22,6 +27,11 @@ const router = createRouter({
       path: "/resource/:id",
       name: "resource",
       component: () => import("@/views/ResourceView.vue"),
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("@/views/LoginView.vue"),
     },
   ],
 });
