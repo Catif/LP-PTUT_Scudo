@@ -41,6 +41,14 @@ final class RegisterAction
 
     private function validateProperties(array $properties): void
     {
+        if (UserService::isUsernameExist($properties['username'])) {
+            throw new \Exception("Le nom d'utilisateur est déjà utilisé.");
+        }
+
+        if (UserService::isEmailExist($properties['email'])) {
+            throw new \Exception("L'email est déjà utilisé.");
+        }
+
         if (!is_array($properties)) {
             throw new \Exception("Aucune information reçu.");
         }
