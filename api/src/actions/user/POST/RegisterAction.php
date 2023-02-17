@@ -45,7 +45,7 @@ final class RegisterAction
             throw new \Exception("Aucune information reçu.");
         }
 
-        if (empty($properties['username']) || empty($properties['email']) || empty($properties['password']) || empty($properties['biography']) || empty($properties['role'])) {
+        if (empty($properties['username']) || empty($properties['email']) || empty($properties['password']) || empty($properties['role'])) {
             throw new \Exception("Des champs sont manquantes.");
         }
         if (!filter_var($properties['email'], FILTER_VALIDATE_EMAIL)) {
