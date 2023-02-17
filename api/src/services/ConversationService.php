@@ -3,35 +3,32 @@
 namespace api\services;
 
 
-use api\models\Conversation as Conversation;
+use api\models\Conversation;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Ramsey\Uuid\Uuid;
 
-final class ConversationService
-{
-  public function getConversation(): array
+final class ConversationService{
+  static public function insertConversation($user ,array $property)
   {
-    return Conversation::select([
-        'id_conversation',
-        'id_sender',
-        'id_recipient',
-        'is_established'
-    ])->get()->toArray();
-  }
-
-  public function getConversationByID($id): ?array
-  {
-    try {
-      $order = Conversation::select([
-        'id_conversation',
-        'id_sender',
-        'id_recipient',
-        'is_established'
-      ])->findOrFail($id);
-    } catch (ModelNotFoundException $e) {
-        new Exception("error UserByID");
+    if (empty($property['name']) || empty($property['description']) || empty($property['image'])) {
+      throw new \Exception("un ou plusieur parametre n'existe pas quand on veut ajouter un groupe");
     }
+    $modelsConversation = new Conversation();
+    $modelsConversation->id_conversation = Uuid::uuid4()->toString();
+    $modelsConversation->id_sender = $user->id_user;
+    // $modelsConversation->recipient = $args[''];
+    $modelsConversation->image = $property['image'];
 
-    return $order->toArray();
+    try {
+      $modelsConversation->save();
+      
+    } catch (\Exception $e) {
+      echo($e->getMessage());
+      throw new \Exception("Erreur d'enregistrement un groupe");
+    }
+    $modelsConversation->users()->attach($user->id_user);
+
+    return $modelsConversation;
   }
+
 }
