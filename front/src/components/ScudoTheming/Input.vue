@@ -61,7 +61,7 @@ div {
   align-items: flex-start;
 
   position: relative;
-  margin: 1.25rem 0;
+  margin: 1.5rem .75rem;
 
   &.border {
     border: 1px solid $light-border;
