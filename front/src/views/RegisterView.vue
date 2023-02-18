@@ -83,7 +83,7 @@ function isValidForm() {
 			password: form.password,
 			role: 'individual',
 		}).then((result) => {
-			Session.setSession(result.data.token)
+			Session.setSession(result.data.result.token)
 			router.push('/')
 		})
 	}
