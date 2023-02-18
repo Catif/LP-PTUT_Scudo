@@ -50,7 +50,7 @@ final class ResourceAction
             throw new Exception("Missing parameters");
         }
         if ($body['type'] != 'video' && $body['type'] != 'stream' && $body['type'] != 'text') {
-            throw new Exception("Invalid type of resource");
+            throw new Exception("Type de resource non reconnu");
         }
     }
 
@@ -62,8 +62,8 @@ final class ResourceAction
             if (!isset($properties['filename'])) {
                 throw new Exception("Chemin du fichier manquant");
             }
-        } elseif ($properties['type'] != 'stream' && $properties['type'] != 'text') {
-            throw new Exception("Type de resource non reconnu");
+        } else {
+            $properties['filename'] = '';
         }
 
         return [
