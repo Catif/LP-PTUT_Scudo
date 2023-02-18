@@ -3,6 +3,9 @@ import { provide } from "vue";
 import axios from "axios";
 import Navbar from "./components/Navbar.vue";
 import mitt from 'mitt';
+import { useSessionStore } from '@/stores/session.js';
+
+const Session = useSessionStore();
 
 // Variable Globale pour Axios nommé "api"
 const API = axios.create({
@@ -22,7 +25,7 @@ provide('bus', bus)
 
 <template>
   <div id="content">
-    <Navbar />
+    <Navbar v-if="Session.data.token !== ''" />
     <RouterView />
   </div>
 </template>

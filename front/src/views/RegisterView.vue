@@ -4,7 +4,7 @@ import Title from '../components/ScudoTheming/Title.vue';
 import Text from '../components/ScudoTheming/Text.vue';
 import Input from '../components/ScudoTheming/Input.vue';
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
-import Button from '../components/ScudoTheming/Button.vue';
+import Button from '../components/ScudoTheming/FilledButton.vue';
 import Alert from '../components/ScudoTheming/Alert.vue';
 import { useSessionStore } from '@/stores/session.js';
 import { useRouter } from 'vue-router';
@@ -18,11 +18,11 @@ if (Session.data.token !== '') {
 }
 
 var form = reactive({
-	username: 'ugodu88',
+	username: '',
 	fullname: '',
-	email: 'ugo@example.fr',
-	password: 'test',
-	confirmPassword: 'test',
+	email: '',
+	password: '',
+	confirmPassword: '',
 	phone: '',
 	pro: false,
 })
@@ -34,30 +34,24 @@ function togglePro() {
 var classConfirmPassword = ref('default');
 
 function changeClassConfirmPassword() {
-	if (form.confirmPassword === '') {
+	if (form.confirmPassword === '' || form.confirmPassword === form.password) {
 		classConfirmPassword.value = 'default'
-		return null;
+	} else {
+		classConfirmPassword.value = 'wrong'
 	}
-
-	if (form.password !== form.confirmPassword) {
-		classConfirmPassword.value = 'wrong';
-		return null;
-	} else if (form.password === form.confirmPassword) {
-		classConfirmPassword.value = 'right';
-		return null;
-	}
+	return null
 }
 
-var error = ref('')
+var message = ref('')
 function isValidForm() {
 	if (form.username.length <= 3) {
-		error.value = 'Votre pseudo doit contenir plus de 3 caractères.'
+		message.value = 'Votre pseudo doit contenir plus de 3 caractères.'
 		return null;
 	} else if (form.password.length === 0) {
-		error.value = 'Veuillez entrer un mot de passe.'
+		message.value = 'Veuillez entrer un mot de passe.'
 		return null;
 	} else if (form.password !== form.confirmPassword) {
-		error.value = "Votre mot de passe de confirmation n'est pas le même."
+		message.value = "Votre mot de passe de confirmation n'est pas le même."
 		return null;
 	}
 
@@ -70,21 +64,24 @@ function isValidForm() {
 			phone: form.phone,
 			role: 'professional',
 		}).then((result) => {
-			Session.setSession(result.data.token)
+			Session.setSession(result.data.result.token)
 			router.push('/')
+		}).catch((error) => {
+			message.value = error.response.data.error
+			return null
 		})
 	} else {
-		console.log(form.username);
-		console.log(form.email);
-		console.log(form.password);
 		API.post('/api/register', {
 			username: form.username,
 			email: form.email,
 			password: form.password,
 			role: 'individual',
 		}).then((result) => {
-			Session.setSession(result.data.token)
+			Session.setSession(result.data.result.token)
 			router.push('/')
+		}).catch((error) => {
+			message.value = error.response.data.error
+			return null
 		})
 	}
 }
@@ -92,7 +89,6 @@ function isValidForm() {
 
 <template>
 	<MainFeed>
-		<Alert id="error" v-if="error !== ''">{{ error }}</Alert>
 		<Title>Inscrivez-vous !</Title>
 		<form action="/api/register" method="post" @submit.prevent="isValidForm">
 			<Text>
@@ -100,7 +96,7 @@ function isValidForm() {
 				<input @click="togglePro" id="role" name="role" type="checkbox" />
 			</Text>
 			<Input type="email" name="email" :required="true" label="Email" v-model:value="form.email" />
-			<Input v-if="form.pro === true" name="phone" :required="true" label="Numéro de téléphone"
+			<Input v-if="form.pro === true" input="tel" name="phone" :required="true" label="Numéro de téléphone"
 				v-model:value="form.phone" />
 			<Input v-if="form.pro === true" name="fullname" :required="true" label="Nom complet"
 				v-model:value="form.fullname" />
@@ -109,8 +105,12 @@ function isValidForm() {
 			<Input id="confirmPassword" type="password" name="confirmPassword" :required="true"
 				label="Confirmer votre mot de passe" v-model:value="form.confirmPassword" :class="classConfirmPassword"
 				v-on:input="changeClassConfirmPassword" />
+			<Alert id="error" v-if="message !== ''">{{ message }}</Alert>
 			<Button>S'inscrire</Button>
 		</form>
+		<RouterLink to="/login">
+			<Button>Déjà un compte ?</Button>
+		</RouterLink>
 	</MainFeed>
 </template>
 
@@ -186,21 +186,15 @@ input[type="checkbox"] {
 }
 
 button {
-	width: 100%;
-	margin-left: 0;
-	border: 1px solid $light-bg-button;
+	width: calc(100% - 1.5rem);
 }
 
 div.border.default {
-	border: 1px solid purple;
+	border: 1px solid $light-border;
 }
 
 div.border.wrong {
-	border: 1px solid red;
-}
-
-div.border.right {
-	border: 1px solid green;
+	border: 1px solid $light-bg-alert;
 }
 
 #error {

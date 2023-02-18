@@ -21,11 +21,11 @@ if (Session.data.token !== '') {
     router.push('/')
 }
 
-var error = ref('')
+var message = ref('')
 
 function isValidForm() {
     if (form.username.length <= 3) {
-        error.value = 'Votre pseudo doit contenir plus de 3 caractères.'
+        message.value = 'Votre pseudo doit contenir plus de 3 caractères.'
         return null;
     }
     API.post('/api/login', {
@@ -34,6 +34,9 @@ function isValidForm() {
     }).then((result) => {
         Session.setSession(result.data.token)
         router.push('/')
+    }).catch((error) => {
+        message.value = error.response.data.error
+        return null
     })
 }
 
@@ -41,14 +44,17 @@ function isValidForm() {
 
 <template>
     <MainFeed>
-        <Alert id="error" v-if="error !== ''">{{ error }}</Alert>
         <Title>Connectez-vous !</Title>
         <form action="/api/login" method="post" @submit.prevent="isValidForm">
             <Input name="username" :required='true' label="Pseudo ou email" v-model:value="form.username" />
             <Input type="password" name="password" :required='true' label="Mot de passe"
                 v-model:value="form.password" />
+            <Alert id="error" v-if="message !== ''">{{ message }}</Alert>
             <Button>Se connecter</Button>
         </form>
+        <RouterLink to="/register">
+            <Button>Pas de compte ?</Button>
+        </RouterLink>
     </MainFeed>
 </template>
 
@@ -56,9 +62,18 @@ function isValidForm() {
 @import "@/assets/scss/colors";
 
 button {
-    width: 100%;
-    margin-left: 0;
+    width: calc(100% - 1.5rem);
     border: 1px solid $light-bg-button;
+    background: $light-bg-button;
+    color: white;
+
+    &:hover {
+        background: $light-bg-button-hover;
+    }
+
+    &:active {
+        background: $light-bg-button-active;
+    }
 }
 
 #error {
