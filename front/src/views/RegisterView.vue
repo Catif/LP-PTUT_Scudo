@@ -44,12 +44,6 @@ function changeClassConfirmPassword() {
 
 var message = ref('')
 function isValidForm() {
-	console.log(navigator.onLine)
-	if (navigator.onLine === false) {
-		message.value = 'Erreur de connexion.'
-		console.log(message)
-		return null;
-	}
 	if (form.username.length <= 3) {
 		message.value = 'Votre pseudo doit contenir plus de 3 caractères.'
 		return null;

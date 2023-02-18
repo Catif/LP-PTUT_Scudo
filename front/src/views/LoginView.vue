@@ -44,12 +44,12 @@ function isValidForm() {
 
 <template>
     <MainFeed>
-        <Alert id="error" v-if="message !== ''">{{ message }}</Alert>
         <Title>Connectez-vous !</Title>
         <form action="/api/login" method="post" @submit.prevent="isValidForm">
             <Input name="username" :required='true' label="Pseudo ou email" v-model:value="form.username" />
             <Input type="password" name="password" :required='true' label="Mot de passe"
                 v-model:value="form.password" />
+            <Alert id="error" v-if="message !== ''">{{ message }}</Alert>
             <Button>Se connecter</Button>
         </form>
         <RouterLink to="/register">
