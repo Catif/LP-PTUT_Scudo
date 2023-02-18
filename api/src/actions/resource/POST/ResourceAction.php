@@ -47,7 +47,7 @@ final class ResourceAction
     private function validateBody($body)
     {
         if (!isset($body['title']) || !isset($body['text']) || !isset($body['type']) || !isset($body['is_private'])) {
-            throw new Exception("Missing parameters");
+            throw new Exception("Paramètres manquants");
         }
         if ($body['type'] != 'video' && $body['type'] != 'stream' && $body['type'] != 'text') {
             throw new Exception("Type de resource non reconnu");
