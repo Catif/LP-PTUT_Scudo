@@ -1,6 +1,11 @@
 RewriteEngine On
 
-# réécriture pour slim
-RewriteCond %{REQUEST_FILENAME} !-d
+# Rediriger vers HTTPS // Uncomment to force HTTPS
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteBase /
+RewriteRule ^index\.php$ - [QSA,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [QSA,L]
