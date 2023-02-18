@@ -14,8 +14,6 @@ use Exception;
 
 final class ResourceAction
 {
-
-
     public function __invoke(Request $rq, Response $rs): Response
     {
         $headers = $rq->getHeaders();
@@ -60,19 +58,14 @@ final class ResourceAction
     {
         $this->validateBody($properties);
 
-        switch ($properties['type']) {
-            case 'video':
-                $filename = 'video/test.mp4';
-                break;
-            case 'stream':
-                $filename = '';
-                break;
-            case 'text':
-                $filename = '';
-            default:
-                # code...
-                break;
+        if ($properties['type'] == 'video') {
+            if (!isset($properties['filename'])) {
+                throw new Exception("Chemin du fichier manquant");
+            }
+        } elseif ($properties['type'] != 'stream' && $properties['type'] != 'text') {
+            throw new Exception("Type de resource non reconnu");
         }
+
         return [
             'title' => $properties['title'],
             'text' => $properties['text'],
