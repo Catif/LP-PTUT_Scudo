@@ -32,7 +32,7 @@ function isValidForm() {
         username: form.username,
         password: form.password,
     }).then((result) => {
-        Session.setSession(result.data.token)
+        Session.setSession(result.data.result.token)
         router.push('/')
     }).catch((error) => {
         message.value = error.response.data.error
@@ -47,8 +47,7 @@ function isValidForm() {
         <Title>Connectez-vous !</Title>
         <form action="/api/login" method="post" @submit.prevent="isValidForm">
             <Input name="username" :required='true' label="Pseudo ou email" v-model:value="form.username" />
-            <Input type="password" name="password" :required='true' label="Mot de passe"
-                v-model:value="form.password" />
+            <Input type="password" name="password" :required='true' label="Mot de passe" v-model:value="form.password" />
             <Alert id="error" v-if="message !== ''">{{ message }}</Alert>
             <Button>Se connecter</Button>
         </form>
