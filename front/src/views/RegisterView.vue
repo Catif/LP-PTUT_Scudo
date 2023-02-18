@@ -64,7 +64,7 @@ function isValidForm() {
 			phone: form.phone,
 			role: 'professional',
 		}).then((result) => {
-			Session.setSession(result.data.token)
+			Session.setSession(result.data.result.token)
 			router.push('/')
 		}).catch((error) => {
 			message.value = error.response.data.error
@@ -77,7 +77,7 @@ function isValidForm() {
 			password: form.password,
 			role: 'individual',
 		}).then((result) => {
-			Session.setSession(result.data.token)
+			Session.setSession(result.data.result.token)
 			router.push('/')
 		}).catch((error) => {
 			message.value = error.response.data.error
