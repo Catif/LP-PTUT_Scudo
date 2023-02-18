@@ -27,7 +27,7 @@ final class ResourceAction
         try {
             $token = Authorization::findOrFail($header['Authorization'][0]);
             $user = $token->user()->first();
-            $resource = ResourceService::getResourceByID($args['id']);
+            $resource = ResourceService::getResourceByID($args['id'])['resource'];
             if ($resource->id_user != $user->id_user) {
                 $data = [
                     'error' => 'You are not the owner of this resource'
@@ -36,7 +36,6 @@ final class ResourceAction
             }
             $newResource = ResourceService::updateResource($resource, $body);
             $data = [
-
                 'result' => [
                     'Resource' => FormatterObject::formatResource($newResource)
                 ]
