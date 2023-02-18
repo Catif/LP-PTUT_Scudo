@@ -30,7 +30,7 @@ final class ResourceAction
             $resource = ResourceService::getResourceByID($args['id'])['resource'];
             if ($resource->id_user != $user->id_user) {
                 $data = [
-                    'error' => 'You are not the owner of this resource'
+                    'error' => 'Vous n\'avez pas les droits pour modifier cette ressource.'
                 ];
                 return FormatterAPI::formatResponse($rq, $rs, $data, 403);
             }
