@@ -43,5 +43,18 @@ services:
     volumes:
       - ./api:/var/www/html
 
+  serverstream:
+    image: catif/node-scudo:latest
+    restart: always
+    networks:
+      - devnet
+    ports:
+      - 3000:3000
+    volumes:
+      - ./server-stream:/app
+    working_dir: /app
+    command: npm start
+
 networks:
   devnet:
+    driver: bridge

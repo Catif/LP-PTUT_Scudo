@@ -6,6 +6,7 @@ use api\errors\exceptions\RessourceNotFoundException;
 use Ramsey\Uuid\Uuid;
 use api\models\Resource;
 use api\models\User;
+use api\services\utils\FormatterObject;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -16,10 +17,15 @@ final class ResourceService
     return Resource::where('is_private', 0)->skip(($page - 1) * $limit)->take($limit)->get();
   }
 
-  static public function getResourceByID($id): Resource
+  static public function getResourceByID($id): array
   {
     try {
-      return Resource::findOrFail($id);
+      $resourceComment = Resource::findOrFail($id)->comments()->get();
+      $resource = Resource::findOrFail($id);
+
+      return [
+        'resource' => $resource,
+        'comment' => $resourceComment];
     } catch (Exception $e) {
       echo ($e->getMessage());
       throw new Exception("error UserByID");
@@ -91,5 +97,8 @@ final class ResourceService
       throw new Exception('Error while saving resource with new properties');
     }
     return $resource;
+
+    
   }
+
 }

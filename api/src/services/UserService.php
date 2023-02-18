@@ -152,4 +152,20 @@ final class UserService
 
     return false;
   }
+  static public function isUsernameExist($username)
+  {
+    $user = User::where('username', $username)->first();
+    if ($user != null) {
+      return true;
+    }
+    return false;
+  }
+  static public function isEmailExist($email)
+  {
+    $user = User::where('email', $email)->first();
+    if ($user != null) {
+      return true;
+    }
+    return false;
+  }
 }

@@ -70,7 +70,7 @@ function isValidForm() {
 			phone: form.phone,
 			role: 'professional',
 		}).then((result) => {
-			Session.setSession(result.data.token)
+			Session.setSession(result.data.result.token)
 			router.push('/')
 		})
 	} else {
