@@ -6,4 +6,3 @@ username=root
 password=
 host=localhost
 database=scudo_db
-db_timezone=+01:00
