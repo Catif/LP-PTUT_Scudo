@@ -34,6 +34,15 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
 // List des routes => https://docs.google.com/document/d/1DWMMHJNmhXVq-R11X4dQVAwZPHYrf-PKavtw7hfs0_Q/edit#
 // =====================
+//        GENERAL
+// =====================
+// POST
+$app->post('/api/upload', actions\general\POST\UploadAction::class);
+
+
+
+
+// =====================
 //        User
 // =====================
 // GET
