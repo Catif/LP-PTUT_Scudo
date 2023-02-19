@@ -57,33 +57,33 @@ $app->post('/api/login', actions\user\POST\LoginAction::class);
 // =====================
 //    ADD MIDDLEWARE
 // =====================
-$app->add(new TokenMiddleware());
+// $app->add(new TokenMiddleware());
 
 // =====================
 //        User
 // =====================
 // GET
-$app->get('/api/users', actions\user\GET\UsersAction::class);
-$app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class);
-$app->get('/api/user/{id}/resources', actions\user\GET\UserResourcesAction::class);
+$app->get('/api/users', actions\user\GET\UsersAction::class)->add(new TokenMiddleware());
+$app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class)->add(new TokenMiddleware());
+$app->get('/api/user/{id}/resources', actions\user\GET\UserResourcesAction::class)->add(new TokenMiddleware());
 
 // POST
 
-$app->post('/api/user/{id}/follow', actions\user\POST\FollowAction::class);
+$app->post('/api/user/{id}/follow', actions\user\POST\FollowAction::class)->add(new TokenMiddleware());
 
 
 // PATCH
-$app->post('/api/user/edit', actions\user\PATCH\UserAction::class);
+$app->post('/api/user/edit', actions\user\PATCH\UserAction::class)->add(new TokenMiddleware());
 
 // DELETE
-$app->delete('/api/disconnect', actions\user\DELETE\DisconnectAction::class);
-$app->delete('/api/user/{id}/unfollow', actions\user\DELETE\UnfollowAction::class);
+$app->delete('/api/disconnect', actions\user\DELETE\DisconnectAction::class)->add(new TokenMiddleware());
+$app->delete('/api/user/{id}/unfollow', actions\user\DELETE\UnfollowAction::class)->add(new TokenMiddleware());
 
 // =====================
 //     Conversation
 // =====================
 // GET
-$app->get('/api/conversations', actions\conversation\GET\ConversationAction::class);
+$app->get('/api/conversations', actions\conversation\GET\ConversationAction::class)->add(new TokenMiddleware());
 
 // POST
 
@@ -97,41 +97,41 @@ $app->get('/api/conversations', actions\conversation\GET\ConversationAction::cla
 //     Message
 // =====================
 // POST
-$app->post('/api/message', actions\message\POST\MessageAction::class);
+$app->post('/api/message', actions\message\POST\MessageAction::class)->add(new TokenMiddleware());
 
 
 // =====================
 //     Ressource
 // =====================
 // GET
-$app->get('/api/resources', actions\resource\GET\ResourcesAction::class);
-$app->get('/api/resource/{id}', actions\resource\GET\ResourceByIdAction::class);
+$app->get('/api/resources', actions\resource\GET\ResourcesAction::class)->add(new TokenMiddleware());
+$app->get('/api/resource/{id}', actions\resource\GET\ResourceByIdAction::class)->add(new TokenMiddleware());
 
 
 // POST
-$app->post('/api/resource', actions\resource\POST\ResourceAction::class);
-$app->post('/api/resource/{id_resource}/group/{id_group}', actions\resource\POST\ResourceGroupShareAction::class);
+$app->post('/api/resource', actions\resource\POST\ResourceAction::class)->add(new TokenMiddleware());
+$app->post('/api/resource/{id_resource}/group/{id_group}', actions\resource\POST\ResourceGroupShareAction::class)->add(new TokenMiddleware());
 
 // Méthode PATCH impossible en PHP
-$app->post('/api/resource/{id}', actions\resource\PATCH\ResourceAction::class);
+$app->post('/api/resource/{id}', actions\resource\PATCH\ResourceAction::class)->add(new TokenMiddleware());
 
 // =====================
 //     Groupe
 // =====================
 // GET
-$app->get('/api/groups', actions\group\GET\GroupsAction::class);
-$app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class);
-$app->get('/api/group/{id}/resources', actions\group\GET\GroupResourceAction::class);
+$app->get('/api/groups', actions\group\GET\GroupsAction::class)->add(new TokenMiddleware());
+$app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class)->add(new TokenMiddleware());
+$app->get('/api/group/{id}/resources', actions\group\GET\GroupResourceAction::class)->add(new TokenMiddleware());
 
 // POST
-$app->post('/api/group', actions\group\POST\GroupAction::class);
-$app->post('/api/group/{id}/follow', actions\group\POST\GroupFollowAction::class);
+$app->post('/api/group', actions\group\POST\GroupAction::class)->add(new TokenMiddleware());
+$app->post('/api/group/{id}/follow', actions\group\POST\GroupFollowAction::class)->add(new TokenMiddleware());
 
 // Méthode PATCH impossible en PHP
-$app->post('/api/group/{id}', actions\group\PATCH\GroupAction::class);
+$app->post('/api/group/{id}', actions\group\PATCH\GroupAction::class)->add(new TokenMiddleware());
 
 // DELETE
-$app->delete('/api/group/{id}/unfollow', actions\group\DELETE\GroupUnfollowAction::class);
+$app->delete('/api/group/{id}/unfollow', actions\group\DELETE\GroupUnfollowAction::class)->add(new TokenMiddleware());
 
 
 // PATCH
@@ -143,6 +143,6 @@ $app->delete('/api/group/{id}/unfollow', actions\group\DELETE\GroupUnfollowActio
 // =====================
 
 // POST
-$app->post('/api/comment/{id_resource}', api\actions\comment\POST\CommentAction::class);
+$app->post('/api/comment/{id_resource}', api\actions\comment\POST\CommentAction::class)->add(new TokenMiddleware());
 
 $app->run();
