@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from "vue";
+
 const props = defineProps({
 	placeholder: {
 		type: String,
@@ -21,7 +23,7 @@ const props = defineProps({
 		default: "default",
 	},
 	value: {
-		type: String,
+		type: [String, Number, File],
 		default: "",
 	},
 	required: {
@@ -38,24 +40,50 @@ const props = defineProps({
 	},
 });
 
-defineEmits(["update:value"]);
+const photoUrl = ref(null);
+
+function onFileInput(event) {
+	const file = event.target.files[0];
+	if (!file) {
+		return;
+	}
+	const url = URL.createObjectURL(file);
+	photoUrl.value = url;
+	emit("update:value", file);
+}
+
+const emit = defineEmits(["update:value"]);
 </script>
 
 <template>
 	<div v-bind:class="{ border: props.border, small: props.small }">
 		<template v-if="props.label">
-			<label v-bind:class="{ active: props.value.length > 0 }" :for="props.name">{{ props.label }}</label>
+			<label v-bind:class="{ active: props.value.length > 0 || props.type == 'file' }" :for="props.name">{{ props.label }}</label>
 		</template>
-		<input
-			:type="props.type"
-			:id="props.name"
-			:name="props.name"
-			:value="props.value"
-			:required="props.required"
-			:disabled="props.disabled"
-			:placeholder="props.placeholder"
-			@input="$emit('update:value', $event.target.value)"
-		/>
+
+		<template v-if="props.type == 'file'">
+			<img :src="photoUrl" class="picture" />
+			<input
+				:type="props.type"
+				:id="props.name"
+				:name="props.name"
+				:required="props.required"
+				:disabled="props.disabled"
+				@change="onFileInput($event)"
+			/>
+		</template>
+		<template v-else>
+			<input
+				:type="props.type"
+				:id="props.name"
+				:name="props.name"
+				:value="props.value"
+				:required="props.required"
+				:disabled="props.disabled"
+				:placeholder="props.placeholder"
+				@input="$emit('update:value', $event.target.value)"
+			/>
+		</template>
 	</div>
 </template>
 
@@ -104,6 +132,17 @@ div {
 				background-color: $light-bg-primary;
 			}
 		}
+	}
+
+	.picture {
+		background-color: rgba(0, 0, 0, 0.1);
+		border-radius: 0.25rem;
+		margin: auto;
+		margin-top: 1rem;
+
+		width: 100px;
+		height: 100px;
+		object-fit: cover;
 	}
 
 	input {
