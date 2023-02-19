@@ -85,9 +85,9 @@ function createGroup() {
 
 		<form>
 			<Alert v-if="message"> {{ message }} </Alert>
-			<Input type="text" name="name" label="Nom du groupe" v-model:value="form.name" />
-			<Input type="file" name="image" label="Photo du groupe" v-model:value="form.image" />
-			<Textarea name="description" label="Description du groupe" v-model:value="form.description" />
+			<Input type="text" name="name" label="Nom" v-model:value="form.name" />
+			<Input type="file" name="image" label="Photo" v-model:value="form.image" />
+			<Textarea name="description" label="Description" v-model:value="form.description" />
 
 			<Button @click.prevent="createGroup">Créer le groupe</Button>
 		</form>
