@@ -8,11 +8,7 @@ class Group extends \Illuminate\Database\Eloquent\Model
 {
   use HasUuids;
 
-  use HasUuids;
-
-  use HasUuids;
-
-  protected  $table = 'Group';
+  protected  $table = 'group';
   protected  $primaryKey = 'id_group';
 
   public $timestamps = true;
@@ -20,11 +16,11 @@ class Group extends \Illuminate\Database\Eloquent\Model
 
   public function resources(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\Resource', 'Resource_Group', 'id_group', 'id_resource');
+    return $this->belongsToMany('api\models\Resource', 'resource_group', 'id_group', 'id_resource');
   }
 
   public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\User', 'User_Group', 'id_group', 'id_user');
+    return $this->belongsToMany('api\models\User', 'user_group', 'id_group', 'id_user');
   }
 }
