@@ -39,21 +39,21 @@ const router = createRouter({
 			redirect: "/group/create",
 			children: [
 				{
-					path: "/:id",
+					path: "create",
+					name: "groupCreate",
+					component: () => import("@/views/group/GroupCreateView.vue"),
+				},
+				{
+					path: ":id",
 					name: "groupByID",
 					component: () => import("@/views/group/GroupView.vue"),
 					children: [
 						{
-							path: "/edit",
+							path: "edit",
 							name: "groupEdit",
 							component: () => import("@/views/group/GroupEditView.vue"),
 						},
 					],
-				},
-				{
-					path: "/create",
-					name: "groupCreate",
-					component: () => import("@/views/group/GroupCreateView.vue"),
 				},
 			],
 		},
