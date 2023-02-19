@@ -52,12 +52,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 // =====================
 $app->post('/api/register', actions\user\POST\RegisterAction::class);
 $app->post('/api/login', actions\user\POST\LoginAction::class);
-
-
-// =====================
-//    ADD MIDDLEWARE
-// =====================
-// $app->add(new TokenMiddleware());
+$app->delete('/api/disconnect', actions\user\DELETE\DisconnectAction::class)->add(new TokenMiddleware());
 
 // =====================
 //        User
@@ -76,7 +71,6 @@ $app->post('/api/user/{id}/follow', actions\user\POST\FollowAction::class)->add(
 $app->post('/api/user/edit', actions\user\PATCH\UserAction::class)->add(new TokenMiddleware());
 
 // DELETE
-$app->delete('/api/disconnect', actions\user\DELETE\DisconnectAction::class)->add(new TokenMiddleware());
 $app->delete('/api/user/{id}/unfollow', actions\user\DELETE\UnfollowAction::class)->add(new TokenMiddleware());
 
 // =====================
