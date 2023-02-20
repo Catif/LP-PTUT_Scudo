@@ -47,13 +47,11 @@ const router = createRouter({
 					path: ":id",
 					name: "groupByID",
 					component: () => import("@/views/group/GroupView.vue"),
-					children: [
-						{
-							path: "edit",
-							name: "groupEdit",
-							component: () => import("@/views/group/GroupEditView.vue"),
-						},
-					],
+				},
+				{
+					path: ":id/edit",
+					name: "groupEdit",
+					component: () => import("@/views/group/GroupEditView.vue"),
 				},
 			],
 		},
