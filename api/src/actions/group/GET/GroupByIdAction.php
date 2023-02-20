@@ -13,33 +13,35 @@ use api\models\Group;
 
 //Exception
 use api\errors\exceptions\RessourceNotFoundException as RessourceNotFoundException;
+use api\models\Authorization;
 use Slim\Exception\HttpNotFoundException;
 
 final class GroupByIdAction
 {
   public function __invoke(Request $rq, Response $rs, array $args): Response
   {
+    $headers = $rq->getHeaders();
+
 
     try {
-      $groupById = GroupService::getGroupByID($args['id']);
-      $followings = $groupById->users()->where('user_group.id_user', $args['id'])->get();
+      $token = Authorization::findOrFail($headers['Authorization'][0]);
+      $user = $token->user()->first();
 
-      foreach ($followings as $following) {
-        $roleUser = $following['role'];
-      }
+      $groupById = GroupService::getGroupByID($args['id']);
+      $following = $groupById->users()->find($user->id_user);
 
       $etatFollowing = false;
       $owner = false;
-      if ($roleUser == 'owner') {
-        $etatFollowing = true;
-        $owner = true;
-      } elseif ($roleUser == 'member') {
-        $etatFollowing = true;
+      if (isset($following)) {
+        if ($following->pivot->role == 'owner') {
+          $etatFollowing = true;
+          $owner = true;
+        } elseif ($following->pivot->role == 'member') {
+          $etatFollowing = true;
+        }
       }
 
       $data = [
-        'Filtre' => 'groupById',
-        'count' => count($groupById),
         'result' => [
           'group' => FormatterObject::formatGroup($groupById),
           'following' => $etatFollowing,
