@@ -6,6 +6,7 @@ use api\errors\exceptions\RessourceNotFoundException;
 use Ramsey\Uuid\Uuid;
 use api\models\Resource;
 use api\models\User;
+use api\services\utils\FormatterObject;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -16,10 +17,16 @@ final class ResourceService
     return Resource::where('is_private', 0)->skip(($page - 1) * $limit)->take($limit)->get();
   }
 
-  static public function getResourceByID($id): Resource
+  static public function getResourceByID($id): array
   {
     try {
-      return Resource::findOrFail($id);
+      $resourceComment = Resource::findOrFail($id)->comments()->get();
+      $resource = Resource::findOrFail($id);
+
+      return [
+        'resource' => $resource,
+        'comment' => $resourceComment
+      ];
     } catch (Exception $e) {
       echo ($e->getMessage());
       throw new Exception("error UserByID");
@@ -54,29 +61,30 @@ final class ResourceService
   static public function updateResource(Resource $resource, array $properties)
   {
     $changed = false;
-    if ($properties['is_private'] == 0 && $resource->is_private == 1) {
-      $resource->published_at = date('Y-m-d H:i:s');
-      $resource->is_private = 0;
-      $changed = true;
+    if (isset($properties['is_private'])) {
+      if ($properties['is_private'] == 0 && $resource->is_private == 1) {
+        $resource->published_at = date('Y-m-d H:i:s');
+        $resource->is_private = 0;
+        $changed = true;
+      } elseif ($properties['is_private'] == 1 && $resource->is_private == 0) {
+        $resource->published_at = null;
+        $resource->is_private = 1;
+        $changed = true;
+      }
     }
-    if ($properties['is_private'] == 1 && $resource->is_private == 0) {
-      $resource->published_at = null;
-      $resource->is_private = 1;
-      $changed = true;
-    }
-    if ($properties['filename'] != null) {
+    if (isset($properties['filename'])) {
       $resource->filename = $properties['filename'];
       $changed = true;
     }
-    if ($properties['type'] != null) {
+    if (isset($properties['type'])) {
       $resource->type = $properties['type'];
       $changed = true;
     }
-    if ($properties['title'] != null) {
+    if (isset($properties['title'])) {
       $resource->title = $properties['title'];
       $changed = true;
     }
-    if ($properties['text'] != null) {
+    if (isset($properties['text'])) {
       $resource->text = $properties['text'];
       $changed = true;
     }

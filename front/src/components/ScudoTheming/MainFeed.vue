@@ -12,11 +12,13 @@
 main {
   flex-grow: 1;
   padding-top: 3.5rem;
+  height: 100vh;
 }
 
 #container {
   max-width: $content-min-width;
   margin: auto;
+
 }
 
 @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {

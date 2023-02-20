@@ -61,7 +61,7 @@ div {
   align-items: flex-start;
 
   position: relative;
-  margin: 1.25rem 0;
+  margin: 1.5rem .75rem;
 
   &.border {
     border: 1px solid $light-border;
@@ -104,7 +104,7 @@ div {
     line-height: 1.5rem;
     font-size: 1rem;
     padding: 1rem;
-
+    z-index: 2;
     width: 100%;
 
     &:focus {

@@ -1,37 +1,39 @@
 <?php
 
-namespace api\actions\group\POST;
+namespace api\actions\comment\POST;
 
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 
-use api\services\GroupService as GroupService;
+use api\services\CommentService;
 use api\services\utils\FormatterAPI;
 
 use api\models\Authorization;
 use api\services\utils\FormatterObject;
 
-final class GroupFollowAction
+final class CommentAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
         $headers = $rq->getHeaders();
-        $token = Authorization::findOrFail($headers['Authorization'][0]);
-        $user = $token->user()->first();
+        
+        $body = $rq->getParsedBody();
 
         try {
+            $token = Authorization::findOrFail($headers['Authorization'][0]);
+            $user = $token->user()->first();
 
-            $modelGroup = GroupService::insertGroupFollow($args['id'], $user);
-
+            if (!is_array($body)) {
+                throw new \Exception("Le body n'existe pas");
+            }
+            $modelComment = CommentService::insertComment($user,$args['id_resource'],$body);
             $data = [
-
-                'result' => [
-                    'group' => $modelGroup
-                ]
+                'comment' => FormatterObject::formatComment($modelComment)
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
+
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
@@ -39,5 +41,7 @@ final class GroupFollowAction
             return FormatterAPI::formatResponse($rq, $rs, $data, 400); // 400 = Bad Request
             return $rs;
         }
+
+
     }
 }

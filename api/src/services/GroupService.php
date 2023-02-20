@@ -32,7 +32,7 @@ final class GroupService
         'created_at'
       ])->findOrFail($id);
     } catch (\Exception $e) {
-        new \Exception("erreur du service getGroupById");
+        new \Exception("Le groupe n'a pas été trouvé.");
     }
 
     return $group;
@@ -87,18 +87,18 @@ final class GroupService
   static public function getResource(int $id,int $page, int $nbMax){
 
     try {
-      $group = Group::find($id)->resources()->skip(($page - 1)* $nbMax)->take($nbMax)->get();
+      $resources = Group::findOrFail($id)->resources()->skip(($page - 1)* $nbMax)->take($nbMax)->get();
     } catch (\Exception $e) {
         new \Exception("Erreur lors de recuperations des resources d'un groupe");
     }
 
-    return $group;
+    return $resources;
   }
 
   static public function deleteGroupFollow(int $id_group, $id_user)
   {
     try{
-    $group = Group::find($id_group)->users()->detach($id_user);
+      $group = Group::find($id_group)->users()->detach($id_user);
     }catch(\Exception $e){
       new \Exception("Erreur lors de l'unfollow d'un groupe");
     }

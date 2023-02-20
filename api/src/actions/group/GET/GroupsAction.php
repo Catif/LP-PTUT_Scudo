@@ -14,16 +14,18 @@ final class GroupsAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
-        $groupService = new GroupService;
-        $groups = $groupService->getGroups();
+        $groups = GroupService::getGroups();
         $listGroup = [];
-        foreach($groups as $group){
-            $listGroup[] =FormatterObject::formatGroup($group);
+        foreach ($groups as $group) {
+            $listGroup[] = FormatterObject::formatGroup($group);
         }
 
         $data = [
             'count' => count($listGroup),
-            'group' =>$listGroup
+
+            'result' => [
+                'group' => $listGroup
+            ]
         ];
 
         return FormatterAPI::formatResponse($rq, $rs, $data);

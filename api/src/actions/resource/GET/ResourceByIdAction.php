@@ -1,5 +1,4 @@
 <?php
-
 namespace api\actions\resource\GET;
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -12,6 +11,7 @@ use api\services\utils\FormatterAPI;
 //Exception
 use api\errors\exceptions\RessourceNotFoundException as RessourceNotFoundException;
 use api\models\Authorization;
+use api\services\utils\FormatterObject;
 use Exception;
 use Slim\Exception\HttpNotFoundException;
 
@@ -22,11 +22,11 @@ final class ResourceByIdAction
     $header = $rq->getHeaders();
 
     try {
-      $resource = ResourceService::getResourceByID($args['id']);
-      if ($resource->is_private == 1) {
-        $token = Authorization::findOrFail($header['API-Token'][0]);
+      $array = ResourceService::getResourceByID($args['id']);
+      if ($array['resource']->is_private == 1) {
+        $token = Authorization::findOrFail($header['Authorization'][0]);
         $user = $token->user()->first();
-        if ($resource->id_user != $user->id_user) {
+        if ($array['resource']->id_user != $user->id_user) {
           throw new Exception("You don't have permission to acces this resource");
         }
       }
@@ -36,8 +36,18 @@ final class ResourceByIdAction
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 401);
     }
+    $allComment[] = [];
+    foreach($array['comment'] as $comment){
+      $allComment[] = FormatterObject::formatComment($comment);
+    }
+
+    
     $data = [
-      'Result' => $resource
+      'result' => [
+        'resource' => FormatterObject::formatResource( $array['resource']),
+        'comments' => $allComment
+      ]
+
     ];
 
     return FormatterAPI::formatResponse($rq, $rs, $data);
