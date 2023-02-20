@@ -64,10 +64,10 @@ function isValidForm() {
 			phone: form.phone,
 			role: 'professional',
 		}).then((result) => {
-			Session.setSession(result.data.token)
+			Session.setSession(result.data.token, result.data.result.user.id)
 			router.push('/')
 		}).catch((error) => {
-			message.value = error.response.data.error
+			message.value = error.data.error
 			return null
 		})
 	} else {
@@ -77,10 +77,10 @@ function isValidForm() {
 			password: form.password,
 			role: 'individual',
 		}).then((result) => {
-			Session.setSession(result.data.token)
+			Session.setSession(result.data.result.token, result.data.result.user.id)
 			router.push('/')
 		}).catch((error) => {
-			message.value = error.response.data.error
+			message.value = error.data.error
 			return null
 		})
 	}

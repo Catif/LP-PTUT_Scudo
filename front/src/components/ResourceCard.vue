@@ -10,20 +10,23 @@ const props = defineProps(['user', 'resource', 'group'])
 
 <template>
     <ClickableFilledCard>
-        <RouterLink :to="'/group/' + props['group'].id" v-if="props['group']">
-            <Text><Icon>groups</Icon> {{ props['group'].name }}</Text>
+        <RouterLink :to="'/group/' + group.id" v-if="group">
+            <Text>
+                <Icon>groups</Icon> {{ group.name }}
+            </Text>
         </RouterLink>
-        <ResourceSection :resource="props['resource']" :user="props['user']" />
-        <AuthorSection :user="props['user']" :title="props['resource'].title" />
+        <ResourceSection :resource="resource" :user="user" />
+        <AuthorSection :user="user" :title="resource.title" />
         <Text>
-            {{ props['resource'].description }}
+            {{ resource.text }}
         </Text>
     </ClickableFilledCard>
 </template>
 <style lang="scss" scoped>
-a{
+a {
     text-decoration: none;
-    p{
+
+    p {
         margin: 0;
         padding: 0.75rem;
     }

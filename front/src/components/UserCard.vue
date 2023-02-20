@@ -4,6 +4,7 @@ import UserPicture from "./UserPicture.vue";
 import UserStat from "./UserStat.vue";
 import Alert from "./ScudoTheming/Alert.vue";
 import FollowButton from "./ScudoTheming/FollowButton.vue";
+import EditButton from "./ScudoTheming/EditButton.vue";
 import Text from "./ScudoTheming/Text.vue";
 
 const props = defineProps({
@@ -15,6 +16,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  edit: {
+    type: Boolean,
+    default: false,
+  }
 });
 </script>
 
@@ -22,7 +27,7 @@ const props = defineProps({
   <Card>
     <section>
       <main>
-        <UserPicture :user="props['user']" />
+        <UserPicture :user="user" />
         <Alert class="live" v-if="live">LIVE</Alert>
       </main>
       <aside>
@@ -30,7 +35,8 @@ const props = defineProps({
           <UserStat :number="user.following" type="suivis" />
           <UserStat :number="user.followers" type="followers" />
         </div>
-        <FollowButton />
+        <FollowButton v-if="edit !== true" />
+        <EditButton v-if="edit" />
       </aside>
       <Text class="biography">{{ user.biography }}</Text>
     </section>
