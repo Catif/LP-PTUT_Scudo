@@ -1,5 +1,65 @@
-<script setup></script>
+<script setup>
+import MainFeed from "@/components/ScudoTheming/MainFeed.vue";
+import GroupCard from "@/components/GroupCard.vue";
+import GroupTopAppBar from "@/components/GroupTopAppBar.vue";
 
-<template></template>
+import { reactive, inject, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { useSessionStore } from "@/stores/session";
 
-<style lang="scss" scoped></style>
+const route = useRoute();
+const Session = useSessionStore();
+
+const API = inject("api");
+
+const group = reactive({
+	id: route.params.id,
+	name: "Chargement...",
+	description: "Chargement...",
+	image: "https://media.tenor.com/5Bg1bLVpl8cAAAAC/loading-chargement.gif",
+	followers: 5,
+	follow: false,
+	owner: false,
+});
+
+function loadGroup() {
+	let config = {
+		headers: {
+			"Content-Type": "multipart/form-data",
+			Authorization: Session.data.token,
+		},
+	};
+	API.get(`/api/group/${route.params.id}`, config)
+		.then((response) => {
+			const result = response.data.result;
+
+			group.id = result.group.id;
+			group.name = result.group.name;
+			group.description = result.group.description;
+			group.image = result.group.url.image;
+			group.followers = result.followers;
+			group.follow = result.follow;
+			group.owner = result.owner;
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+}
+
+onMounted(() => {
+	loadGroup();
+});
+</script>
+
+<template>
+	<MainFeed>
+		<GroupTopAppBar :group="group" />
+		<GroupCard id="groupCard" :group="group" />
+	</MainFeed>
+</template>
+
+<style lang="scss" scoped>
+#groupCard {
+	margin-top: 68px;
+}
+</style>
