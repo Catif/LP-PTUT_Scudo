@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 
 const props = defineProps({
 	placeholder: {
@@ -41,6 +41,13 @@ const props = defineProps({
 });
 
 const photoUrl = ref(null);
+
+if (props.type == "file") {
+	const bus = inject("bus");
+	bus.on("loadImage", (url) => {
+		photoUrl.value = url;
+	});
+}
 
 function onFileInput(event) {
 	const file = event.target.files[0];
