@@ -18,7 +18,7 @@ final class GroupService
       'description',
       'image',
       'created_at'
-      ])->get();
+    ])->get();
   }
 
   static public function getGroupById($id)
@@ -32,18 +32,18 @@ final class GroupService
         'created_at'
       ])->findOrFail($id);
     } catch (\Exception $e) {
-        new \Exception("Le groupe n'a pas été trouvé.");
+      new \Exception("Le groupe n'a pas été trouvé.");
     }
 
     return $group;
   }
 
-  static public function insertGroup($user ,array $property)
+  static public function insertGroup($user, array $property)
   {
     if (empty($property['name']) || empty($property['description']) || empty($property['image'])) {
       throw new \Exception("un ou plusieur parametre n'existe pas quand on veut ajouter un groupe");
     }
-    $modelsGroup= new Group();
+    $modelsGroup = new Group();
     $modelsGroup->id_group = Uuid::uuid4()->toString();
     $modelsGroup->name = $property['name'];
     $modelsGroup->description = $property['description'];
@@ -51,9 +51,8 @@ final class GroupService
 
     try {
       $modelsGroup->save();
-      
     } catch (\Exception $e) {
-      echo($e->getMessage());
+      echo ($e->getMessage());
       throw new \Exception("Erreur d'enregistrement un groupe");
     }
     $modelsGroup->users()->attach($user, ['role' => 'owner']);
@@ -63,33 +62,31 @@ final class GroupService
 
   static public function insertGroupFollow(int $id_group, $id_user)
   {
-    try {   
-    $group = Group::find($id_group)->users()->attach($id_user, ['role' => 'member']);
-  } catch (\Exception $e) {
-    new \Exception("Erreur lors du follow d'un groupe");
-  }
+    try {
+      $group = Group::find($id_group)->users()->attach($id_user, ['role' => 'member']);
+    } catch (\Exception $e) {
+      new \Exception("Erreur lors du follow d'un groupe");
+    }
     return $group;
   }
 
-  static public function updateGroup(int $id,array $property){
-    if((empty($property['name']) || empty($property['description']) || empty($property['image']))){
-      throw new \Exception("un champs n'a pas été remplis ou n'est pas intègre au nomage demandé");
-    }
-    $modelsGroup = Group::find($id);
-    $modelsGroup->name = $property['name'];
-    $modelsGroup->description = $property['description'];
-    $modelsGroup->image = $property['image'];
+  static public function updateGroup(Group $group, array $property)
+  {
+    $group->name = isset($property['name']) ? $property['name'] : $group->name;
+    $group->description = isset($property['description']) ? $property['description'] : $group->description;
+    $group->image = isset($property['image']) ? $property['image'] : $group->image;
 
-    $modelsGroup->save();
-    return $modelsGroup;
+    $group->save();
+    return $group;
   }
 
-  static public function getResource(int $id,int $page, int $nbMax){
+  static public function getResource(int $id, int $page, int $nbMax)
+  {
 
     try {
-      $resources = Group::findOrFail($id)->resources()->skip(($page - 1)* $nbMax)->take($nbMax)->get();
+      $resources = Group::findOrFail($id)->resources()->skip(($page - 1) * $nbMax)->take($nbMax)->get();
     } catch (\Exception $e) {
-        new \Exception("Erreur lors de recuperations des resources d'un groupe");
+      new \Exception("Erreur lors de recuperations des resources d'un groupe");
     }
 
     return $resources;
@@ -97,9 +94,9 @@ final class GroupService
 
   static public function deleteGroupFollow(int $id_group, $id_user)
   {
-    try{
+    try {
       $group = Group::find($id_group)->users()->detach($id_user);
-    }catch(\Exception $e){
+    } catch (\Exception $e) {
       new \Exception("Erreur lors de l'unfollow d'un groupe");
     }
 
