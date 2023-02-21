@@ -29,6 +29,7 @@ final class GroupByIdAction
 
       $groupById = GroupService::getGroupByID($args['id']);
       $following = $groupById->users()->find($user->id_user);
+      $followers = $groupById->users()->count();
 
       $etatFollowing = false;
       $owner = false;
@@ -44,6 +45,7 @@ final class GroupByIdAction
       $data = [
         'result' => [
           'group' => FormatterObject::formatGroup($groupById),
+          'followers' => $followers,
           'following' => $etatFollowing,
           'owner' => $owner
         ]
