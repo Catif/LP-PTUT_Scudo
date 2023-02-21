@@ -18,17 +18,18 @@ final class GroupFollowAction
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
         $headers = $rq->getHeaders();
-        $token = Authorization::findOrFail($headers['Authorization'][0]);
-        $user = $token->user()->first();
 
         try {
+            $token = Authorization::findOrFail($headers['Authorization'][0]);
+            $user = $token->user()->first();
 
-            $modelGroup = GroupService::insertGroupFollow($args['id'], $user);
+            $group = GroupService::getGroupById($args['id']);
+
+            GroupService::insertGroupFollow($user, $group);
 
             $data = [
-
                 'result' => [
-                    'group' => $modelGroup
+                    'message' => "Vous venez se follow le groupe."
                 ]
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created

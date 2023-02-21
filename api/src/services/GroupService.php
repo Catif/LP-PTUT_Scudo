@@ -4,6 +4,7 @@ namespace api\services;
 
 
 use api\models\Group as Group;
+use api\models\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Ramsey\Uuid\Uuid;
@@ -60,16 +61,6 @@ final class GroupService
     return $modelsGroup;
   }
 
-  static public function insertGroupFollow(int $id_group, $id_user)
-  {
-    try {
-      $group = Group::find($id_group)->users()->attach($id_user, ['role' => 'member']);
-    } catch (\Exception $e) {
-      new \Exception("Erreur lors du follow d'un groupe");
-    }
-    return $group;
-  }
-
   static public function updateGroup(Group $group, array $property)
   {
     $group->name = isset($property['name']) ? $property['name'] : $group->name;
@@ -92,14 +83,42 @@ final class GroupService
     return $resources;
   }
 
-  static public function deleteGroupFollow(int $id_group, $id_user)
+  static public function insertGroupFollow(User $user, Group $groupToFollow)
   {
-    try {
-      $group = Group::find($id_group)->users()->detach($id_user);
-    } catch (\Exception $e) {
-      new \Exception("Erreur lors de l'unfollow d'un groupe");
+
+    if ($groupToFollow->users()->find($user->id_user)->pivot->role == 'owner') {
+      throw new Exception("Vous ne pouvez pas vous abonner à un groupe que vous avez créé.");
     }
 
-    return $group;
+    if (GroupService::isFollowing($user, $groupToFollow)) {
+      throw new Exception("Vous suivez déjà ce groupe.");
+    }
+
+    $groupToFollow->users()->attach($user, ['role' => 'member']);
+  }
+
+  static public function deleteGroupFollow(User $user, Group $groupToUnfollow)
+  {
+
+    if ($groupToUnfollow->users()->find($user->id_user)->pivot->role == 'owner') {
+      throw new Exception("Vous ne pouvez pas supprimer votre abonnement à un groupe que vous avez créé.");
+    }
+
+    if (!GroupService::isFollowing($user, $groupToUnfollow)) {
+      throw new Exception("Vous ne suivez pas ce groupe.");
+    }
+
+    $groupToUnfollow->users()->detach($user);
+  }
+
+  static public function isFollowing(User $user, Group $userToCheck)
+  {
+    $idUserFollow = $userToCheck->id_user;
+
+    if ($user->follows()->where('id_user_followed', $idUserFollow)->exists()) {
+      return true;
+    }
+
+    return false;
   }
 }

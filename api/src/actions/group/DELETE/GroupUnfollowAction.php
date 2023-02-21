@@ -18,16 +18,26 @@ final class GroupUnfollowAction
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
         $headers = $rq->getHeaders();
-        $token = Authorization::find($headers['Authorization'][0]);
-        $user = $token->user()->first();
+
 
         $body = $rq->getParsedBody();
 
 
 
         try {
+            $token = Authorization::find($headers['Authorization'][0]);
+            $user = $token->user()->first();
 
-            $modelGroup = GroupService::deleteGroupFollow($args['id'], $user);
+            $group = GroupService::getGroupById($args['id']);
+
+            GroupService::deleteGroupFollow($user, $group);
+
+            $data = [
+                'result' => [
+                    'message' => "Vous avez arrêté de suivre ce groupe."
+                ]
+            ];
+            return FormatterAPI::formatResponse($rq, $rs, $data, 202); // 201 = Accepted
         } catch (\Exception $e) {
             $data = [
                 'error' => $e->getMessage()
@@ -35,13 +45,5 @@ final class GroupUnfollowAction
             return FormatterAPI::formatResponse($rq, $rs, $data, 400); // 400 = Bad Request
             return $rs;
         }
-
-        $data = [
-
-            'result' => [
-                'group' => $modelGroup
-            ]
-        ];
-        return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
     }
 }
