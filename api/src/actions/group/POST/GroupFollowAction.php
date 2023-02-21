@@ -29,7 +29,7 @@ final class GroupFollowAction
 
             $data = [
                 'result' => [
-                    'message' => "Vous venez se follow le groupe."
+                    'message' => "Vous avez rejoinds le groupe."
                 ]
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 201); // 201 = Created
@@ -38,7 +38,6 @@ final class GroupFollowAction
                 'error' => $e->getMessage()
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 400); // 400 = Bad Request
-            return $rs;
         }
     }
 }

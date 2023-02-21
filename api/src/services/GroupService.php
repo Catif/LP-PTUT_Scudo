@@ -111,11 +111,9 @@ final class GroupService
     $groupToUnfollow->users()->detach($user);
   }
 
-  static public function isFollowing(User $user, Group $userToCheck)
+  static public function isFollowing(User $user, Group $groupToCheck)
   {
-    $idUserFollow = $userToCheck->id_user;
-
-    if ($user->follows()->where('id_user_followed', $idUserFollow)->exists()) {
+    if ($groupToCheck->users()->find($user->id_user)->exists()) {
       return true;
     }
 

@@ -19,11 +19,6 @@ final class GroupUnfollowAction
     {
         $headers = $rq->getHeaders();
 
-
-        $body = $rq->getParsedBody();
-
-
-
         try {
             $token = Authorization::find($headers['Authorization'][0]);
             $user = $token->user()->first();
@@ -34,7 +29,7 @@ final class GroupUnfollowAction
 
             $data = [
                 'result' => [
-                    'message' => "Vous avez arrêté de suivre ce groupe."
+                    'message' => "Vous avez quitté ce groupe."
                 ]
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 202); // 201 = Accepted
@@ -43,7 +38,6 @@ final class GroupUnfollowAction
                 'error' => $e->getMessage()
             ];
             return FormatterAPI::formatResponse($rq, $rs, $data, 400); // 400 = Bad Request
-            return $rs;
         }
     }
 }
