@@ -86,7 +86,7 @@ class FormatterObject
         'file' => $resource['filename']
       ],
       'title' => $resource['title'],
-      'description' => $resource['text'],
+      'text' => $resource['text'],
       'localisation' => [
         'latitude' => $resource['latitude'],
         'longitude' => $resource['longitude'],

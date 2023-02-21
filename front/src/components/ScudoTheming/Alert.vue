@@ -1,26 +1,41 @@
+<script setup>
+const props = defineProps({
+	type: {
+		type: String,
+		default: "error",
+	},
+});
+</script>
+
 <template>
-  <div>
-    <slot></slot>
-  </div>
+	<div class="alert" :class="{ error: type == 'error', success: type == 'success' }">
+		<slot></slot>
+	</div>
 </template>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
 
 div {
-  display: inline-block;
+	display: inline-block;
 
-  line-height: 1.5rem;
+	line-height: 1.5rem;
 
-  font-size: 1rem;
-  font-weight: 500;
+	font-size: 1rem;
+	font-weight: 500;
 
-  margin: .75rem;
-  padding: .375rem .75rem;
+	margin: 0.75rem;
+	padding: 0.375rem 0.75rem;
 
-  border-radius: 1.125rem;
+	border-radius: 1.125rem;
+	color: $light-text-button-alert;
+}
 
-  background: $light-bg-alert;
-  color: $light-text-button-alert;
+.alert.error {
+	background: $light-bg-alert;
+}
+
+.alert.success {
+	background: green;
 }
 </style>

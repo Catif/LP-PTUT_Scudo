@@ -10,7 +10,7 @@ class Authorization extends \Illuminate\Database\Eloquent\Model
 {
   use HasUuids;
 
-  protected  $table = 'Authorization';
+  protected  $table = 'authorization';
   protected  $primaryKey = 'token';
 
   public $timestamps = true;

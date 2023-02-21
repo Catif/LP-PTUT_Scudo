@@ -1,0 +1,124 @@
+<script setup>
+const props = defineProps({
+	placeholder: {
+		type: String,
+		default: "",
+	},
+	label: {
+		type: String,
+		default: "",
+	},
+	disabled: {
+		type: Boolean,
+		default: false,
+	},
+	name: {
+		type: String,
+		default: "default",
+	},
+	value: {
+		type: String,
+		default: "",
+	},
+	required: {
+		type: Boolean,
+		default: false,
+	},
+	border: {
+		type: Boolean,
+		default: true,
+	},
+	small: {
+		type: Boolean,
+		default: false,
+	},
+});
+
+defineEmits(["update:value"]);
+</script>
+
+<template>
+	<div v-bind:class="{ border: props.border, small: props.small }">
+		<template v-if="props.label">
+			<label v-bind:class="{ active: props.value.length > 0 }" :for="props.name">{{ props.label }}</label>
+		</template>
+		<textarea
+			:id="props.name"
+			:name="props.name"
+			:required="props.required"
+			:disabled="props.disabled"
+			:placeholder="props.placeholder"
+			@input="$emit('update:value', $event.target.value)"
+			>{{ props.value }}</textarea
+		>
+	</div>
+</template>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/colors";
+
+div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+
+	position: relative;
+	margin: 1.5rem 0.75rem;
+
+	&.border {
+		border: 1px solid;
+		border-radius: 0.25rem;
+		border-color: $light-border;
+	}
+
+	label {
+		position: absolute;
+		left: 0.5rem;
+		color: $light-text-secondary;
+		top: 30px;
+		padding: 0 0.5rem;
+		transform: translate(0, -50%);
+		cursor: text;
+
+		transition: all 0.1s ease-out;
+
+		&.active {
+			top: 0px;
+			left: 6px;
+			font-size: 0.9rem;
+
+			&::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: -1;
+				background-color: $light-bg-primary;
+			}
+		}
+	}
+
+	textarea {
+		border: none;
+		background-color: transparent;
+		line-height: 1.5rem;
+		font-size: 1rem;
+		padding: 1rem;
+		z-index: 2;
+		width: 100%;
+		resize: vertical;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&.small textarea {
+		line-height: 1rem;
+		padding: 0.375rem 0.75rem;
+	}
+}
+</style>

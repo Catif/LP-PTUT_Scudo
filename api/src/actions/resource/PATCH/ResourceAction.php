@@ -27,16 +27,15 @@ final class ResourceAction
         try {
             $token = Authorization::findOrFail($header['Authorization'][0]);
             $user = $token->user()->first();
-            $resource = ResourceService::getResourceByID($args['id']);
+            $resource = ResourceService::getResourceByID($args['id'])['resource'];
             if ($resource->id_user != $user->id_user) {
                 $data = [
-                    'error' => 'You are not the owner of this resource'
+                    'error' => 'Vous n\'avez pas les droits pour modifier cette ressource.'
                 ];
                 return FormatterAPI::formatResponse($rq, $rs, $data, 403);
             }
             $newResource = ResourceService::updateResource($resource, $body);
             $data = [
-
                 'result' => [
                     'Resource' => FormatterObject::formatResource($newResource)
                 ]
