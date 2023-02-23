@@ -1,9 +1,10 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, inject, ref } from 'vue';
 import FloatingAppButton from './ScudoTheming/FloatingAppButton.vue';
 import LargeIcon from './ScudoTheming/LargeIcon.vue';
 
 const props = defineProps(['id']);
+const bus = inject('bus')
 
 var stream_id = props.id;
 
@@ -55,10 +56,9 @@ connection.onstream = function (event) {
   });
   // Démarrage de l'enregistrement avec la durée d'un segment
   mediaRecorder.start(segmentLengthInMs);
-};
+  bus.emit('recordOK');
 
-// function startStream() {
-// }
+};
 
 function stopStream() {
   connection.closeSocket();
@@ -76,20 +76,19 @@ onMounted(() => {
   connection.socket.emit("runStream");
   connection.open(stream_id);
 
-
 })
 
+
+
+bus.on('stopRecord', function () {
+  stopStream();
+})
 
 </script>
 
 
 <template>
-  <div id="record">
-    <video id="video" autoplay muted playsinline :srcObject="videoSrc"></video>
-    <FloatingAppButton v-if="videoSrc != null" @click="stopStream">
-      <LargeIcon>stop</LargeIcon>
-    </FloatingAppButton>
-  </div>
+  <video id="video" autoplay muted playsinline :srcObject="videoSrc"></video>
 </template>
 
 <style lang="scss" scoped>
@@ -108,17 +107,6 @@ video {
   @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
     margin: .75rem 0;
     border-radius: 1.75rem;
-  }
-}
-
-#record {
-  position: relative;
-
-  &>button {
-    position: absolute;
-    bottom: .75rem;
-    left: 50%;
-    transform: translateX(-50%);
   }
 }
 </style>
