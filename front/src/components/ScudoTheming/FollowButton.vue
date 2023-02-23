@@ -2,17 +2,17 @@
 import FilledButton from "@/components/ScudoTheming/FilledButton.vue";
 import Icon from "@/components/ScudoTheming/Icon.vue";
 
-import { defineProps, inject } from "vue";
+import { ref, defineProps, inject } from "vue";
 import { useSessionStore } from "@/stores/session";
 
 const props = defineProps({
 	following: {
 		type: Boolean,
-		required: false,
+		default: false,
 	},
 	owner: {
 		type: Boolean,
-		required: false,
+		default: false,
 	},
 	type: {
 		type: String,
@@ -41,11 +41,11 @@ function follow() {
 			}
 		)
 			.then((response) => {
-				bus.emit("messageFollow", [response.data.result.message, "success"]);
+				bus.emit("actionFollow", [response.data.result.message, "success"]);
 			})
 			.catch((error) => {
 				console.log(error);
-				bus.emit("messageFollow", [error.response.data.error, "error"]);
+				bus.emit("actionFollow", [error.response.data.error, "error"]);
 			});
 	} else if (props.type == "user") {
 		API.post(
@@ -58,10 +58,41 @@ function follow() {
 			}
 		)
 			.then((response) => {
-				console.log(response);
+				bus.emit("actionFollow", [response.data.result.message, "success"]);
 			})
 			.catch((error) => {
 				console.log(error);
+				bus.emit("actionFollow", [error.response.data.error, "error"]);
+			});
+	}
+}
+
+function unfollow() {
+	if (props.type == "group") {
+		API.delete(`/api/group/${props.id}/unfollow`, {
+			headers: {
+				Authorization: Session.data.token,
+			},
+		})
+			.then((response) => {
+				bus.emit("actionFollow", [response.data.result.message, "success"]);
+			})
+			.catch((error) => {
+				console.log(error);
+				bus.emit("actionFollow", [error.response.data.error, "error"]);
+			});
+	} else if (props.type == "user") {
+		API.delete(`/api/user/${props.id}/unfollow`, {
+			headers: {
+				Authorization: Session.data.token,
+			},
+		})
+			.then((response) => {
+				bus.emit("actionFollow", [response.data.result.message, "success"]);
+			})
+			.catch((error) => {
+				console.log(error);
+				bus.emit("actionFollow", [error.response.data.error, "error"]);
 			});
 	}
 }
@@ -73,13 +104,20 @@ function follow() {
 			<FilledButton id="follow" @click="follow">Suivre</FilledButton>
 		</template>
 		<template v-else-if="!owner">
-			<FilledButton id="unfollow">Ne plus suivre</FilledButton>
+			<FilledButton id="unfollow" @click="unfollow">Ne plus suivre</FilledButton>
 			<FilledButton id="notification"><Icon>notifications</Icon></FilledButton>
 		</template>
 		<template v-else>
-			<RouterLink :to="{ name: 'groupEdit', params: { id: id } }" id="edit">
-				<FilledButton>Modifier</FilledButton>
-			</RouterLink>
+			<template v-if="type == 'group'">
+				<RouterLink :to="{ name: 'groupEdit', params: { id: id } }" id="edit">
+					<FilledButton>Modifier</FilledButton>
+				</RouterLink>
+			</template>
+			<template v-else-if="type == 'user'">
+				<RouterLink :to="{ name: 'userEdit', params: { id: id } }" id="edit">
+					<FilledButton>Modifier</FilledButton>
+				</RouterLink>
+			</template>
 		</template>
 	</div>
 </template>
