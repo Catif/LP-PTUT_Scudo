@@ -17,8 +17,8 @@ const group = reactive({
 	name: "Chargement...",
 	description: "Chargement...",
 	image: "https://media.tenor.com/5Bg1bLVpl8cAAAAC/loading-chargement.gif",
-	followers: 5,
-	follow: false,
+	followers: 0,
+	following: false,
 	owner: false,
 });
 
@@ -38,7 +38,7 @@ function loadGroup() {
 			group.description = result.group.description;
 			group.image = result.group.url.image;
 			group.followers = result.followers;
-			group.follow = result.follow;
+			group.following = result.following;
 			group.owner = result.owner;
 		})
 		.catch((error) => {

@@ -37,7 +37,6 @@ function loadGroup() {
 	})
 		.then((response) => {
 			const result = response.data.result;
-			console.log(result);
 
 			group.value = result.group;
 
@@ -86,7 +85,6 @@ function editGroup() {
 		API.post("/api/upload", fileData, config)
 			.then((response) => {
 				let url = response.data.result.url;
-				console.log(url);
 
 				API.post(
 					`/api/group/${group.value.id}`,

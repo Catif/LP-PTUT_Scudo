@@ -40,7 +40,7 @@ bus.on("messageFollow", (event) => {
 			<div class="stats">
 				<UserStat :number="group.followers" type="followers" />
 			</div>
-			<FollowButton type="group" :id="group.id" />
+			<FollowButton type="group" :id="group.id" :following="group.following" :owner="group.owner" />
 		</aside>
 		<Text class="biography">{{ group.description }}</Text>
 	</Card>
