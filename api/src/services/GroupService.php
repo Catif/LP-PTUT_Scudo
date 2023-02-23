@@ -85,37 +85,33 @@ final class GroupService
 
   static public function insertGroupFollow(User $user, Group $groupToFollow)
   {
-    if ($groupToFollow->users()->find($user->id_user) == null) {
-      $groupToFollow->users()->attach($user, ['role' => 'member']);
-    } else {
+
+    if (GroupService::isFollowing($user, $groupToFollow)) {
       if ($groupToFollow->users()->find($user->id_user)->pivot->role == 'owner') {
         throw new Exception("Vous ne pouvez pas vous abonner à un groupe que vous avez créé.");
       }
-
-      if (GroupService::isFollowing($user, $groupToFollow)) {
-        throw new Exception("Vous suivez déjà ce groupe.");
-      }
+      throw new Exception("Vous suivez déjà ce groupe.");
     }
+
+    $groupToFollow->users()->attach($user, ['role' => 'member']);
   }
 
   static public function deleteGroupFollow(User $user, Group $groupToUnfollow)
   {
-    if ($groupToUnfollow->users()->find($user->id_user) == null) {
-      $groupToUnfollow->users()->detach($user);
-    } else {
-      if ($groupToUnfollow->users()->find($user->id_user)->pivot->role == 'owner') {
-        throw new Exception("Vous ne pouvez pas supprimer votre abonnement à un groupe que vous avez créé.");
-      }
-
-      if (!GroupService::isFollowing($user, $groupToUnfollow)) {
-        throw new Exception("Vous ne suivez pas ce groupe.");
-      }
+    if (!GroupService::isFollowing($user, $groupToUnfollow)) {
+      throw new Exception("Vous ne suivez pas ce groupe.");
     }
+
+    if ($groupToUnfollow->users()->find($user->id_user)->pivot->role == 'owner') {
+      throw new Exception("Vous ne pouvez pas supprimer votre abonnement à un groupe que vous avez créé.");
+    }
+
+    $groupToUnfollow->users()->detach($user);
   }
 
   static public function isFollowing(User $user, Group $groupToCheck)
   {
-    if ($groupToCheck->users()->find($user->id_user)->exists()) {
+    if ($groupToCheck->users()->find($user->id_user) != null) {
       return true;
     }
 
