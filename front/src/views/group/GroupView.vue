@@ -24,30 +24,6 @@ const group = reactive({
 	owner: false,
 });
 
-const message = reactive({
-	content: "",
-	type: "",
-});
-
-bus.on("actionFollow", (event) => {
-	message.type = event[1];
-	message.content = event[0];
-	if (message.type == "success") {
-		console.log("group.following: " + group.following);
-		group.following = !group.following;
-
-		if (group.following) {
-			group.followers++;
-		} else {
-			group.followers--;
-		}
-	}
-
-	setTimeout(() => {
-		message.content = "";
-	}, 3000);
-});
-
 function loadGroup() {
 	let config = {
 		headers: {
@@ -72,6 +48,31 @@ function loadGroup() {
 		});
 }
 
+const message = reactive({
+	content: "",
+	type: "",
+});
+
+bus.on("actionFollow", (event) => {
+	message.type = event[1];
+	if (message.type == "success") {
+		group.following = !group.following;
+
+		if (group.following) {
+			group.followers++;
+		} else {
+			group.followers--;
+		}
+	} else if (message.type == "error") {
+		message.content = event[0];
+		console.log("group.following: " + group.following);
+	}
+
+	setTimeout(() => {
+		message.content = "";
+	}, 3000);
+});
+
 onMounted(() => {
 	loadGroup();
 });
@@ -82,6 +83,8 @@ onMounted(() => {
 		<GroupTopAppBar :group="group" />
 		<Alert class="alert" v-if="message.content" :type="message.type">{{ message.content }}</Alert>
 		<GroupCard id="groupCard" :group="group" />
+
+		<div id="list-resources"></div>
 	</MainFeed>
 </template>
 
