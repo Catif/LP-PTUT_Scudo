@@ -2,6 +2,7 @@
 import MainFeed from "@/components/ScudoTheming/MainFeed.vue";
 import GroupCard from "@/components/GroupCard.vue";
 import GroupTopAppBar from "@/components/GroupTopAppBar.vue";
+import Alert from "@/components/ScudoTheming/Alert.vue";
 
 import { reactive, inject, onMounted } from "vue";
 import { useRoute } from "vue-router";
@@ -11,6 +12,7 @@ const route = useRoute();
 const Session = useSessionStore();
 
 const API = inject("api");
+const bus = inject("bus");
 
 const group = reactive({
 	id: route.params.id,
@@ -20,6 +22,30 @@ const group = reactive({
 	followers: 0,
 	following: false,
 	owner: false,
+});
+
+const message = reactive({
+	content: "",
+	type: "",
+});
+
+bus.on("actionFollow", (event) => {
+	message.type = event[1];
+	message.content = event[0];
+	if (message.type == "success") {
+		console.log("group.following: " + group.following);
+		group.following = !group.following;
+
+		if (group.following) {
+			group.followers++;
+		} else {
+			group.followers--;
+		}
+	}
+
+	setTimeout(() => {
+		message.content = "";
+	}, 3000);
 });
 
 function loadGroup() {
@@ -54,12 +80,15 @@ onMounted(() => {
 <template>
 	<MainFeed>
 		<GroupTopAppBar :group="group" />
+		<Alert class="alert" v-if="message.content" :type="message.type">{{ message.content }}</Alert>
 		<GroupCard id="groupCard" :group="group" />
 	</MainFeed>
 </template>
 
 <style lang="scss" scoped>
-#groupCard {
-	margin-top: 68px;
+.alert {
+	width: 100%;
+	text-align: center;
+	margin: 0;
 }
 </style>

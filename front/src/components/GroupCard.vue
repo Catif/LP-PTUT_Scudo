@@ -14,26 +14,9 @@ const props = defineProps({
 		required: true,
 	},
 });
-
-const bus = inject("bus");
-
-const message = reactive({
-	content: "",
-	type: "",
-});
-
-bus.on("messageFollow", (event) => {
-	message.content = event[0];
-	message.type = event[1];
-
-	setTimeout(() => {
-		message.content = "";
-	}, 3000);
-});
 </script>
 
 <template>
-	<Alert class="alert" v-if="message.content" :type="message.type">{{ message.content }}</Alert>
 	<Card>
 		<Image :src="group.image" :alt="'Photo de couverture de' + props['group'].name" />
 		<aside>
@@ -47,12 +30,6 @@ bus.on("messageFollow", (event) => {
 </template>
 
 <style lang="scss" scoped>
-.alert {
-	width: 100%;
-	text-align: center;
-	margin: 0;
-}
-
 img {
 	aspect-ratio: 2 / 1;
 }
