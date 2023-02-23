@@ -6,6 +6,14 @@ import { defineProps, inject } from "vue";
 import { useSessionStore } from "@/stores/session";
 
 const props = defineProps({
+	following: {
+		type: Boolean,
+		required: false,
+	},
+	owner: {
+		type: Boolean,
+		required: false,
+	},
 	type: {
 		type: String,
 		required: true,
@@ -61,8 +69,18 @@ function follow() {
 
 <template>
 	<div class="followButton">
-		<FilledButton id="follow" @click="follow">Suivre</FilledButton>
-		<FilledButton id="notification"><Icon>notifications</Icon></FilledButton>
+		<template v-if="!following && !owner">
+			<FilledButton id="follow" @click="follow">Suivre</FilledButton>
+		</template>
+		<template v-else-if="!owner">
+			<FilledButton id="unfollow">Ne plus suivre</FilledButton>
+			<FilledButton id="notification"><Icon>notifications</Icon></FilledButton>
+		</template>
+		<template v-else>
+			<RouterLink :to="{ name: 'groupEdit', params: { id: id } }" id="edit">
+				<FilledButton>Modifier</FilledButton>
+			</RouterLink>
+		</template>
 	</div>
 </template>
 
@@ -85,11 +103,26 @@ function follow() {
 		justify-content: center;
 	}
 
-	#follow {
+	#unfollow {
 		flex-grow: 1;
 		border-radius: 18px 0 0 18px;
 		text-transform: uppercase;
 		font-weight: 500;
+	}
+
+	#follow,
+	a#edit,
+	a#edit button {
+		flex-grow: 1;
+		border-radius: 18px;
+		text-transform: uppercase;
+		font-weight: 500;
+
+		text-decoration: none;
+	}
+
+	a#edit button {
+		margin: 0;
 	}
 
 	#notification {
