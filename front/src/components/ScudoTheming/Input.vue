@@ -1,4 +1,10 @@
 <script setup>
+import { inject } from 'vue';
+
+
+const bus = inject('bus');
+
+
 const props = defineProps({
   placeholder: {
     type: String,
@@ -38,6 +44,10 @@ const props = defineProps({
   },
 });
 
+function changeOK() {
+  bus.emit('changeOK')
+}
+
 defineEmits(["update:value"]);
 </script>
 
@@ -46,8 +56,9 @@ defineEmits(["update:value"]);
     <template v-if="props.label">
       <label v-bind:class="{ active: props.value.length > 0 }" :for="props.name">{{ props.label }}</label>
     </template>
-    <input :type="props.type" :id="props.name" :name="props.name" :value="props.value" :required="props.required"
-      :disabled="props.disabled" :placeholder="props.placeholder" @input="$emit('update:value', $event.target.value)" />
+    <input :type="props.type" @blur="changeOK" :id="props.name" :name="props.name" :value="props.value"
+      :required="props.required" :disabled="props.disabled" :placeholder="props.placeholder"
+      @input="$emit('update:value', $event.target.value)" />
   </div>
 </template>
 
