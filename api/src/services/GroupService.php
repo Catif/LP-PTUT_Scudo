@@ -71,7 +71,7 @@ final class GroupService
     return $group;
   }
 
-  static public function getResource(int $id, int $page, int $nbMax)
+  static public function getResource($id, int $page, int $nbMax)
   {
 
     try {
