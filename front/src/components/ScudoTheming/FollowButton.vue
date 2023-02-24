@@ -2,7 +2,7 @@
 import FilledButton from "@/components/ScudoTheming/FilledButton.vue";
 import Icon from "@/components/ScudoTheming/Icon.vue";
 
-import { ref, defineProps, inject } from "vue";
+import { inject } from "vue";
 import { useSessionStore } from "@/stores/session";
 
 const props = defineProps({
