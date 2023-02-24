@@ -2,9 +2,10 @@
 import MainFeed from "@/components/ScudoTheming/MainFeed.vue";
 import GroupCard from "@/components/GroupCard.vue";
 import GroupTopAppBar from "@/components/GroupTopAppBar.vue";
+import ResourceCard from "@/components/ResourceCard.vue";
 import Alert from "@/components/ScudoTheming/Alert.vue";
 
-import { reactive, inject, onMounted } from "vue";
+import { ref, reactive, inject, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useSessionStore } from "@/stores/session";
 
@@ -24,14 +25,15 @@ const group = reactive({
 	owner: false,
 });
 
+const resources = ref([]);
+
 function loadGroup() {
 	let config = {
 		headers: {
-			"Content-Type": "multipart/form-data",
 			Authorization: Session.data.token,
 		},
 	};
-	API.get(`/api/group/${route.params.id}`, config)
+	return API.get(`/api/group/${route.params.id}`, config)
 		.then((response) => {
 			const result = response.data.result;
 
@@ -42,6 +44,47 @@ function loadGroup() {
 			group.followers = result.followers;
 			group.following = result.following;
 			group.owner = result.owner;
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+}
+
+function loadResources(page, limit) {
+	let config = {
+		headers: {
+			Authorization: Session.data.token,
+		},
+		params: {
+			page: page,
+			limit: limit,
+		},
+	};
+	return API.get(`/api/group/${route.params.id}/resources`, config)
+		.then((response) => {
+			let result = response.data.result;
+
+			result.resources.map((resource) => {
+				loadUserForResource(resource.id_user).then((user) => {
+					resource.user = user;
+					resources.value.push(resource);
+				});
+			});
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+}
+
+function loadUserForResource(idUser) {
+	let config = {
+		headers: {
+			Authorization: Session.data.token,
+		},
+	};
+	return API.get(`/api/user/${idUser}`, config)
+		.then((response) => {
+			return response.data.result.user;
 		})
 		.catch((error) => {
 			console.log(error);
@@ -74,7 +117,9 @@ bus.on("actionFollow", (event) => {
 });
 
 onMounted(() => {
-	loadGroup();
+	loadGroup().then(() => {
+		loadResources(1, 10);
+	});
 });
 </script>
 
@@ -84,7 +129,11 @@ onMounted(() => {
 		<Alert class="alert" v-if="message.content" :type="message.type">{{ message.content }}</Alert>
 		<GroupCard id="groupCard" :group="group" />
 
-		<div id="list-resources"></div>
+		<div id="list-resources">
+			<template v-for="resource in resources">
+				<ResourceCard :resource="resource" :user="resource.user" :group="group" /><!--! Mettre le nom du groupe ou non ? -->
+			</template>
+		</div>
 	</MainFeed>
 </template>
 
