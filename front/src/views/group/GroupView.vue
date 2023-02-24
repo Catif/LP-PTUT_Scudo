@@ -118,7 +118,7 @@ bus.on("actionFollow", (event) => {
 
 onMounted(() => {
 	loadGroup().then(() => {
-		loadResources(1, 10);
+		loadResources(1, 50);
 	});
 });
 </script>
