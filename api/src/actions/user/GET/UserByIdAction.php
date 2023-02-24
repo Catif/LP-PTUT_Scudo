@@ -38,7 +38,7 @@ final class UserByIdAction
     if ($userToken->id_user == $userSearch->id_user) {
       $owner = true;
       $following = true;
-    } elseif (UserService::isFollowing($userToken->id_user, $userSearch->id_user)) {
+    } elseif (UserService::isFollowing($userToken, $userSearch)) {
       $following = true;
     }
 
