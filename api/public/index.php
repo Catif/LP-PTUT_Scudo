@@ -54,6 +54,9 @@ $app->post('/api/register', actions\user\POST\RegisterAction::class);
 $app->post('/api/login', actions\user\POST\LoginAction::class);
 $app->delete('/api/disconnect', actions\user\DELETE\DisconnectAction::class)->add(new TokenMiddleware());
 
+$app->post('/api/upload', actions\general\POST\UploadAction::class)->add(new TokenMiddleware());
+
+
 // =====================
 //        User
 // =====================
