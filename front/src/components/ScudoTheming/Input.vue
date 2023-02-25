@@ -98,10 +98,10 @@ const emit = defineEmits(["update:value"]);
 @import "@/assets/scss/colors";
 
 div {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 
 	position: relative;
 	margin: 1.5rem 0.75rem;
