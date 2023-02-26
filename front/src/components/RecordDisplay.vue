@@ -2,7 +2,7 @@
 import { onMounted, inject, ref } from 'vue';
 import FloatingAppButton from './ScudoTheming/FloatingAppButton.vue';
 import LargeIcon from './ScudoTheming/LargeIcon.vue';
-import useSessionStore from '@/stores/session.js';
+import { useSessionStore } from '@/stores/session.js';
 
 const Session = useSessionStore();
 const props = defineProps(['id']);

@@ -9,7 +9,7 @@ const Session = useSessionStore();
 const API = inject("api");
 const form = reactive({
   resource: {
-    id: '4628eb12-4276-4d71-a96b-c695e8ec6dc4',
+    id: '4564fdea-3676-45a2-9a14-2bb3a285234a',
     type: ''
   }
 })
@@ -21,6 +21,7 @@ API.get(`/api/resource/${form.resource.id}`, {
 }).then((reponse) => {
   form.resource = reponse.data.result.resource;
   console.log(reponse);
+  console.log(form.resource);
 }).catch(() => {
   alert('oups');
 })
@@ -32,5 +33,5 @@ API.get(`/api/resource/${form.resource.id}`, {
     <ResourceDisplay v-if="form.resource.type != ''" :resource="form.resource" />
   </MainFeed>
   <!-- <AsideFeed  :large="false">
-                                                                              </AsideFeed> -->
+                                                                                              </AsideFeed> -->
 </template>
