@@ -2,7 +2,9 @@
 import { onMounted, inject, ref } from 'vue';
 import FloatingAppButton from './ScudoTheming/FloatingAppButton.vue';
 import LargeIcon from './ScudoTheming/LargeIcon.vue';
+import useSessionStore from '@/stores/session.js';
 
+const Session = useSessionStore();
 const props = defineProps(['id']);
 const bus = inject('bus')
 
@@ -72,6 +74,7 @@ onMounted(() => {
   connection.socket.emit("initUser", {
     role: "streamer",
     room: stream_id,
+    token: Session.data.token,
   });
   connection.socket.emit("runStream");
   connection.open(stream_id);
