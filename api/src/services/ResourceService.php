@@ -25,7 +25,8 @@ final class ResourceService
 
       return [
         'resource' => $resource,
-        'comment' => $resourceComment];
+        'comment' => $resourceComment
+      ];
     } catch (Exception $e) {
       echo ($e->getMessage());
       throw new Exception("error UserByID");
@@ -60,29 +61,30 @@ final class ResourceService
   static public function updateResource(Resource $resource, array $properties)
   {
     $changed = false;
-    if ($properties['is_private'] == 0 && $resource->is_private == 1) {
-      $resource->published_at = date('Y-m-d H:i:s');
-      $resource->is_private = 0;
-      $changed = true;
+    if (isset($properties['is_private'])) {
+      if ($properties['is_private'] == 0 && $resource->is_private == 1) {
+        $resource->published_at = date('Y-m-d H:i:s');
+        $resource->is_private = 0;
+        $changed = true;
+      } elseif ($properties['is_private'] == 1 && $resource->is_private == 0) {
+        $resource->published_at = null;
+        $resource->is_private = 1;
+        $changed = true;
+      }
     }
-    if ($properties['is_private'] == 1 && $resource->is_private == 0) {
-      $resource->published_at = null;
-      $resource->is_private = 1;
-      $changed = true;
-    }
-    if ($properties['filename'] != null) {
+    if (isset($properties['filename'])) {
       $resource->filename = $properties['filename'];
       $changed = true;
     }
-    if ($properties['type'] != null) {
+    if (isset($properties['type'])) {
       $resource->type = $properties['type'];
       $changed = true;
     }
-    if ($properties['title'] != null) {
+    if (isset($properties['title'])) {
       $resource->title = $properties['title'];
       $changed = true;
     }
-    if ($properties['text'] != null) {
+    if (isset($properties['text'])) {
       $resource->text = $properties['text'];
       $changed = true;
     }
@@ -97,8 +99,5 @@ final class ResourceService
       throw new Exception('Error while saving resource with new properties');
     }
     return $resource;
-
-    
   }
-
 }

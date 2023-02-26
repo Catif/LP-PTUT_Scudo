@@ -38,7 +38,7 @@ final class UserResourcesAction
 				'count' => count($listResources),
 
 				'result' => [
-					'users' => $listResources
+					'resources' => $listResources
 				]
 			];
 

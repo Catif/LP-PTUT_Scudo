@@ -18,11 +18,11 @@ CREATE SCHEMA IF NOT EXISTS `scudo_db` DEFAULT CHARACTER SET utf8 ;
 USE `scudo_db` ;
 
 -- -----------------------------------------------------
--- Table `scudo_db`.`User`
+-- Table `scudo_db`.`user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scudo_db`.`User` ;
+DROP TABLE IF EXISTS `scudo_db`.`user` ;
 
-CREATE TABLE IF NOT EXISTS `scudo_db`.`User` (
+CREATE TABLE IF NOT EXISTS `scudo_db`.`user` (
   `id_user` INT NOT NULL,
   `fullname` VARCHAR(250) NULL,
   `username` VARCHAR(250) NOT NULL,
@@ -39,11 +39,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scudo_db`.`Resource`
+-- Table `scudo_db`.`resource`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scudo_db`.`Resource` ;
+DROP TABLE IF EXISTS `scudo_db`.`resource` ;
 
-CREATE TABLE IF NOT EXISTS `scudo_db`.`Resource` (
+CREATE TABLE IF NOT EXISTS `scudo_db`.`resource` (
   `id_resource` INT NOT NULL,
   `id_user` INT NOT NULL,
   `filename` VARCHAR(250) NULL,
@@ -57,22 +57,22 @@ CREATE TABLE IF NOT EXISTS `scudo_db`.`Resource` (
   `updated_at` TIMESTAMP NOT NULL,
   `published_at` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id_resource`),
-  CONSTRAINT `FK_Resource_User`
+  CONSTRAINT `FK_resource_user`
     FOREIGN KEY (`id_user`)
-    REFERENCES `scudo_db`.`User` (`id_user`)
+    REFERENCES `scudo_db`.`user` (`id_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `FK_Resource_User_idx` ON `scudo_db`.`Resource` (`id_user` ASC);
+CREATE INDEX `FK_resource_user_idx` ON `scudo_db`.`resource` (`id_user` ASC);
 
 
 -- -----------------------------------------------------
--- Table `scudo_db`.`Group`
+-- Table `scudo_db`.`group`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scudo_db`.`Group` ;
+DROP TABLE IF EXISTS `scudo_db`.`group` ;
 
-CREATE TABLE IF NOT EXISTS `scudo_db`.`Group` (
+CREATE TABLE IF NOT EXISTS `scudo_db`.`group` (
   `id_group` INT NOT NULL,
   `name` VARCHAR(250) NOT NULL,
   `description` VARCHAR(1000) NOT NULL,
@@ -84,165 +84,165 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `scudo_db`.`Conversation`
+-- Table `scudo_db`.`conversation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scudo_db`.`Conversation` ;
+DROP TABLE IF EXISTS `scudo_db`.`conversation` ;
 
-CREATE TABLE IF NOT EXISTS `scudo_db`.`Conversation` (
+CREATE TABLE IF NOT EXISTS `scudo_db`.`conversation` (
   `id_conversation` INT NOT NULL,
   `id_sender` INT NOT NULL,
   `id_recipient` INT NOT NULL,
   `is_established` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id_conversation`),
-  CONSTRAINT `FK_Conversation_User_Sender`
+  CONSTRAINT `FK_conversation_user_Sender`
     FOREIGN KEY (`id_sender`)
-    REFERENCES `scudo_db`.`User` (`id_user`)
+    REFERENCES `scudo_db`.`user` (`id_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_Conversation_User_Recipient`
+  CONSTRAINT `FK_conversation_user_Recipient`
     FOREIGN KEY (`id_recipient`)
-    REFERENCES `scudo_db`.`User` (`id_user`)
+    REFERENCES `scudo_db`.`user` (`id_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `FK_Conversation_User_Sender_idx` ON `scudo_db`.`Conversation` (`id_sender` ASC);
+CREATE INDEX `FK_conversation_user_Sender_idx` ON `scudo_db`.`conversation` (`id_sender` ASC);
 
-CREATE INDEX `FK_Conversation_User_Recipient_idx` ON `scudo_db`.`Conversation` (`id_recipient` ASC);
+CREATE INDEX `FK_conversation_user_Recipient_idx` ON `scudo_db`.`conversation` (`id_recipient` ASC);
 
 
 -- -----------------------------------------------------
--- Table `scudo_db`.`Message`
+-- Table `scudo_db`.`message`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scudo_db`.`Message` ;
+DROP TABLE IF EXISTS `scudo_db`.`message` ;
 
-CREATE TABLE IF NOT EXISTS `scudo_db`.`Message` (
+CREATE TABLE IF NOT EXISTS `scudo_db`.`message` (
   `id_message` INT NOT NULL,
   `id_user` INT NOT NULL,
   `id_conversation` INT NOT NULL,
   `content` VARCHAR(5000) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_message`),
-  CONSTRAINT `FK_Message_User`
+  CONSTRAINT `FK_message_user`
     FOREIGN KEY (`id_user`)
-    REFERENCES `scudo_db`.`User` (`id_user`)
+    REFERENCES `scudo_db`.`user` (`id_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_Message_Conversation`
+  CONSTRAINT `FK_message_conversation`
     FOREIGN KEY (`id_conversation`)
-    REFERENCES `scudo_db`.`Conversation` (`id_conversation`)
+    REFERENCES `scudo_db`.`conversation` (`id_conversation`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `FK_Message_User_idx` ON `scudo_db`.`Message` (`id_user` ASC);
+CREATE INDEX `FK_message_user_idx` ON `scudo_db`.`message` (`id_user` ASC);
 
-CREATE INDEX `FK_Message_Conversation_idx` ON `scudo_db`.`Message` (`id_conversation` ASC);
+CREATE INDEX `FK_message_conversation_idx` ON `scudo_db`.`message` (`id_conversation` ASC);
 
 
 -- -----------------------------------------------------
--- Table `scudo_db`.`User_Follow`
+-- Table `scudo_db`.`user_follow`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scudo_db`.`User_Follow` ;
+DROP TABLE IF EXISTS `scudo_db`.`user_follow` ;
 
-CREATE TABLE IF NOT EXISTS `scudo_db`.`User_Follow` (
+CREATE TABLE IF NOT EXISTS `scudo_db`.`user_follow` (
   `id_user` INT NOT NULL,
   `id_user_followed` INT NOT NULL,
-  CONSTRAINT `FK_User-Follow_User`
+  CONSTRAINT `FK_user-follow_user`
     FOREIGN KEY (`id_user`)
-    REFERENCES `scudo_db`.`User` (`id_user`)
+    REFERENCES `scudo_db`.`user` (`id_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_User-Follow_User2`
+  CONSTRAINT `FK_user-follow_user2`
     FOREIGN KEY (`id_user_followed`)
-    REFERENCES `scudo_db`.`User` (`id_user`)
+    REFERENCES `scudo_db`.`user` (`id_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `FK_User-Follow_User_idx` ON `scudo_db`.`User_Follow` (`id_user` ASC);
+CREATE INDEX `FK_user-follow_user_idx` ON `scudo_db`.`user_follow` (`id_user` ASC);
 
-CREATE INDEX `FK_User-Follow_User2_idx` ON `scudo_db`.`User_Follow` (`id_user_followed` ASC);
+CREATE INDEX `FK_user-follow_user2_idx` ON `scudo_db`.`user_follow` (`id_user_followed` ASC);
 
 
 -- -----------------------------------------------------
--- Table `scudo_db`.`User_Group`
+-- Table `scudo_db`.`user_group`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scudo_db`.`User_Group` ;
+DROP TABLE IF EXISTS `scudo_db`.`user_group` ;
 
-CREATE TABLE IF NOT EXISTS `scudo_db`.`User_Group` (
+CREATE TABLE IF NOT EXISTS `scudo_db`.`user_group` (
   `id_user` INT NOT NULL,
   `id_group` INT NOT NULL,
   `role` VARCHAR(250) NOT NULL,
-  CONSTRAINT `FK_User-Group_User`
+  CONSTRAINT `FK_user-group_user`
     FOREIGN KEY (`id_user`)
-    REFERENCES `scudo_db`.`User` (`id_user`)
+    REFERENCES `scudo_db`.`user` (`id_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_User-Group_Group`
+  CONSTRAINT `FK_user-group_group`
     FOREIGN KEY (`id_group`)
-    REFERENCES `scudo_db`.`Group` (`id_group`)
+    REFERENCES `scudo_db`.`group` (`id_group`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `FK_User-Group_User_idx` ON `scudo_db`.`User_Group` (`id_user` ASC);
+CREATE INDEX `FK_user-group_user_idx` ON `scudo_db`.`user_group` (`id_user` ASC);
 
-CREATE INDEX `FK_User-Group_Group_idx` ON `scudo_db`.`User_Group` (`id_group` ASC);
+CREATE INDEX `FK_user-group_group_idx` ON `scudo_db`.`user_group` (`id_group` ASC);
 
 
 -- -----------------------------------------------------
--- Table `scudo_db`.`Resource_Group`
+-- Table `scudo_db`.`resource_group`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scudo_db`.`Resource_Group` ;
+DROP TABLE IF EXISTS `scudo_db`.`resource_group` ;
 
-CREATE TABLE IF NOT EXISTS `scudo_db`.`Resource_Group` (
+CREATE TABLE IF NOT EXISTS `scudo_db`.`resource_group` (
   `id_resource` INT NOT NULL,
   `id_group` INT NOT NULL,
-  CONSTRAINT `FK_Resource-Group_Resource`
+  CONSTRAINT `FK_resource-group_resource`
     FOREIGN KEY (`id_resource`)
-    REFERENCES `scudo_db`.`Resource` (`id_resource`)
+    REFERENCES `scudo_db`.`resource` (`id_resource`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_Resource-Group_Group`
+  CONSTRAINT `FK_resource-group_group`
     FOREIGN KEY (`id_group`)
-    REFERENCES `scudo_db`.`Group` (`id_group`)
+    REFERENCES `scudo_db`.`group` (`id_group`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `FK_Resource-Group_Resource_idx` ON `scudo_db`.`Resource_Group` (`id_resource` ASC);
+CREATE INDEX `FK_resource-group_resource_idx` ON `scudo_db`.`resource_group` (`id_resource` ASC);
 
-CREATE INDEX `FK_Resource-Group_Group_idx` ON `scudo_db`.`Resource_Group` (`id_group` ASC);
+CREATE INDEX `FK_resource-group_group_idx` ON `scudo_db`.`resource_group` (`id_group` ASC);
 
 
 -- -----------------------------------------------------
--- Table `scudo_db`.`Comment`
+-- Table `scudo_db`.`comment`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `scudo_db`.`Comment` ;
+DROP TABLE IF EXISTS `scudo_db`.`comment` ;
 
-CREATE TABLE IF NOT EXISTS `scudo_db`.`Comment` (
+CREATE TABLE IF NOT EXISTS `scudo_db`.`comment` (
   `id_comment` INT NOT NULL,
   `id_user` INT NOT NULL,
   `id_resource` INT NOT NULL,
   `content` VARCHAR(250) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_comment`),
-  CONSTRAINT `FK_Comment_User`
+  CONSTRAINT `FK_comment_user`
     FOREIGN KEY (`id_user`)
-    REFERENCES `scudo_db`.`User` (`id_user`)
+    REFERENCES `scudo_db`.`user` (`id_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_Comment_Resource`
+  CONSTRAINT `FK_comment_resource`
     FOREIGN KEY (`id_resource`)
-    REFERENCES `scudo_db`.`Resource` (`id_resource`)
+    REFERENCES `scudo_db`.`resource` (`id_resource`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `FK_Comment_User_idx` ON `scudo_db`.`Comment` (`id_user` ASC);
+CREATE INDEX `FK_comment_user_idx` ON `scudo_db`.`comment` (`id_user` ASC);
 
-CREATE INDEX `FK_Comment_Resource_idx` ON `scudo_db`.`Comment` (`id_resource` ASC);
+CREATE INDEX `FK_comment_resource_idx` ON `scudo_db`.`comment` (`id_resource` ASC);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

@@ -5,13 +5,13 @@ namespace api\models;
 class Conversation extends \Illuminate\Database\Eloquent\Model
 {
 
-  protected  $table = 'User';
+  protected  $table = 'user';
   protected  $primaryKey = 'id_user';
 
   public $timestamps = false;
 
   public function resources(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\Resource', 'Resource_Group', 'id_re', 'id_group');
+    return $this->belongsToMany('api\models\Resource', 'resource_group', '', 'id_group');
   }
 }
