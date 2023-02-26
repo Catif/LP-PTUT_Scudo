@@ -2,26 +2,35 @@
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
 import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
 import ResourceDisplay from '../components/ResourceDisplay.vue';
+import { inject, reactive } from 'vue';
+import { useSessionStore } from '@/stores/session.js';
 
-var type = 'video';
-
-function api_getResourceById(id) {
-  return {
-    id: id,
-    title: 'En vacances !!',
-    description: 'Lorem Elsass ipsum Spätzle Salu bissame leo elementum knack Oberschaeffolsheim risus, kougelhopf mollis Verdammi eget chambon hop nüdle Carola adipiscing amet nullam aliquam libero, ac quam, sagittis hopla knepfle tristique.',
-    image: 'https://thumbs.dreamstime.com/b/l-%C3%AEle-d%C3%A9serte-avec-le-palmier-sur-la-plage-35138358.jpg',
-    type: type,
-    filename: `video-${id}.mp4`
+const Session = useSessionStore();
+const API = inject("api");
+const form = reactive({
+  resource: {
+    id: '4628eb12-4276-4d71-a96b-c695e8ec6dc4',
+    type: ''
   }
-}
+})
+
+API.get(`/api/resource/${form.resource.id}`, {
+  headers: {
+    Authorization: Session.data.token,
+  },
+}).then((reponse) => {
+  form.resource = reponse.data.result.resource;
+  console.log(reponse);
+}).catch(() => {
+  alert('oups');
+})
 
 </script>
 
 <template>
   <MainFeed>
-    <ResourceDisplay :resource="api_getResourceById($route.params.id)" />
+    <ResourceDisplay v-if="form.resource.type != ''" :resource="form.resource" />
   </MainFeed>
   <!-- <AsideFeed  :large="false">
-  </AsideFeed> -->
+                                                                              </AsideFeed> -->
 </template>
