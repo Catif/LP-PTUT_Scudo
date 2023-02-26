@@ -47,6 +47,16 @@ export function transcodeVideo(user, file) {
 	console.log("Début de la conversion");
 
 	// Transcode
+	fetch(`${conf.api_url}/api/resource/${file.id}`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: user.token,
+		},
+		body: JSON.stringify({
+			type: "video",
+		}),
+	});
 	let startTime = performance.now();
 	ffmpeg()
 		.input(pathFileTemp)
@@ -68,7 +78,6 @@ export function transcodeVideo(user, file) {
 					Authorization: user.token,
 				},
 				body: JSON.stringify({
-					type: "video",
 					filename: `https://scudo-node.herokuapp.com/api/video?video=${file.filename}.${conf.transcode.extensionFile}`,
 				}),
 			});
