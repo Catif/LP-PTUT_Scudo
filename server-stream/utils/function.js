@@ -35,7 +35,7 @@ export function getStatFile(file, durationTranscode) {
 	});
 }
 
-export function transcodeVideo(file) {
+export function transcodeVideo(user, file) {
 	if (!existsSync(conf.folderOutput)) {
 		mkdirSync(conf.folderOutput, { recursive: true });
 	}
@@ -63,7 +63,14 @@ export function transcodeVideo(file) {
 
 			fetch(`${conf.api_url}/api/resource/${file.id}`, {
 				method: "POST",
-				body: JSON.stringify({ type: "video" }),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: user.token,
+				},
+				body: JSON.stringify({
+					type: "video",
+					filename: `https://scudo-node.herokuapp.com/api/video?video=${file.filename}.${conf.transcode.extensionFile}`,
+				}),
 			});
 
 			getStatFile(pathFileTranscode, durationTranscode);
