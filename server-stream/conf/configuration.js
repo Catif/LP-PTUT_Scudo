@@ -7,7 +7,7 @@ const conf = {
 	// The port to listen on
 	port: process.env.PORT || 3000,
 
-	api_url: "http://localhost:8000",
+	api_url: "https://api.scudo.catif.me",
 
 	// The path to the folder where the videos will be stored
 	folderTemp: "./video/temp",
