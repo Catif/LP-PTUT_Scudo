@@ -56,37 +56,41 @@ export function transcodeVideo(user, file) {
 		body: JSON.stringify({
 			type: "video",
 		}),
-	}).then((res) => {
-		let startTime = performance.now();
-		ffmpeg()
-			.input(pathFileTemp)
-			.withVideoCodec(conf.transcode.codec)
-			.addOption("-preset", conf.transcode.preset)
-			.addOption("-crf", conf.transcode.quality)
-			.output(pathFileTranscode)
-			.on("end", () => {
-				// Calcul du temps de conversion
-				let endTime = performance.now();
-				let durationTranscode = Math.round(endTime - startTime) / 1000;
+	})
+		.then((res) => {
+			let startTime = performance.now();
+			ffmpeg()
+				.input(pathFileTemp)
+				.withVideoCodec(conf.transcode.codec)
+				.addOption("-preset", conf.transcode.preset)
+				.addOption("-crf", conf.transcode.quality)
+				.output(pathFileTranscode)
+				.on("end", () => {
+					// Calcul du temps de conversion
+					let endTime = performance.now();
+					let durationTranscode = Math.round(endTime - startTime) / 1000;
 
-				console.log("Conversion complete");
+					console.log("Conversion complete");
 
-				fetch(`${conf.api_url}/api/resource/${file.id}`, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: user.token,
-					},
-					body: JSON.stringify({
-						filename: `https://scudo-node.herokuapp.com/api/video?video=${file.filename}.${conf.transcode.extensionFile}`,
-					}),
-				});
+					fetch(`${conf.api_url}/api/resource/${file.id}`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: user.token,
+						},
+						body: JSON.stringify({
+							filename: `https://scudo-node.herokuapp.com/api/video?video=${file.filename}.${conf.transcode.extensionFile}`,
+						}),
+					});
 
-				getStatFile(pathFileTranscode, durationTranscode);
-				unlinkSync(pathFileTemp); // Delete file temp
-			})
-			.run();
-	});
+					getStatFile(pathFileTranscode, durationTranscode);
+					unlinkSync(pathFileTemp); // Delete file temp
+				})
+				.run();
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 }
 
 export default () => {
