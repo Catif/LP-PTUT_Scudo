@@ -1,34 +1,38 @@
 <script setup>
-// Importation de la méthode Ref de Vue.js
-import { ref } from "vue";
+// Importation de composants
+import MainFeed from "@/components/ScudoTheming/MainFeed.vue";
 
-// Déclaration de la variable user en réactive
-const user = ref({});
+// Importation de méthode
+import { ref, inject, onMounted } from "vue";
 
-// Appel à une API de test
-// ps: API est déclaré dans le main.js
-// remarque: le lien défini dans la variable API, peut être écrasé par un autre lien
-API.get("https://jsonplaceholder.typicode.com/users/1")
-  .then((response) => {
-    // Récupération des informations
-    user.value = response.data;
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+// Importation de store
+import { useSessionStore } from "@/stores/session.js";
+
+const API = inject("api");
+const Session = useSessionStore();
+
+const listResources = ref([]);
+
+function getResources() {
+	const config = {
+		headers: {
+			Authorization: Session.data.token,
+		},
+	};
+
+	API.get("api/resources", config).then((response) => {
+		const result = response.data.result;
+		console.log(result);
+	});
+}
+
+onMounted(() => {
+	getResources();
+});
 </script>
 
 <template>
-  <div>
-    <h1>Bonjour monde!</h1>
-    <p>Je suis un composant Vue.js nommé <b>Home</b></p>
-
-    <h2>Exemple de code pour axios</h2>
-    <pre>
-      <code>
-        <!-- Implémentation dans le HTML -->
-{{ user }}
-      </code>
-    </pre>
-  </div>
+	<MainFeed>
+		<h1>Test</h1>
+	</MainFeed>
 </template>
