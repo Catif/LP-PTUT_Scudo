@@ -1,6 +1,7 @@
 <script setup>
 // Importation de composants
 import MainFeed from "@/components/ScudoTheming/MainFeed.vue";
+import ResourceCard from "@/components/ResourceCard.vue";
 
 // Importation de méthode
 import { ref, inject, onMounted } from "vue";
@@ -20,13 +21,33 @@ function getResources() {
 		},
 	};
 
-	API.get("/api/resources?page=1&limit=5", config)
+	API.get("/api/resources?page=1&limit=20", config)
 		.then((response) => {
-			const result = response.data;
-			console.log(result);
+			const data = response.data;
+			data.result.resources.map((resource) => {
+				loadUserForResource(resource.id_user).then((user) => {
+					resource.user = user;
+					listResources.value.push(resource);
+				});
+			});
 		})
 		.catch((err) => {
 			console.log(err.response.data);
+		});
+}
+
+function loadUserForResource(idUser) {
+	let config = {
+		headers: {
+			Authorization: Session.data.token,
+		},
+	};
+	return API.get(`/api/user/${idUser}`, config)
+		.then((response) => {
+			return response.data.result.user;
+		})
+		.catch((error) => {
+			console.log(error);
 		});
 }
 
@@ -37,6 +58,7 @@ onMounted(() => {
 
 <template>
 	<MainFeed>
-		<h1>Test</h1>
+		<ResourceCard v-for="resource in listResources" :resource="resource" :user="resource.user" />
+		<!-- :group="group" -->
 	</MainFeed>
 </template>
