@@ -20,10 +20,14 @@ function getResources() {
 		},
 	};
 
-	API.get("api/resources", config).then((response) => {
-		const result = response.data.result;
-		console.log(result);
-	});
+	API.get("/api/resources?page=1&limit=5", config)
+		.then((response) => {
+			const result = response.data;
+			console.log(result);
+		})
+		.catch((err) => {
+			console.log(err.response.data);
+		});
 }
 
 onMounted(() => {
