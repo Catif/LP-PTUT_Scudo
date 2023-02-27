@@ -26,7 +26,6 @@ final class ResourcesAction
             $limit = isset($query['limit']) ? $query['limit'] : 5;
 
             $resources = ResourceService::getResourcesHomePage($user, $page, $limit);
-            var_dump($resources);
 
             $listResources = [];
             foreach ($resources as $resource) {
@@ -37,7 +36,7 @@ final class ResourcesAction
                 'count' => count($resources),
 
                 'result' => [
-                    'Resources' => $listResources
+                    'resources' => $listResources
                 ]
             ];
 
