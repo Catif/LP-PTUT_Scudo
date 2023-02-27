@@ -1,6 +1,7 @@
 import conf from "../conf/configuration.js";
 import ffmpeg from "fluent-ffmpeg";
 import { statSync, unlinkSync, existsSync, mkdirSync } from "fs";
+import fetch from "node-fetch";
 
 // ==============================
 //          fonctions
