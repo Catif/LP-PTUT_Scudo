@@ -66,6 +66,7 @@ $app->get('/api/user/{id}/resources', actions\user\GET\UserResourcesAction::clas
 
 $app->post('/api/user/{id}/follow', actions\user\POST\FollowAction::class)->add(new TokenMiddleware());
 
+$app->post('/api/user/password_change', actions\user\POST\PasswordChangeAction::class)->add(new TokenMiddleware());
 
 // PATCH
 $app->post('/api/user/edit', actions\user\PATCH\UserAction::class)->add(new TokenMiddleware());
