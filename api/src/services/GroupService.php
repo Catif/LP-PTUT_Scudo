@@ -22,6 +22,11 @@ final class GroupService
     ])->get();
   }
 
+  static public function getRandomGroups($limit)
+  {
+    return Group::inRandomOrder()->limit($limit)->get();
+  }
+
   static public function getGroupById($id)
   {
     try {
