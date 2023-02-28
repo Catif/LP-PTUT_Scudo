@@ -2,9 +2,10 @@
 
 namespace api\services;
 
-
+use api\models\Authorization;
 use api\models\User as User;
 use Exception;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 use Ramsey\Uuid\Uuid;
 
 
@@ -167,5 +168,20 @@ final class UserService
       return true;
     }
     return false;
+  }
+
+  static public function getPasswordChange($authorisation){
+    $authorisation_user = Authorization::findOrFail($authorisation);
+    $password = $authorisation_user->user()->first();
+    return $password->password;
+  }
+
+  static public function passwordChange($authorisation,$password){
+    $authorisation_user = Authorization::findOrFail($authorisation);
+    $password_change = $authorisation_user->user()->first();
+    $password_change->password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
+    $password_change->save();
+
+    return $password_change;
   }
 }
