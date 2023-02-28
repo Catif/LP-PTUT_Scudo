@@ -36,7 +36,7 @@ const props = defineProps({
           <UserStat :number="user.followers" type="followers" />
         </div>
         <FollowButton v-if="edit !== true" />
-        <EditButton v-if="edit" />
+        <EditButton v-if="edit" :route="'/profile/' + user.id + '/edit'" />
       </aside>
       <Text class="biography">{{ user.biography }}</Text>
     </section>

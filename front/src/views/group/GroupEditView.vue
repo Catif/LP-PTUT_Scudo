@@ -37,7 +37,6 @@ function loadGroup() {
 	})
 		.then((response) => {
 			const result = response.data.result;
-			console.log(result);
 
 			group.value = result.group;
 
@@ -149,6 +148,7 @@ onMounted(() => {
 #edit-group {
 	padding-top: 50px;
 }
+
 #container {
 	h2 {
 		text-align: center;

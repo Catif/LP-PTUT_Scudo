@@ -72,13 +72,12 @@ const emit = defineEmits(["update:value"]);
 
     <template v-if="props.type == 'file'">
       <img :src="photoUrl" class="picture" />
-      <input :type="props.type" :id="props.name" :name="props.name" :required="props.required"
-        :disabled="props.disabled" @change="onFileInput($event)" />
+      <input :type="props.type" :id="props.name" :name="props.name" :required="props.required" :disabled="props.disabled"
+        @change="onFileInput($event)" />
     </template>
     <template v-else>
       <input :type="props.type" :id="props.name" :name="props.name" :value="props.value" :required="props.required"
-        :disabled="props.disabled" :placeholder="props.placeholder"
-        @input="$emit('update:value', $event.target.value)" />
+        :disabled="props.disabled" :placeholder="props.placeholder" @input="$emit('update:value', $event.target.value)" />
     </template>
   </div>
 </template>

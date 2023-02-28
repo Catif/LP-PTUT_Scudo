@@ -33,6 +33,18 @@ const router = createRouter({
 			name: "login",
 			component: () => import("@/views/LoginView.vue"),
 		},
+		
+		{
+			path: "/profile/:id",
+			name: "profile",
+			component: () => import("@/views/ProfileView.vue"),
+		},
+		
+		{
+			path: "/profile/:id/edit",
+			name: "editProfile",
+			component: () => import("@/views/EditProfileView.vue"),
+		},
 		{
 			path: "/group",
 			name: "group",

@@ -1,15 +1,22 @@
 <script setup>
 import FilledButton from "@/components/ScudoTheming/FilledButton.vue";
+const props = defineProps(['route'])
 </script>
 
 <template>
   <div class="followButton">
-    <FilledButton id="edit">Modifier mon profil</FilledButton>
+    <RouterLink :to="props.route" id="edit">
+      <FilledButton>Modifier mon profil</FilledButton>
+    </RouterLink>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/colors.scss";
+
+button {
+  width: 100%;
+}
 
 .followButton {
   display: flex;
@@ -28,6 +35,7 @@ import FilledButton from "@/components/ScudoTheming/FilledButton.vue";
   }
 
   #edit {
+    text-decoration: none;
     flex-grow: 1;
     border-radius: 18px 0 0 18px;
     text-transform: uppercase;
