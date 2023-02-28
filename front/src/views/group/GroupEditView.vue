@@ -85,7 +85,6 @@ function editGroup() {
 		API.post("/api/upload", fileData, config)
 			.then((response) => {
 				let url = response.data.result.url;
-				console.log(url);
 
 				API.post(
 					`/api/group/${group.value.id}`,

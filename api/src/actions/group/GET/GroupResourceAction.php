@@ -38,7 +38,7 @@ final class GroupResourceAction
       'Filtre' => 'groupResource',
       'count' => count($listResources),
       'result' => [
-        'groupResource' =>  $listResources
+        'resources' =>  $listResources
       ]
     ];
 

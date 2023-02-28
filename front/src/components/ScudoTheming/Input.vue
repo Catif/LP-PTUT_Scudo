@@ -65,8 +65,7 @@ const emit = defineEmits(["update:value"]);
 <template>
   <div v-bind:class="{ border: props.border, small: props.small }">
     <template v-if="props.label">
-      <label v-bind:class="{ active: props.value.length > 0 || props.type == 'file' }" :for="props.name">{{
-        props.label
+      <label v-bind:class="{ active: props.value.length > 0 || props.type == 'file' }" :for="props.name">{{ props.label
       }}</label>
     </template>
 
