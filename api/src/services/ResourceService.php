@@ -26,7 +26,7 @@ final class ResourceService
       $latestResourcesFromGroups = Resource::select('resource.*')
         ->join('resource_group', 'resource.id_resource', '=', 'resource_group.id_resource')
         ->whereIn('resource_group.id_group', $groupIds)
-        // ->where('resource.is_private', 0) Temporairement pour tester si les ressources sont bien récupérées
+        ->where('resource.is_private', 0)
         ->orderBy('resource.created_at', 'desc')
         ->skip(($page - 1) * $limit)
         ->take($limit)
@@ -38,7 +38,7 @@ final class ResourceService
     $latestResourcesFromUsers = [];
     if (!empty($userIds)) {
       $latestResourcesFromUsers = Resource::whereIn('id_user', $userIds)
-        // ->where('is_private', 0) Temporairement pour tester si les ressources sont bien récupérées
+        ->where('is_private', 0)
         ->orderBy('created_at', 'desc')
         ->limit($limit)
         ->get();
