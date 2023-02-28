@@ -1,5 +1,6 @@
 <script setup>
 // Importation de composants
+import TopAppBar from "@/components/ScudoTheming/TopAppBar.vue";
 import MainFeed from "@/components/ScudoTheming/MainFeed.vue";
 import ResourceCard from "@/components/ResourceCard.vue";
 
@@ -58,6 +59,7 @@ onMounted(() => {
 
 <template>
 	<MainFeed>
+		<TopAppBar></TopAppBar>
 		<ResourceCard v-for="resource in listResources" :resource="resource" :user="resource.user" />
 		<!-- :group="group" -->
 	</MainFeed>
