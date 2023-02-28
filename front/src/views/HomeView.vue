@@ -52,9 +52,7 @@ function loadUserForResource(idUser) {
 		});
 }
 
-onMounted(() => {
-	getResources();
-});
+getResources();
 </script>
 
 <template>
