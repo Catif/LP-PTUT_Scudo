@@ -56,6 +56,7 @@ export function transcodeVideo(user, file) {
     },
     body: JSON.stringify({
       type: "video",
+      filename: file.filename,
     }),
   })
     .then((res) => {
