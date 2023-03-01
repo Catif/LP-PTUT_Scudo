@@ -27,17 +27,27 @@ console.log(Session.data.token)
 var message = ref('')
 
 
+let fileData = new FormData();
+fileData.append("file", form.new_password);
+
+let config = {
+    headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: Session.data.token,
+    },
+};
 
 function isValidFormParams() {
     if (form.new_password != form.new_password_repeat) {
         message.value = "Vous n'avez pas saisi le même nouveau mot de passe"
         return null;
     }
-    API.post('/api/user/password_change', {
-        username: form.old_password,
-        password: form.new_password,
-        password_repeat: form.new_password_repeat
-    }).then(() => {
+    API.post('/api/user/password_change',{
+        old_password: form.old_password,
+        new_password: form.new_password,
+        new_password_repeat: form.new_password_repeat
+    }, config,
+    ).then(() => {
         message.value = "Votre mot de passe a bien été changé"
         return null
     }).catch((error) => {
