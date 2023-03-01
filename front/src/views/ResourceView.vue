@@ -22,8 +22,6 @@ API.get(`/api/resource/${form.resource.id}`, {
   },
 }).then((reponse) => {
   form.resource = reponse.data.result.resource;
-  console.log(reponse);
-  console.log(form.resource);
 }).catch(() => {
   alert('oups');
 })
@@ -35,5 +33,5 @@ API.get(`/api/resource/${form.resource.id}`, {
     <ResourceDisplay v-if="form.resource.type != ''" :resource="form.resource" />
   </MainFeed>
   <!-- <AsideFeed  :large="false">
-                                                                                                    </AsideFeed> -->
+                                                                                                      </AsideFeed> -->
 </template>

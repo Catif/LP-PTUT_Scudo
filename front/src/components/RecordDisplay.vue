@@ -23,7 +23,7 @@ var constraints = {
   video: true,
 };
 var connection = new RTCMultiConnection();
-connection.socketURL = "http://localhost:3000/";
+connection.socketURL = "https://scudo-node.herokuapp.com/";
 
 connection.socketCustomEvent = "scudo";
 connection.socketMessageEvent = "live";

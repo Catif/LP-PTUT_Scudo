@@ -6,7 +6,7 @@ const props = defineProps(['resource']);
 const videoSrc = ref(null);
 
 var connection = new RTCMultiConnection();
-connection.socketURL = "http://localhost:3000/";
+connection.socketURL = "https://scudo-node.herokuapp.com/";
 
 connection.socketCustomEvent = "scudo";
 connection.socketMessageEvent = "live";
@@ -35,7 +35,6 @@ connection.iceServers = [
 
 connection.videosContainer = document.getElementById("videos-container");
 connection.onstream = function (event) {
-  // console.log(event);
   videoSrc.value = event.stream;
 };
 
@@ -81,8 +80,7 @@ function openLive() {
 }
 
 function openVideo() {
-  // console.log(`http://localhost:3000/api/video?video=${props.resource.filename}`);
-  videoSrc.value = `http://localhost:3000/api/video?video=${props.resource.filename}`
+  videoSrc.value = props.resource.urls.file
 }
 
 
