@@ -81,6 +81,7 @@ class FormatterObject
     return [
       'id' => $resource['id_resource'],
       'type' => $resource['type'],
+      'id_user' => $resource['id_user'],
       'urls' => [
         'api' => '/api/resource/' . $resource['id_resource'],
         'file' => $resource['filename']
