@@ -13,7 +13,9 @@ const props = defineProps(["group"]);
 <template>
 	<RouterLink :to="{ name: 'groupByID', params: { id: group.id } }">
 		<Card>
-			<Image :src="props['group'].url.image" :alt="'Photo de présentation de ' + props['group'].name" />
+			<div class="image-border">
+				<Image :src="props['group'].url.image" :alt="'Photo de présentation de ' + props['group'].name" />
+			</div>
 			<section>
 				<Title>
 					{{ props["group"].name }}
@@ -32,12 +34,21 @@ section {
 	display: flex;
 	justify-content: space-between;
 }
-
-img {
-	aspect-ratio: 2 / 1;
+div.image-border {
+	border-radius: 28px;
+	overflow: hidden;
+	img {
+		aspect-ratio: 2 / 1;
+		transition: transform 0.2s;
+		border-radius: 0px;
+	}
 }
 
 a {
 	text-decoration: none;
+}
+
+a:hover img {
+	transform: scale(1.1);
 }
 </style>

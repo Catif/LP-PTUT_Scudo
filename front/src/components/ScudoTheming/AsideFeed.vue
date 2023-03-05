@@ -2,11 +2,10 @@
 window.addEventListener("scroll", function () {
 	var element = document.getElementById("AsideContainer");
 
-	var positionY = element.offsetTop + element.offsetHeight - window.pageYOffset - this.innerHeight + 12;
+	var positionY = element.offsetHeight - window.pageYOffset - this.innerHeight + 12;
 
-	if (positionY <= -100) {
+	if (positionY <= 0) {
 		// Tester plusieurs valeur pour voir quel est la meilleur
-		console.log("fixed !");
 		element.classList.add("fixed");
 	} else {
 		element.classList.remove("fixed");
