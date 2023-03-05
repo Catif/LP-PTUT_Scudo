@@ -36,4 +36,8 @@ section {
 img {
 	aspect-ratio: 2 / 1;
 }
+
+a {
+	text-decoration: none;
+}
 </style>
