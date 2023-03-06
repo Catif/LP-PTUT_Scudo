@@ -111,10 +111,32 @@ createResource();
 
 <template>
   <MainFeed>
+    <!-- FORMULAIRE ÉDITION DE RESOURCE AVANT LE LIVE -->
+    <form v-if="form.resource.type != 'stream'">
+      <Card>
+        <Title>Démarrer un enregistrement</Title>
+        <Input name="title" label="Titre" v-model:value="form.resource.title" />
+        <Input name="text" label="Description" v-model:value="form.resource.text" />
+        <Text>
+          <label for="role" class="form-control">Partager publiquement</label>
+          <input @click="toggleAccessibility" id="role" name="role" type="checkbox" />
+        </Text>
+      </Card>
+    </form>
+
+    <!-- RETOUR LIVE -->
     <div id="recordDisplay">
       <RecordDisplay v-if="form.resource.type == 'stream'" :id="form.resource.id" />
     </div>
-    <BottomSheetScaffold v-if="form.resource.type == 'stream'">
+    <FloatingAppButton @click="startStopRecord">
+      <Icon v-if="form.resource.type == 'text'">fiber_manual_record</Icon>
+      <Icon v-else>stop</Icon>
+    </FloatingAppButton>
+  </MainFeed>
+
+  <!-- FORMULAIRE ÉDITION DE RESOURCE PENDANT LE LIVE -->
+  <template v-if="form.resource.type == 'stream'">
+    <BottomSheetScaffold>
       <form>
         <Card>
           <Input name="title" label="Titre" v-model:value="form.resource.title" />
@@ -126,23 +148,19 @@ createResource();
         </Card>
       </form>
     </BottomSheetScaffold>
-    <form v-else>
-      <Card>
-        <Title>Démarrer un enregistrement</Title>
-        <Input name="title" label="Titre" v-model:value="form.resource.title" />
-        <Input name="text" label="Description" v-model:value="form.resource.text" />
-        <Text>
-          <label for="role" class="form-control">Partager publiquement</label>
-          <input @click="toggleAccessibility" id="role" name="role" type="checkbox" />
-        </Text>
-      </Card>
-    </form>
-    <FloatingAppButton @click="startStopRecord">
-      <Icon v-if="form.resource.type == 'text'">fiber_manual_record</Icon>
-      <Icon v-else>stop</Icon>
-    </FloatingAppButton>
-  </MainFeed>
-  <!-- <AsideFeed  :large="false"></AsideFeed> -->
+    <AsideFeed :large="true">
+      <form>
+        <Card>
+          <Input name="title" label="Titre" v-model:value="form.resource.title" />
+          <Input name="text" label="Description" v-model:value="form.resource.text" />
+          <Text>
+            <label for="role" class="form-control">Partager publiquement</label>
+            <input @click="toggleAccessibility" id="role" name="role" type="checkbox" />
+          </Text>
+        </Card>
+      </form>
+    </AsideFeed>
+  </template>
 </template>
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
