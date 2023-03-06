@@ -5,6 +5,7 @@ import Text from '../components/ScudoTheming/Text.vue';
 import Input from '../components/ScudoTheming/Input.vue';
 import Button from '../components/ScudoTheming/Button.vue';
 import Alert from '../components/ScudoTheming/Alert.vue';
+import MainFeed from '../components/ScudoTheming/MainFeed.vue';
 import { useSessionStore } from '@/stores/session.js';
 import { reactive, ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
@@ -23,8 +24,11 @@ const Session = useSessionStore();
 if (Session.data.token == '') {
     router.push('/')
 }
-console.log(Session.data.token)
-var message = ref('')
+
+var message = reactive({
+    content: '',
+    type: ''
+})
 
 
 let fileData = new FormData();
@@ -48,10 +52,12 @@ function isValidFormParams() {
         new_password_repeat: form.new_password_repeat
     }, config,
     ).then(() => {
-        message.value = "Votre mot de passe a bien été changé"
+        message.type = "success"
+        message.content = "Votre mot de passe a bien été changé"
         return null
     }).catch((error) => {
-        message.value = error.response.data.error
+        message.type = "error"
+        message.content = error.response.data.error
         return null
     })
 }
@@ -64,10 +70,10 @@ function isValidFormParams() {
         <Title>Paramètre !</Title>
         <Text>Changer son mot de passe</Text>
         <form action="/api/login" method="post" @submit.prevent="isValidFormParams">
-            <Input name="old_password" :required='true' label="Ancien mot de passe" v-model:value="form.old_password" />
+            <Input type="password" name="old_password" :required='true' label="Ancien mot de passe" v-model:value="form.old_password" />
             <Input type="password" name="new_password" :required='true' label="Nouveau mot de pass" v-model:value="form.new_password" />
             <Input type="password" name="new_password_repeat" :required='true' label="Vérification du nouveau mot de passe" v-model:value="form.new_password_repeat" />
-            <Alert id="error" v-if="message !== ''">{{ message }}</Alert>
+            <Alert id="success" :type="message.type" v-if="message.content !== ''">{{ message.content }}  </Alert>
             <Button>CONFIRMER</Button>
         </form>
         <RouterLink to="/"></RouterLink>
