@@ -1,7 +1,5 @@
 <script setup>
 import { onMounted, inject, ref } from 'vue';
-import FloatingAppButton from './ScudoTheming/FloatingAppButton.vue';
-import LargeIcon from './ScudoTheming/LargeIcon.vue';
 import { useSessionStore } from '@/stores/session.js';
 
 const Session = useSessionStore();
@@ -98,7 +96,7 @@ bus.on('stopRecord', function () {
 @import "@/assets/scss/media-queries";
 
 video {
-  width: 100%;
+  max-width: $content-min-width;
   aspect-ratio: 4 / 7;
   object-fit: cover;
 

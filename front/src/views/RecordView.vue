@@ -1,7 +1,7 @@
 <script setup>
 import Title from "@/components/ScudoTheming/Title.vue"
 import { reactive, inject } from "vue";
-import IconButton from "@/components/ScudoTheming/IconButton.vue";
+import BottomSheetScaffold from "@/components/ScudoTheming/BottomSheetScaffold.vue";
 import Input from "@/components/ScudoTheming/Input.vue";
 import { useRouter, useRoute } from 'vue-router';
 import { useSessionStore } from '@/stores/session.js';
@@ -11,6 +11,7 @@ import AsideFeed from '@/components/ScudoTheming/AsideFeed.vue';
 import RecordDisplay from '@/components/RecordDisplay.vue';
 import FloatingAppButton from "../components/ScudoTheming/FloatingAppButton.vue";
 import Icon from "../components/ScudoTheming/LargeIcon.vue";
+import Card from "../components/ScudoTheming/Card.vue";
 
 const API = inject("api");
 const router = useRouter();
@@ -110,23 +111,38 @@ createResource();
 
 <template>
   <MainFeed>
-    <RecordDisplay v-if="form.resource.type == 'stream'" :id="form.resource.id" />
-    <form>
-      <Title>Démarrer un enregistrement</Title>
-      <Input name="title" label="Titre" v-model:value="form.resource.title" />
-      <Input name="text" label="Description" v-model:value="form.resource.text" />
-      <Text>
-        <label for="role" class="form-control">Partager publiquement</label>
-        <input @click="toggleAccessibility" id="role" name="role" type="checkbox" />
-      </Text>
+    <div id="recordDisplay">
+      <RecordDisplay v-if="form.resource.type == 'stream'" :id="form.resource.id" />
+    </div>
+    <BottomSheetScaffold v-if="form.resource.type == 'stream'">
+      <form>
+        <Card>
+          <Input name="title" label="Titre" v-model:value="form.resource.title" />
+          <Input name="text" label="Description" v-model:value="form.resource.text" />
+          <Text>
+            <label for="role" class="form-control">Partager publiquement</label>
+            <input @click="toggleAccessibility" id="role" name="role" type="checkbox" />
+          </Text>
+        </Card>
+      </form>
+    </BottomSheetScaffold>
+    <form v-else>
+      <Card>
+        <Title>Démarrer un enregistrement</Title>
+        <Input name="title" label="Titre" v-model:value="form.resource.title" />
+        <Input name="text" label="Description" v-model:value="form.resource.text" />
+        <Text>
+          <label for="role" class="form-control">Partager publiquement</label>
+          <input @click="toggleAccessibility" id="role" name="role" type="checkbox" />
+        </Text>
+      </Card>
     </form>
     <FloatingAppButton @click="startStopRecord">
       <Icon v-if="form.resource.type == 'text'">fiber_manual_record</Icon>
       <Icon v-else>stop</Icon>
     </FloatingAppButton>
   </MainFeed>
-  <!-- <AsideFeed  :large="false">
-                                                                                                                                                                          </AsideFeed> -->
+  <!-- <AsideFeed  :large="false"></AsideFeed> -->
 </template>
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
@@ -140,6 +156,11 @@ main {
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+#recordDisplay {
+  position: fixed;
+  top: 0;
 }
 
 p,

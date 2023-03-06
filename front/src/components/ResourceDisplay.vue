@@ -1,7 +1,11 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, inject, ref } from 'vue';
+import FilledButton from './ScudoTheming/FilledButton.vue';
+import Icon from './ScudoTheming/Icon.vue';
+import Title from './ScudoTheming/Title.vue';
 
 const props = defineProps(['resource']);
+const bus = inject('bus')
 
 const videoSrc = ref(null);
 
@@ -83,23 +87,48 @@ function openVideo() {
   videoSrc.value = props.resource.urls.file
 }
 
+function refresh() {
+  bus.emit('refreshResource');
+}
 
 onMounted(() => {
   if (props.resource.type == 'stream') {
     openLive()
   } else if (props.resource.type == 'video') {
-    openVideo()
+    if (props.resource.urls.file == '') {
+
+    } else {
+      openVideo()
+    }
   }
-})
+});
 </script>
 
 <template>
   <video v-if="resource.type == 'stream'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
-  <video v-if="resource.type == 'video'" id="remoteStream" autoplay muted controls :src="videoSrc"></video>
+  <video v-if="resource.type == 'video' && props.resource.urls.file != ''" id="remoteStream" autoplay muted controls
+    :src="videoSrc"></video>
+  <div id="infoVideoTraitement" v-if="resource.type == 'video' && props.resource.urls.file == ''">
+    <Title>Vidéo en cours de traitement</Title>
+    <div>
+      <FilledButton @click="refresh">
+        <Icon>refresh</Icon>
+        Réessayer
+      </FilledButton>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/media-queries";
+
+#infoVideoTraitement {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 90vh;
+}
 
 video {
   width: 100%;

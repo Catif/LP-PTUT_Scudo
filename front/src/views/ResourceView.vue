@@ -9,6 +9,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const Session = useSessionStore();
 const API = inject("api");
+const bus = inject('bus')
 const form = reactive({
   resource: {
     id: route.params.id,
@@ -26,6 +27,18 @@ API.get(`/api/resource/${form.resource.id}`, {
   alert('oups');
 })
 
+bus.on('refreshResource', function () {
+  API.get(`/api/resource/${form.resource.id}`, {
+    headers: {
+      Authorization: Session.data.token,
+    },
+  }).then((reponse) => {
+    form.resource = reponse.data.result.resource;
+  }).catch(() => {
+    alert('oups');
+  })
+})
+
 </script>
 
 <template>
@@ -33,5 +46,5 @@ API.get(`/api/resource/${form.resource.id}`, {
     <ResourceDisplay v-if="form.resource.type != ''" :resource="form.resource" />
   </MainFeed>
   <!-- <AsideFeed  :large="false">
-                                                                                                      </AsideFeed> -->
+                                                                                                                  </AsideFeed> -->
 </template>
