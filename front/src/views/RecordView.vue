@@ -132,14 +132,16 @@ function openEditResourceLive() {
     <!-- RETOUR LIVE -->
     <div id="recordDisplay">
       <RecordDisplay v-if="form.resource.type == 'stream'" :id="form.resource.id" />
+      <div id="liveButtons">
+        <FloatingAppButton @click="openEditResourceLive" v-if="form.resource.type == 'stream'">
+          <Icon>settings_photo_camera</Icon>
+        </FloatingAppButton>
+        <FloatingAppButton @click="startStopRecord">
+          <Icon v-if="form.resource.type == 'text'">fiber_manual_record</Icon>
+          <Icon v-if="form.resource.type == 'stream'">stop</Icon>
+        </FloatingAppButton>
+      </div>
     </div>
-    <FloatingAppButton @click="openEditResourceLive" v-if="form.resource.type == 'stream'">
-      <Icon>settings_photo_camera</Icon>
-    </FloatingAppButton>
-    <FloatingAppButton @click="startStopRecord">
-      <Icon v-if="form.resource.type == 'text'">fiber_manual_record</Icon>
-      <Icon v-if="form.resource.type == 'stream'">stop</Icon>
-    </FloatingAppButton>
   </MainFeed>
 
   <!-- FORMULAIRE ÉDITION DE RESOURCE PENDANT LE LIVE -->
@@ -174,21 +176,24 @@ function openEditResourceLive() {
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
 
-main {
+#recordDisplay {
   position: relative;
 
-  button {
-    // position: absolute;
-    bottom: .75rem;
-    left: 50%;
-    transform: translateX(-50%);
+  #liveButtons {
+    position: absolute;
+    bottom: 0;
+    left: .75rem;
+    width: calc(100% - 1.5rem);
+
+
+    button:nth-child(2) {
+      position: absolute;
+      left: calc(50% - .75rem);
+      transform: translateX(-50%);
+    }
   }
 }
 
-#recordDisplay {
-  position: fixed;
-  top: 0;
-}
 
 p,
 label {

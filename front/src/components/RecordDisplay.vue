@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, inject, ref } from 'vue';
 import { useSessionStore } from '@/stores/session.js';
+import Card from './ScudoTheming/Card.vue';
 
 const Session = useSessionStore();
 const props = defineProps(['id']);
@@ -89,14 +90,17 @@ bus.on('stopRecord', function () {
 
 
 <template>
-  <video id="video" autoplay muted playsinline :srcObject="videoSrc"></video>
+  <Card>
+    <video id="video" autoplay muted playsinline :srcObject="videoSrc"></video>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/media-queries";
 
 video {
-  max-width: $content-min-width;
+  width: 100%;
+  // max-width: $content-min-width;
   aspect-ratio: 4 / 7;
   object-fit: cover;
 
@@ -106,7 +110,6 @@ video {
   transform: scaleX(-1);
 
   @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
-    margin: .75rem 0;
     border-radius: 1.75rem;
   }
 }
