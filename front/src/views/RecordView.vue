@@ -1,7 +1,7 @@
 <script setup>
 import Title from "@/components/ScudoTheming/Title.vue"
 import { reactive, inject } from "vue";
-import BottomSheetScaffold from "@/components/ScudoTheming/BottomSheetScaffold.vue";
+import ModalBottomSheet from "@/components/ScudoTheming/ModalBottomSheet.vue";
 import Input from "@/components/ScudoTheming/Input.vue";
 import { useRouter, useRoute } from 'vue-router';
 import { useSessionStore } from '@/stores/session.js';
@@ -107,6 +107,11 @@ bus.on('recordOK', function () {
 })
 
 createResource();
+
+function openEditResourceLive() {
+  bus.emit('RecordDisplay')
+}
+
 </script>
 
 <template>
@@ -128,15 +133,19 @@ createResource();
     <div id="recordDisplay">
       <RecordDisplay v-if="form.resource.type == 'stream'" :id="form.resource.id" />
     </div>
+    <FloatingAppButton @click="openEditResourceLive" v-if="form.resource.type == 'stream'">
+      <Icon>settings_photo_camera</Icon>
+    </FloatingAppButton>
     <FloatingAppButton @click="startStopRecord">
       <Icon v-if="form.resource.type == 'text'">fiber_manual_record</Icon>
-      <Icon v-else>stop</Icon>
+      <Icon v-if="form.resource.type == 'stream'">stop</Icon>
     </FloatingAppButton>
   </MainFeed>
 
   <!-- FORMULAIRE ÉDITION DE RESOURCE PENDANT LE LIVE -->
   <template v-if="form.resource.type == 'stream'">
-    <BottomSheetScaffold>
+
+    <ModalBottomSheet bus="RecordDisplay">
       <form>
         <Card>
           <Input name="title" label="Titre" v-model:value="form.resource.title" />
@@ -147,7 +156,7 @@ createResource();
           </Text>
         </Card>
       </form>
-    </BottomSheetScaffold>
+    </ModalBottomSheet>
     <AsideFeed :large="true">
       <form>
         <Card>
@@ -169,7 +178,7 @@ main {
   position: relative;
 
   button {
-    position: absolute;
+    // position: absolute;
     bottom: .75rem;
     left: 50%;
     transform: translateX(-50%);
