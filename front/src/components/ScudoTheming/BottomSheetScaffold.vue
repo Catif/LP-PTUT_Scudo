@@ -6,6 +6,8 @@
 
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
+@import "@/assets/scss/media-queries";
+
 
 div {
     border-top-left-radius: 2.375rem;
@@ -15,5 +17,13 @@ div {
     position: relative;
     z-index: 1000;
     margin-top: calc(100vh - 200px);
+}
+
+
+
+@media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $content-min-width + 24px)) {
+    div {
+        display: none;
+    }
 }
 </style>
