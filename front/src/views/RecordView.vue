@@ -115,22 +115,23 @@ function openEditResourceLive() {
 </script>
 
 <template>
-  <MainFeed>
+  <MainFeed :TopAppBar="false">
     <!-- FORMULAIRE ÉDITION DE RESOURCE AVANT LE LIVE -->
     <form v-if="form.resource.type != 'stream'">
       <Card>
         <Title>Démarrer un enregistrement</Title>
-        <Input name="title" label="Titre" v-model:value="form.resource.title" />
-        <Input name="text" label="Description" v-model:value="form.resource.text" />
+        <Input name="title1" label="Titre" v-model:value="form.resource.title" />
+        <Input name="text1" label="Description" v-model:value="form.resource.text" />
         <Text>
-          <label for="role" class="form-control">Partager publiquement</label>
-          <input @click="toggleAccessibility" id="role" name="role" type="checkbox" />
+          <label for="role1" class="form-control">Partager publiquement</label>
+          <input @click="toggleAccessibility" id="role1" name="role1" type="checkbox" />
         </Text>
       </Card>
     </form>
 
     <!-- RETOUR LIVE -->
-    <div id="recordDisplay">
+    <div id="recordDisplay"
+      :class="{ recordOn: form.resource.type == 'stream', recordOff: form.resource.type != 'stream' }">
       <RecordDisplay v-if="form.resource.type == 'stream'" :id="form.resource.id" />
       <div id="liveButtons">
         <FloatingAppButton @click="openEditResourceLive" v-if="form.resource.type == 'stream'">
@@ -150,11 +151,11 @@ function openEditResourceLive() {
     <ModalBottomSheet bus="RecordDisplay">
       <form>
         <Card>
-          <Input name="title" label="Titre" v-model:value="form.resource.title" />
-          <Input name="text" label="Description" v-model:value="form.resource.text" />
+          <Input name="title2" label="Titre" v-model:value="form.resource.title" />
+          <Input name="text2" label="Description" v-model:value="form.resource.text" />
           <Text>
-            <label for="role" class="form-control">Partager publiquement</label>
-            <input @click="toggleAccessibility" id="role" name="role" type="checkbox" />
+            <label for="role2" class="form-control">Partager publiquement</label>
+            <input @click="toggleAccessibility" id="role2" name="role2" type="checkbox" />
           </Text>
         </Card>
       </form>
@@ -162,11 +163,11 @@ function openEditResourceLive() {
     <AsideFeed :large="true">
       <form>
         <Card>
-          <Input name="title" label="Titre" v-model:value="form.resource.title" />
-          <Input name="text" label="Description" v-model:value="form.resource.text" />
+          <Input name="title3" label="Titre" v-model:value="form.resource.title" />
+          <Input name="text3" label="Description" v-model:value="form.resource.text" />
           <Text>
-            <label for="role" class="form-control">Partager publiquement</label>
-            <input @click="toggleAccessibility" id="role" name="role" type="checkbox" />
+            <label for="role3" class="form-control">Partager publiquement</label>
+            <input @click="toggleAccessibility" id="role3" name="role3" type="checkbox" />
           </Text>
         </Card>
       </form>
@@ -175,24 +176,61 @@ function openEditResourceLive() {
 </template>
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
+@import "@/assets/scss/media-queries";
 
-#recordDisplay {
+main {
+  position: relative;
+}
+
+#recordDisplay.recordOn {
   position: relative;
 
   #liveButtons {
     position: absolute;
     bottom: 0;
-    left: .75rem;
-    width: calc(100% - 1.5rem);
+    width: 100%;
+    padding: 0 .75rem;
 
+    @media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $content-min-width + 24px)) {
+      button:nth-child(1) {
+        display: none;
+        // display: none;
+      }
+    }
 
     button:nth-child(2) {
       position: absolute;
-      left: calc(50% - .75rem);
-      transform: translateX(-50%);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(calc(-50% - .75rem));
     }
   }
 }
+
+#recordDisplay.recordOff #liveButtons button {
+  position: absolute;
+  bottom: 4.25rem;
+  left: 50%;
+  transform: translateX(calc(-50% - .75rem));
+}
+
+// #liveButtons {
+//   position: absolute;
+//   bottom: 0;
+
+//   &.recordOn button:nth-child(2) {
+//     position: absolute;
+//     bottom: 0;
+//     left: .75rem;
+//     width: calc(100% - 1.5rem);
+//   }
+
+//   &.recordOff button {
+//     position: absolute;
+//     left: calc(50% - .75rem);
+//     transform: translateX(-50%);
+//   }
+// }
 
 
 p,

@@ -1,5 +1,15 @@
+<script setup>
+const props = defineProps({
+  TopAppBar: {
+    type: Boolean,
+    default: true,
+  }
+});
+
+</script>
+
 <template>
-  <main>
+  <main :class="{ paddingTopToTopAppBar: TopAppBar }">
     <div id="container">
       <slot></slot>
     </div>
@@ -11,8 +21,11 @@
 
 main {
   flex-grow: 1;
-  padding-top: 3.5rem;
   height: 100vh;
+}
+
+.paddingTopToTopAppBar {
+  padding-top: 3.5rem;
 }
 
 #container {
