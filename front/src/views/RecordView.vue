@@ -7,6 +7,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { useSessionStore } from '@/stores/session.js';
 import Text from '@/components/ScudoTheming/Text.vue';
 import MainFeed from '@/components/ScudoTheming/MainFeed.vue';
+import FilledButton from '@/components/ScudoTheming/FilledButton.vue';
 import AsideFeed from '@/components/ScudoTheming/AsideFeed.vue';
 import RecordDisplay from '@/components/RecordDisplay.vue';
 import FloatingAppButton from "../components/ScudoTheming/FloatingAppButton.vue";
@@ -25,19 +26,25 @@ var form = reactive({
     title: '',
     text: '',
     type: 'text',
-    is_private: 1,
-  }
+  },
+  is_public: false,
 })
 if (route.params.accessibility == 'public') {
-  form.resource.is_private = 0;
+  form.is_public = true;
 }
 
 function createResource() {
+  if (form.is_public) {
+    var is_private = 0;
+  } else {
+    var is_private = 1;
+  }
+
   API.post('/api/resource', {
     title: form.resource.title,
     text: form.resource.text,
     type: form.resource.type,
-    is_private: form.resource.is_private,
+    is_private: is_private,
   }, {
     headers: {
       Authorization: Session.data.token
@@ -50,11 +57,17 @@ function createResource() {
 }
 
 function saveResource() {
+  if (form.is_public) {
+    var is_private = 0;
+  } else {
+    var is_private = 1;
+  }
+
   API.post(`/api/resource/${form.resource.id}`, {
     title: form.resource.title,
     text: form.resource.text,
     type: form.resource.type,
-    is_private: form.resource.is_private,
+    is_private: is_private,
   }, {
     headers: {
       Authorization: Session.data.token
@@ -68,12 +81,10 @@ function saveResource() {
 
 function toggleAccessibility() {
 
-  if (form.resource.is_private) {
+  if (form.is_public) {
     router.push('/record/private');
-    form.resource.is_private = 1;
   } else {
     router.push('/record/public');
-    form.resource.is_private = 0;
   }
 
   saveResource();
@@ -112,6 +123,10 @@ function openEditResourceLive() {
   bus.emit('RecordDisplay')
 }
 
+function oui() {
+  console.log(form.is_public);
+}
+
 </script>
 
 <template>
@@ -124,7 +139,7 @@ function openEditResourceLive() {
         <Input name="text1" label="Description" v-model:value="form.resource.text" />
         <Text>
           <label for="role1" class="form-control">Partager publiquement</label>
-          <input @click="toggleAccessibility" id="role1" name="role1" type="checkbox" />
+          <input @click="toggleAccessibility" id="role1" name="role1" type="checkbox" v-model="form.is_public" />
         </Text>
       </Card>
     </form>
@@ -155,7 +170,7 @@ function openEditResourceLive() {
           <Input name="text2" label="Description" v-model:value="form.resource.text" />
           <Text>
             <label for="role2" class="form-control">Partager publiquement</label>
-            <input @click="toggleAccessibility" id="role2" name="role2" type="checkbox" />
+            <input @click="toggleAccessibility" id="role2" name="role2" type="checkbox" v-model="form.is_public" />
           </Text>
         </Card>
       </form>
@@ -167,7 +182,7 @@ function openEditResourceLive() {
           <Input name="text3" label="Description" v-model:value="form.resource.text" />
           <Text>
             <label for="role3" class="form-control">Partager publiquement</label>
-            <input @click="toggleAccessibility" id="role3" name="role3" type="checkbox" />
+            <input @click="toggleAccessibility" id="role3" name="role3" type="checkbox" v-model="form.is_public" />
           </Text>
         </Card>
       </form>
