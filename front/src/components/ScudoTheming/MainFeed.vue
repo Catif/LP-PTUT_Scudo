@@ -22,6 +22,7 @@ const props = defineProps({
 main {
   flex-grow: 1;
   height: 100vh;
+  overflow: auto;
 }
 
 .paddingTopToTopAppBar {
