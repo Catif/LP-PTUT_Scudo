@@ -21,7 +21,12 @@ const form = reactive({
     id: route.params.id,
     type: ''
   },
-  auteur: {}
+  comments: [],
+  auteur: {
+    url: {
+      image: ''
+    }
+  }
 })
 
 function getResource() {
@@ -31,6 +36,7 @@ function getResource() {
     },
   }).then((reponse) => {
     form.resource = reponse.data.result.resource;
+    form.comments = reponse.data.result.comments;
     getAuteur();
   }).catch(() => {
     alert('oups');
@@ -66,9 +72,11 @@ getResource();
         <AuthorSection :user="form.auteur" :title="form.resource.title" />
         <Description v-if="form.resource.text != ''" :description="form.resource.text" />
       </Card>
-      <div v-if="typeof (form.resource.comments) != 'undefined'">
-        <Title>COMMENTAIRES</Title>
-        <CommentCard v-for="comment in form.resource.comments">A</CommentCard>
+      <div v-if="typeof (form.comments) != 'undefined'">
+        <Card>
+          <Title>COMMENTAIRES</Title>
+        </Card>
+        <CommentCard v-for="comment in form.comments" :comment="comment" />
       </div>
     </div>
   </MainFeed>
@@ -77,9 +85,11 @@ getResource();
       <AuthorSection :user="form.auteur" :title="form.resource.title" />
       <Description v-if="form.resource.text != ''" :description="form.resource.text" />
     </Card>
-    <div v-if="typeof (form.resource.comments) != 'undefined'">
-      <Title>COMMENTAIRES</Title>
-      <CommentCard v-for="comment in form.resource.comments">A</CommentCard>
+    <div v-if="typeof (form.comments) != 'undefined'">
+      <Card>
+        <Title>COMMENTAIRES</Title>
+      </Card>
+      <CommentCard v-for="comment in form.comments" :comment="comment" />
     </div>
   </AsideFeed>
 </template>
