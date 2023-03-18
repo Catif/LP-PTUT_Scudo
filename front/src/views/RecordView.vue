@@ -106,7 +106,7 @@ function stopRecord() {
   form.resource.type = 'video';
   saveResource();
   bus.emit('stopRecord');
-  alert('rediriger vers édition resource');
+  // alert('rediriger vers édition resource');
 }
 
 bus.on('changeOK', function () {

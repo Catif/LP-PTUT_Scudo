@@ -42,9 +42,9 @@ bus.on('refreshResource', function () {
 </script>
 
 <template>
-  <MainFeed>
+  <MainFeed :TopAppBar="false">
     <ResourceDisplay v-if="form.resource.type != ''" :resource="form.resource" />
   </MainFeed>
   <!-- <AsideFeed  :large="false">
-                                                                                                                  </AsideFeed> -->
+                                                                                                                                        </AsideFeed> -->
 </template>

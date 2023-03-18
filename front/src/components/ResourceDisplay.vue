@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, inject, ref } from 'vue';
+import { onMounted, inject, ref, watch } from 'vue';
+import Card from './ScudoTheming/Card.vue';
 import FilledButton from './ScudoTheming/FilledButton.vue';
 import Icon from './ScudoTheming/Icon.vue';
 import Title from './ScudoTheming/Title.vue';
@@ -43,7 +44,9 @@ connection.onstream = function (event) {
 };
 
 connection.onstreamended = function (event) {
-  alert("Broadcast is ended.");
+  // alert("Broadcast is ended.");
+
+  refresh();
 
   videoSrc.value = null;
 
@@ -91,32 +94,40 @@ function refresh() {
   bus.emit('refreshResource');
 }
 
-onMounted(() => {
+function openResource() {
   if (props.resource.type == 'stream') {
     openLive()
   } else if (props.resource.type == 'video') {
     if (props.resource.urls.file == '') {
-
     } else {
       openVideo()
     }
   }
+}
+
+onMounted(() => {
+  watch(() => props.resource.urls.file, (newValue, oldValue) => {
+    openResource();
+  })
+  openResource();
 });
 </script>
 
 <template>
-  <video v-if="resource.type == 'stream'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
-  <video v-if="resource.type == 'video' && props.resource.urls.file != ''" id="remoteStream" autoplay muted controls
-    :src="videoSrc"></video>
-  <div id="infoVideoTraitement" v-if="resource.type == 'video' && props.resource.urls.file == ''">
-    <Title>Vidéo en cours de traitement</Title>
-    <div>
-      <FilledButton @click="refresh">
-        <Icon>refresh</Icon>
-        Réessayer
-      </FilledButton>
+  <Card>
+    <video v-if="resource.type == 'stream'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
+    <video v-if="resource.type == 'video' && props.resource.urls.file != ''" autoplay muted controls
+      :src="videoSrc"></video>
+    <div id="infoVideoTraitement" v-if="resource.type == 'video' && props.resource.urls.file == ''">
+      <Title>Stream terminé, <br>vidéo en cours de traitement</Title>
+      <div>
+        <FilledButton @click="refresh">
+          <Icon>refresh</Icon>
+          Réessayer
+        </FilledButton>
+      </div>
     </div>
-  </div>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
@@ -137,8 +148,8 @@ video {
 
   vertical-align: bottom;
 
+
   @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
-    margin: .75rem 0;
     border-radius: 1.75rem;
   }
 }
