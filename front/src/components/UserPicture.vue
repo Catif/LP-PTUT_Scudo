@@ -3,7 +3,8 @@ const props = defineProps(["user"]);
 </script>
 <template>
 	<RouterLink :to="'/' + props['user'].username">
-		<img :src="props['user'].url.image" :alt="'Photo de profil de ' + props['user'].username" />
+		<img v-if="typeof (props['user'].url) != 'undefined' && typeof (props['user'].url.image) != 'undefined'"
+			:src="props['user'].url.image" :alt="'Photo de profil de ' + props['user'].username" />
 	</RouterLink>
 </template>
 

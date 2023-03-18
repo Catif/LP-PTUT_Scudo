@@ -66,6 +66,7 @@ function stopStream() {
 
   // mediaRecorder.stop();
   videoSrc.value = null;
+  // router.push({ name: "editResourceById", params: { id: props.id } });
 }
 
 onMounted(() => {
