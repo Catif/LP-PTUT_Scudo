@@ -108,14 +108,12 @@ getResource();
       <div v-if="typeof (form.comments) != 'undefined'">
         <Card>
           <Title>COMMENTAIRES</Title>
+          <form @submit.prevent="postComment">
+            <Input name="commentaire" placeholder="Ajouter un commentaire" v-model:value="form.newComment" />
+          </form>
         </Card>
         <CommentCard v-for="comment in form.comments" :comment="comment" />
       </div>
-      <Card>
-        <form @submit.prevent="postComment">
-          <Input name="commentaire" placeholder="Ajouter un commentaire" v-model:value="form.newComment" />
-        </form>
-      </Card>
     </div>
   </MainFeed>
 
@@ -129,14 +127,12 @@ getResource();
     <div v-if="typeof (form.comments) != 'undefined'">
       <Card>
         <Title>COMMENTAIRES</Title>
+        <form @submit.prevent="postComment">
+          <Input name="commentaire1" placeholder="Ajouter un commentaire" v-model:value="form.newComment" />
+        </form>
       </Card>
       <CommentCard v-for="comment in form.comments" :comment="comment" />
     </div>
-    <Card>
-      <form @submit.prevent="postComment">
-        <Input name="commentaire1" placeholder="Ajouter un commentaire" v-model:value="form.newComment" />
-      </form>
-    </Card>
   </AsideFeed>
 </template>
 <style lang="scss" scoped>
