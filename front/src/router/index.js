@@ -24,19 +24,26 @@ const router = createRouter({
       component: () => import("@/views/RecordView.vue"),
     },
     {
-      path: "/resource/edit/:id",
-      name: "resource",
-      component: () => import("@/views/EditResourceView.vue"),
-    },
-    {
-      path: "/resource/:id",
-      name: "resource",
-      component: () => import("@/views/ResourceView.vue"),
-    },
-    {
       path: "/login",
       name: "login",
       component: () => import("@/views/LoginView.vue"),
+    },
+    {
+      path: "/resource",
+      name: "resource",
+      redirect: "",
+      children: [
+        {
+          path: ":id",
+          name: "resourceByID",
+          component: () => import("@/views/ResourceView.vue"),
+        },
+        {
+          path: ":id/edit",
+          name: "resourceEdit",
+          component: () => import("@/views/EditResourceView.vue"),
+        },
+      ],
     },
   ],
 });
