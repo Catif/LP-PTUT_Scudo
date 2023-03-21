@@ -123,10 +123,6 @@ function openEditResourceLive() {
   bus.emit('RecordDisplay')
 }
 
-function oui() {
-  console.log(form.is_public);
-}
-
 </script>
 
 <template>
