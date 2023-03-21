@@ -24,6 +24,11 @@ const router = createRouter({
       component: () => import("@/views/RecordView.vue"),
     },
     {
+      path: "/resource/edit/:id",
+      name: "resource",
+      component: () => import("@/views/EditResourceView.vue"),
+    },
+    {
       path: "/resource/:id",
       name: "resource",
       component: () => import("@/views/ResourceView.vue"),
