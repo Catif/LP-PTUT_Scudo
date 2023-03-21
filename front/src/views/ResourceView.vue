@@ -1,6 +1,7 @@
 <script setup>
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
 import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
+import Input from '../components/ScudoTheming/Input.vue';
 import ResourceDisplay from '../components/ResourceDisplay.vue';
 import CommentCard from '../components/CommentCard.vue';
 import AuthorSection from '../components/AuthorSection.vue';
@@ -22,6 +23,7 @@ const form = reactive({
     type: ''
   },
   comments: [],
+  newComment: '',
   auteur: {
     url: {
       image: ''
@@ -55,6 +57,34 @@ function getAuteur() {
   })
 }
 
+function getComments() {
+  API.get(`/api/comment/${form.resource.id_user}`, {
+    headers: {
+      Authorization: Session.data.token,
+    },
+  }).then((reponse) => {
+    form.resource.comments = reponse.data.result;
+  }).catch(() => {
+    alert('oups');
+  })
+}
+
+function postComment() {
+  API.post(`/api/comment/${form.resource.id}`, {
+    content: form.newComment,
+  }, {
+    headers: {
+      Authorization: Session.data.token
+    }
+  }).then(() => {
+    // getComments();
+    getResource();
+    form.newComment = ''
+  }).catch(() => {
+    alert('oups');
+  })
+}
+
 bus.on('refreshResource', function () {
   getResource();
 })
@@ -67,6 +97,9 @@ getResource();
 <template>
   <MainFeed :TopAppBar="false">
     <ResourceDisplay v-if="form.resource.type != ''" :resource="form.resource" />
+
+
+
     <div id="resourceDatasS">
       <Card>
         <AuthorSection :user="form.auteur" :title="form.resource.title" />
@@ -78,8 +111,16 @@ getResource();
         </Card>
         <CommentCard v-for="comment in form.comments" :comment="comment" />
       </div>
+      <Card>
+        <form @submit.prevent="postComment">
+          <Input name="commentaire" placeholder="Ajouter un commentaire" v-model:value="form.newComment" />
+        </form>
+      </Card>
     </div>
   </MainFeed>
+
+
+
   <AsideFeed :large="true">
     <Card>
       <AuthorSection :user="form.auteur" :title="form.resource.title" />
@@ -91,6 +132,11 @@ getResource();
       </Card>
       <CommentCard v-for="comment in form.comments" :comment="comment" />
     </div>
+    <Card>
+      <form @submit.prevent="postComment">
+        <Input name="commentaire1" placeholder="Ajouter un commentaire" v-model:value="form.newComment" />
+      </form>
+    </Card>
   </AsideFeed>
 </template>
 <style lang="scss" scoped>

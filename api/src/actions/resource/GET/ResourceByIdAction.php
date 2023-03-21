@@ -1,4 +1,5 @@
 <?php
+
 namespace api\actions\resource\GET;
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -36,15 +37,15 @@ final class ResourceByIdAction
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 401);
     }
-    $allComment[] = [];
-    foreach($array['comment'] as $comment){
+    $allComment = [];
+    foreach ($array['comment'] as $comment) {
       $allComment[] = FormatterObject::formatComment($comment);
     }
 
-    
+
     $data = [
       'result' => [
-        'resource' => FormatterObject::formatResource( $array['resource']),
+        'resource' => FormatterObject::formatResource($array['resource']),
         'comments' => $allComment
       ]
 

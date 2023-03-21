@@ -22,7 +22,6 @@ API.get(`/api/user/${props['comment'].id_user} `, {
     },
 }).then((reponse) => {
     datas.user = reponse.data.result.user;
-    console.log(datas.user.username);
 }).catch(() => {
     // alert('oups');
 })
