@@ -22,6 +22,17 @@ final class GroupService
     ])->get();
   }
 
+  static public function getGroupsOfUser($id_user)
+  {
+    try {
+      $groups = User::findOrFail($id_user)->groups()->get();
+    } catch (\Exception $e) {
+      new \Exception("Erreur lors de recuperations des groupes d'un utilisateur");
+    }
+
+    return $groups;
+  }
+
   static public function getGroupById($id)
   {
     try {
