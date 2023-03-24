@@ -28,7 +28,7 @@ final class ResourceByIdAction
         $token = Authorization::findOrFail($header['Authorization'][0]);
         $user = $token->user()->first();
         if ($array['resource']->id_user != $user->id_user) {
-          throw new Exception("You don't have permission to acces this resource");
+          throw new Exception("Vous n'avez pas la permission pour cette ressource.");
         }
       }
     } catch (Exception  $e) {
