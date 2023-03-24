@@ -3,11 +3,8 @@ import { reactive, inject } from "vue";
 import { useRouter, useRoute } from 'vue-router';
 import { useSessionStore } from '@/stores/session.js';
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
-import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
-import RecordDisplay from '../components/RecordDisplay.vue';
 import Input from "@/components/ScudoTheming/Input.vue";
 import Text from '@/components/ScudoTheming/Text.vue';
-import Title from "@/components/ScudoTheming/Title.vue"
 import Card from "../components/ScudoTheming/Card.vue";
 import FilledButton from "../components/ScudoTheming/FilledButton.vue";
 
@@ -43,8 +40,7 @@ function saveResource() {
     headers: {
       Authorization: Session.data.token
     }
-  }).then((reponse) => {
-    form.resource = reponse.data.result.Resource;
+  }).then(() => {
   }).catch(() => {
     alert('oups');
   })
@@ -57,7 +53,6 @@ function getResource() {
     },
   }).then((reponse) => {
     form.resource = reponse.data.result.resource;
-    console.log();
     if (reponse.data.result.resource.is_private == 1) {
       form.is_public = false;
     } else {
@@ -81,8 +76,8 @@ getResource();
           <label for="role" class="form-control">Partager publiquement</label>
           <input id="role" name="role" type="checkbox" v-model="form.is_public" />
         </Text>
+        <FilledButton>ENREGISTRER</FilledButton>
       </Card>
-      <FilledButton>ENREGISTRER</FilledButton>
     </form>
   </MainFeed>
 </template>
