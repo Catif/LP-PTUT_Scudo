@@ -57,18 +57,6 @@ function getAuteur() {
   })
 }
 
-function getComments() {
-  API.get(`/api/comment/${form.resource.id_user}`, {
-    headers: {
-      Authorization: Session.data.token,
-    },
-  }).then((reponse) => {
-    form.resource.comments = reponse.data.result;
-  }).catch(() => {
-    alert('oups');
-  })
-}
-
 function postComment() {
   API.post(`/api/comment/${form.resource.id}`, {
     content: form.newComment,
@@ -77,7 +65,6 @@ function postComment() {
       Authorization: Session.data.token
     }
   }).then(() => {
-    // getComments();
     getResource();
     form.newComment = ''
   }).catch(() => {
