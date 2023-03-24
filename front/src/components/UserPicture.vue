@@ -4,7 +4,9 @@ const props = defineProps(["user"]);
 <template>
 	<template v-if="typeof (props['user']) != 'undefined'">
 		<RouterLink :to="'/' + props['user'].username">
-			<img :src="props['user'].url.image" :alt="'Photo de profil de ' + props['user'].username" />
+			<img v-if="props['user'].url.image == ''" src="/dist/userPictureDefault.png"
+				:alt="'Photo de profil de ' + props['user'].username" />
+			<img v-else :src="props['user'].url.image" :alt="'Photo de profil de ' + props['user'].username" />
 		</RouterLink>
 	</template>
 </template>
