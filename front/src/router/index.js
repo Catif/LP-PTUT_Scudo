@@ -43,6 +43,11 @@ const router = createRouter({
           name: "resourceEdit",
           component: () => import("@/views/EditResourceView.vue"),
         },
+        {
+          path: ":id/share",
+          name: "resourceShare",
+          component: () => import("@/views/ShareResourceView.vue"),
+        },
       ],
     },
   ],
