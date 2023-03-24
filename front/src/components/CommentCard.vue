@@ -53,8 +53,9 @@ API.get(`/api/user/${props['comment'].id_user} `, {
     margin: 0.75rem;
 }
 
-img {
+a {
     height: 3rem;
+    aspect-ratio: 1 / 1;
 }
 
 p {
