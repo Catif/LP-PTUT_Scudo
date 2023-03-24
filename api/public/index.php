@@ -64,6 +64,7 @@ $app->post('/api/upload', actions\general\POST\UploadAction::class)->add(new Tok
 $app->get('/api/users', actions\user\GET\UsersAction::class)->add(new TokenMiddleware());
 $app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class)->add(new TokenMiddleware());
 $app->get('/api/user/{id}/resources', actions\user\GET\UserResourcesAction::class)->add(new TokenMiddleware());
+$app->get('/api/user/{id}/groups', actions\user\GET\UserGetGroupsAction::class)->add(new TokenMiddleware());
 
 // POST
 
