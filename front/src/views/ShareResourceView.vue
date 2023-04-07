@@ -21,20 +21,19 @@ const Session = useSessionStore();
 var form = reactive({
   resource: {
     id: route.params.id,
-    title: '',
-    text: '',
-    type: 'text',
   },
   groups: []
 })
 
-function getResource() {
-  API.get(`/api/resource/${form.resource.id}`, {
+function validateGroups() {
+  API.get(`/api/resource/${form.resource.id}/groups`, {
     headers: {
       Authorization: Session.data.token,
     },
   }).then((reponse) => {
-    form.resource = reponse.data.result.resource;
+    reponse.data.result.groups.forEach(group_validated => {
+      form.groups.map(group => group.id == group_validated.id ? group.shared = true : null)
+    });
   }).catch(() => {
     alert('oups');
   })
@@ -47,13 +46,13 @@ function getGroups() {
     },
   }).then((reponse) => {
     form.groups = reponse.data.result.group;
+    validateGroups();
   }).catch(() => {
     alert('oups');
   })
 }
 
 getGroups();
-getResource();
 </script>
 
 <template>
