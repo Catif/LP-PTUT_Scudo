@@ -46,7 +46,7 @@ function loadGroup() {
 			group.owner = result.owner;
 		})
 		.catch((error) => {
-			console.log(error);
+			// console.log(error);
 		});
 }
 
@@ -72,7 +72,7 @@ function loadResources(page, limit) {
 			});
 		})
 		.catch((error) => {
-			console.log(error);
+			// console.log(error);
 		});
 }
 
@@ -87,7 +87,7 @@ function loadUserForResource(idUser) {
 			return response.data.result.user;
 		})
 		.catch((error) => {
-			console.log(error);
+			// console.log(error);
 		});
 }
 
@@ -108,7 +108,7 @@ bus.on("actionFollow", (event) => {
 		}
 	} else if (message.type == "error") {
 		message.content = event[0];
-		console.log("group.following: " + group.following);
+		// console.log("group.following: " + group.following);
 	}
 
 	setTimeout(() => {
@@ -131,7 +131,8 @@ onMounted(() => {
 
 		<div id="list-resources">
 			<template v-for="resource in resources">
-				<ResourceCard :resource="resource" :user="resource.user" :group="group" /><!--! Mettre le nom du groupe ou non ? -->
+				<ResourceCard :resource="resource" :user="resource.user" :group="group" />
+				<!--! Mettre le nom du groupe ou non ? -->
 			</template>
 		</div>
 	</MainFeed>

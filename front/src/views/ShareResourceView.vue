@@ -35,7 +35,8 @@ function validateGroups() {
       form.groups.map(group => group.id == group_validated.id ? group.shared = true : null)
     });
   }).catch(() => {
-    alert('oups');
+    alert('Récupération de vos groupes échouée.');
+    router.push({ name: "editResourceById", params: { id: form.resource.id } });
   })
 }
 
@@ -48,7 +49,8 @@ function getGroups() {
     form.groups = reponse.data.result.group;
     validateGroups();
   }).catch(() => {
-    alert('oups');
+    alert('Récupération de vos groupes échouée.');
+    router.push({ name: "editResourceById", params: { id: form.resource.id } });
   })
 }
 

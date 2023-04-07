@@ -52,11 +52,12 @@ function createResource() {
   }).then((reponse) => {
     form.resource = reponse.data.result.resource;
   }).catch(() => {
-    alert('oups')
+    router.push({ name: "home" });
   })
 }
 
 function saveResource() {
+  form.errorMessage = '';
   if (form.is_public) {
     var is_private = 0;
   } else {
@@ -75,7 +76,7 @@ function saveResource() {
   }).then((reponse) => {
     form.resource = reponse.data.result.Resource;
   }).catch(() => {
-    alert('oups');
+    form.errorMessage = 'Un problème est survenu lors de la sauvgarde, vérifiez votre connexion internet et réessayez.'
   })
 }
 
@@ -168,6 +169,7 @@ function openEditResourceLive() {
             <label for="role2" class="form-control">Partager publiquement</label>
             <input @click="toggleAccessibility" id="role2" name="role2" type="checkbox" v-model="form.is_public" />
           </Text>
+          <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
         </Card>
       </form>
     </ModalBottomSheet>
@@ -180,6 +182,7 @@ function openEditResourceLive() {
             <label for="role3" class="form-control">Partager publiquement</label>
             <input @click="toggleAccessibility" id="role3" name="role3" type="checkbox" v-model="form.is_public" />
           </Text>
+          <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
         </Card>
       </form>
     </AsideFeed>

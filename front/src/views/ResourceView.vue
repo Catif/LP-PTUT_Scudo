@@ -41,7 +41,7 @@ function getResource() {
     form.comments = reponse.data.result.comments;
     getAuteur();
   }).catch(() => {
-    alert('oups');
+    router.push({ name: "home" });
   })
 }
 
@@ -53,7 +53,7 @@ function getAuteur() {
   }).then((reponse) => {
     form.auteur = reponse.data.result.user;
   }).catch(() => {
-    alert('oups');
+    // alert('oups');
   })
 }
 
@@ -68,7 +68,7 @@ function postComment() {
     getResource();
     form.newComment = ''
   }).catch(() => {
-    alert('oups');
+    alert('Publication de commentaire échouée.');
   })
 }
 

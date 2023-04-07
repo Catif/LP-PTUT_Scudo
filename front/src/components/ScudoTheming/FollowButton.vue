@@ -44,7 +44,6 @@ function follow() {
 				bus.emit("actionFollow", [response.data.result.message, "success"]);
 			})
 			.catch((error) => {
-				console.log(error);
 				bus.emit("actionFollow", [error.response.data.error, "error"]);
 			});
 	} else if (props.type == "user") {
@@ -61,7 +60,6 @@ function follow() {
 				bus.emit("actionFollow", [response.data.result.message, "success"]);
 			})
 			.catch((error) => {
-				console.log(error);
 				bus.emit("actionFollow", [error.response.data.error, "error"]);
 			});
 	}
@@ -78,7 +76,6 @@ function unfollow() {
 				bus.emit("actionFollow", [response.data.result.message, "success"]);
 			})
 			.catch((error) => {
-				console.log(error);
 				bus.emit("actionFollow", [error.response.data.error, "error"]);
 			});
 	} else if (props.type == "user") {
@@ -91,7 +88,6 @@ function unfollow() {
 				bus.emit("actionFollow", [response.data.result.message, "success"]);
 			})
 			.catch((error) => {
-				console.log(error);
 				bus.emit("actionFollow", [error.response.data.error, "error"]);
 			});
 	}
@@ -105,7 +101,9 @@ function unfollow() {
 		</template>
 		<template v-else-if="!owner">
 			<FilledButton id="unfollow" @click="unfollow">Ne plus suivre</FilledButton>
-			<FilledButton id="notification"><Icon>notifications</Icon></FilledButton>
+			<FilledButton id="notification">
+				<Icon>notifications</Icon>
+			</FilledButton>
 		</template>
 		<template v-else>
 			<template v-if="type == 'group'">
@@ -135,7 +133,7 @@ function unfollow() {
 	overflow: hidden;
 	gap: 4px;
 
-	& > * {
+	&>* {
 		margin: 0;
 		display: flex;
 		justify-content: center;

@@ -22,9 +22,11 @@ var form = reactive({
     type: 'text',
   },
   is_public: false,
+  errorMessage: '',
 })
 
 function saveResource() {
+  form.errorMessage = '';
   if (form.is_public) {
     var is_private = 0;
   } else {
@@ -42,7 +44,7 @@ function saveResource() {
     }
   }).then(() => {
   }).catch(() => {
-    alert('oups');
+    form.errorMessage = 'Un problème est survenu lors de la sauvgarde, vérifiez votre connexion internet et réessayez.'
   })
 }
 
@@ -59,7 +61,9 @@ function getResource() {
       form.is_public = true;
     }
   }).catch(() => {
-    alert('oups');
+    alert('Vous ne pouvez pas modifier cette resource.');
+    router.push({ name: "resourceByID", params: { id: route.params.id } });
+
   })
 }
 
@@ -76,6 +80,7 @@ getResource();
           <label for="role" class="form-control">Partager publiquement</label>
           <input id="role" name="role" type="checkbox" v-model="form.is_public" />
         </Text>
+        <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
         <FilledButton>ENREGISTRER</FilledButton>
       </Card>
     </form>

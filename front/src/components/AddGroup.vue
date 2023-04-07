@@ -17,7 +17,6 @@ if (form.group.shared != true) {
   form.group.shared = false;
 }
 
-console.log(form.group.shared);
 
 function addShare() {
   API.post(`/api/resource/${props.resource.id}/group/${form.group.id}`,
