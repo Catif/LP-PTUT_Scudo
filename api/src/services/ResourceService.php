@@ -20,8 +20,8 @@ final class ResourceService
   static public function getResourceByID($id): array
   {
     try {
-      $resourceComment = Resource::findOrFail($id)->comments()->get();
       $resource = Resource::findOrFail($id);
+      $resourceComment = $resource->comments()->get();
 
       return [
         'resource' => $resource,
@@ -31,6 +31,11 @@ final class ResourceService
       echo ($e->getMessage());
       throw new Exception("error UserByID");
     }
+  }
+
+  static public function getGroupsOfResource(Resource $resource)
+  {
+    return $resource->groups()->get();
   }
 
   static public function insertResource(array $property, User $user)

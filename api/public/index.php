@@ -104,6 +104,7 @@ $app->post('/api/message', actions\message\POST\MessageAction::class)->add(new T
 // GET
 $app->get('/api/resources', actions\resource\GET\ResourcesAction::class)->add(new TokenMiddleware());
 $app->get('/api/resource/{id}', actions\resource\GET\ResourceByIdAction::class)->add(new TokenMiddleware());
+$app->get('/api/resource/{id}/groups', actions\resource\GET\ResourceGroupsAction::class)->add(new TokenMiddleware());
 
 
 // POST
@@ -112,6 +113,9 @@ $app->post('/api/resource/{id_resource}/group/{id_group}', actions\resource\POST
 
 // Méthode PATCH impossible en PHP
 $app->post('/api/resource/{id}', actions\resource\PATCH\ResourceAction::class)->add(new TokenMiddleware());
+
+// DELETE
+$app->delete('/api/resource/{id}/group/{id_group}', actions\resource\DELETE\ResourceGroupUnshareAction::class)->add(new TokenMiddleware());
 
 // =====================
 //     Groupe
