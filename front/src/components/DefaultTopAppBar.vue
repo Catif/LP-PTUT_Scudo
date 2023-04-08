@@ -11,7 +11,7 @@ function switchMode() {
   alert('fonction non créée')
 }
 
-function changeState(){
+function changeState() {
   bus.emit('TopAppBarModal')
 }
 
@@ -24,18 +24,16 @@ function changeState(){
     <IconButton @click="changeState">more_vert</IconButton>
   </TopAppBar>
   <ModalBottomSheet bus="TopAppBarModal">
-      <router-link to="create-group">
-        <Icon>groups</Icon>Créer un groupe
-      </router-link>
-      <button @click="switchMode">
-        <Icon>dark_mode</Icon>Mode nuit
-      </button>
-      <router-link to="settings">
-        <Icon>settings</Icon>Paramètres
-      </router-link>
-    </ModalBottomSheet>
+    <router-link to="create-group">
+      <Icon>groups</Icon>Créer un groupe
+    </router-link>
+    <!-- <button @click="switchMode">
+          <Icon>dark_mode</Icon>Mode nuit
+        </button> -->
+    <router-link to="settings">
+      <Icon>settings</Icon>Paramètres
+    </router-link>
+  </ModalBottomSheet>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

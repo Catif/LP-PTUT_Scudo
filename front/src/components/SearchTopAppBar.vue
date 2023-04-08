@@ -17,9 +17,9 @@ function switchMode() {
       <router-link to="create-group">
         <Icon>groups</Icon>Créer un groupe
       </router-link>
-      <button @click="switchMode">
-        <Icon>dark_mode</Icon>Mode nuit
-      </button>
+      <!-- <button @click="switchMode">
+          <Icon>dark_mode</Icon>Mode nuit
+        </button> -->
       <router-link to="settings">
         <Icon>settings</Icon>Paramètres
       </router-link>
@@ -27,6 +27,4 @@ function switchMode() {
   </TopAppBar>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

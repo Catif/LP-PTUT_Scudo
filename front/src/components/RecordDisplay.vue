@@ -2,6 +2,8 @@
 import { onMounted, inject, ref } from 'vue';
 import { useSessionStore } from '@/stores/session.js';
 import Card from './ScudoTheming/Card.vue';
+import { useRouter, useRoute } from 'vue-router';
+const router = useRouter();
 
 const Session = useSessionStore();
 const props = defineProps(['id']);
@@ -66,7 +68,7 @@ function stopStream() {
 
   // mediaRecorder.stop();
   videoSrc.value = null;
-  // router.push({ name: "editResourceById", params: { id: props.id } });
+  router.push({ name: "editResourceById", params: { id: stream_id } });
 }
 
 onMounted(() => {

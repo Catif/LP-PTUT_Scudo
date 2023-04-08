@@ -97,6 +97,7 @@ input[type="checkbox"] {
   width: 1.5em;
   height: 1.5em;
   color: $light-text-primary;
+  border: solid 1px $light-border;
   border-radius: 50%;
   vertical-align: bottom;
   appearance: none;

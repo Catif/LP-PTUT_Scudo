@@ -11,6 +11,7 @@ import Title from "@/components/ScudoTheming/Title.vue"
 import Card from "../components/ScudoTheming/Card.vue";
 import FilledButton from "../components/ScudoTheming/FilledButton.vue";
 import AddGroup from "../components/AddGroup.vue";
+import DefaultTopAppBar from "../components/DefaultTopAppBar.vue";
 
 
 const API = inject("api");
@@ -58,7 +59,8 @@ getGroups();
 </script>
 
 <template>
-  <MainFeed>
+  <MainFeed :top-app-bar="true">
+    <DefaultTopAppBar title="Partager" :back="true" />
     <Card>
       <AddGroup v-for="group in form.groups" :group="group" :resource="form.resource" />
     </Card>

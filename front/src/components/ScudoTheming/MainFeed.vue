@@ -39,5 +39,9 @@ main {
   main {
     padding-top: 0;
   }
+
+  .paddingTopToTopAppBar {
+    padding-top: 0rem;
+  }
 }
 </style>

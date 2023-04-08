@@ -1,13 +1,16 @@
 <script setup>
+
 import { reactive, inject } from "vue";
 import { useRouter, useRoute } from 'vue-router';
 import { useSessionStore } from '@/stores/session.js';
-import MainFeed from '../components/ScudoTheming/MainFeed.vue';
+import MainFeed from '@/components/ScudoTheming/MainFeed.vue';
 import Input from "@/components/ScudoTheming/Input.vue";
 import Text from '@/components/ScudoTheming/Text.vue';
-import Card from "../components/ScudoTheming/Card.vue";
-import FilledButton from "../components/ScudoTheming/FilledButton.vue";
-
+import Card from "@/components/ScudoTheming/Card.vue";
+import FilledButton from "@/components/ScudoTheming/FilledButton.vue";
+import Button from "@/components/ScudoTheming/Button.vue";
+import Icon from "@/components/ScudoTheming/Icon.vue";
+import EditTopAppBar from "@/components/EditTopAppBar.vue";
 
 const API = inject("api");
 const router = useRouter();
@@ -67,11 +70,16 @@ function getResource() {
   })
 }
 
+function shareResource() {
+  router.push({ name: "shareResourceById", params: { id: form.resource.id } })
+}
+
 getResource();
 </script>
 
 <template>
   <MainFeed>
+    <EditTopAppBar :resource="form.resource" />
     <form @submit.prevent="saveResource">
       <Card>
         <Input name="title" label="Titre" v-model:value="form.resource.title" />
@@ -81,6 +89,12 @@ getResource();
           <input id="role" name="role" type="checkbox" v-model="form.is_public" />
         </Text>
         <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
+        <Button @click="shareResource">
+          <div>
+            <span>Partager dans mes groupes </span>
+            <Icon>chevron_right</Icon>
+          </div>
+        </Button>
         <FilledButton>ENREGISTRER</FilledButton>
       </Card>
     </form>
@@ -89,11 +103,22 @@ getResource();
 
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
+@import "@/assets/scss/media-queries";
 
 p,
 label {
   line-height: 1.625rem;
   cursor: pointer;
+}
+
+button {
+  width: calc(100% - 1.5rem);
+
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 p {

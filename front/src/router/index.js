@@ -40,12 +40,12 @@ const router = createRouter({
         },
         {
           path: ":id/edit",
-          name: "resourceEdit",
+          name: "editResourceById",
           component: () => import("@/views/EditResourceView.vue"),
         },
         {
           path: ":id/share",
-          name: "resourceShare",
+          name: "shareResourceById",
           component: () => import("@/views/ShareResourceView.vue"),
         },
       ],

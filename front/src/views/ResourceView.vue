@@ -8,10 +8,11 @@ import AuthorSection from '../components/AuthorSection.vue';
 import Description from '../components/Description.vue';
 import { inject, reactive } from 'vue';
 import { useSessionStore } from '@/stores/session.js';
-import { useRoute } from "vue-router";
 import Card from '../components/ScudoTheming/Card.vue';
 import Text from '../components/ScudoTheming/Text.vue';
 import Title from '../components/ScudoTheming/Title.vue';
+import { useRouter, useRoute } from 'vue-router';
+const router = useRouter();
 
 const route = useRoute();
 const Session = useSessionStore();
