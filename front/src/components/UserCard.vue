@@ -6,6 +6,12 @@ import Alert from "./ScudoTheming/Alert.vue";
 import FollowButton from "./ScudoTheming/FollowButton.vue";
 import EditButton from "./ScudoTheming/EditButton.vue";
 import Text from "./ScudoTheming/Text.vue";
+import { useSessionStore } from '@/stores/session.js';
+import { useRoute } from 'vue-router';
+import { ref } from 'vue';
+
+const route = useRoute();
+const Session = useSessionStore();
 
 const props = defineProps({
   user: {
@@ -16,11 +22,16 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  edit: {
-    type: Boolean,
-    default: false,
-  }
 });
+
+const edit = ref(false)
+
+console.log(Session.data.idUser, route.params.id)
+if (Session.data.idUser === route.params.id) {
+  edit.value = true
+}
+
+console.log(props.user.follows)
 </script>
 
 <template>
@@ -35,8 +46,8 @@ const props = defineProps({
           <UserStat :number="user.following" type="suivis" />
           <UserStat :number="user.followers" type="followers" />
         </div>
-        <FollowButton v-if="edit !== true" />
-        <EditButton v-if="edit" :route="'/profile/' + user.id + '/edit'" />
+        <FollowButton v-if="edit === false" />
+        <EditButton v-if="edit === true" :route="'/profile/' + user.id + '/edit'" />
       </aside>
       <Text class="biography">{{ user.biography }}</Text>
     </section>

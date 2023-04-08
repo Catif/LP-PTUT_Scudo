@@ -4,7 +4,7 @@ const props = defineProps(['route'])
 </script>
 
 <template>
-  <div class="followButton">
+  <div class="EditButton">
     <RouterLink :to="props.route" id="edit">
       <FilledButton>Modifier mon profil</FilledButton>
     </RouterLink>
@@ -18,7 +18,7 @@ button {
   width: 100%;
 }
 
-.followButton {
+.EditButton {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

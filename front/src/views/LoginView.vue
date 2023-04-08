@@ -33,7 +33,6 @@ function isValidForm() {
         password: form.password,
     }).then((result) => {
         Session.setSession(result.data.result.token, result.data.result.user.id)
-        Session.setSession(result.data.result.token)
         router.push('/')
     }).catch((error) => {
         message.value = error.response.data.error
