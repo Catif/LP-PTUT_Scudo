@@ -22,17 +22,6 @@ const props = defineProps({
     default: false,
   },
 });
-
-console.log(props.user);
-
-const edit = ref(false);
-
-console.log(Session.data.idUser, route.params.id);
-if (Session.data.idUser === route.params.id) {
-  edit.value = true;
-}
-
-console.log(props.user.follows);
 </script>
 
 <template>
@@ -44,10 +33,15 @@ console.log(props.user.follows);
       </main>
       <aside>
         <div class="stats">
-          <UserStat :number="user.following" type="suivis" />
-          <UserStat :number="user.followers" type="followers" />
+          <UserStat :number="user.nb_following" type="suivis" />
+          <UserStat :number="user.nb_followers" type="followers" />
         </div>
-        <FollowButton type="user" :id="user.id" />
+        <FollowButton
+          :following="user.following"
+          :owner="user.owner"
+          :id="user.id"
+          type="user"
+        />
       </aside>
       <Text class="biography">{{ user.biography }}</Text>
     </section>

@@ -24,6 +24,11 @@ class User extends \Illuminate\Database\Eloquent\Model
     return $this->belongsToMany('api\models\User', 'user_follow', 'id_user', 'id_user_followed');
   }
 
+  public function followers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+  {
+    return $this->belongsToMany('api\models\User', 'user_follow', 'id_user_followed', 'id_user');
+  }
+
   public function resources(): \Illuminate\Database\Eloquent\Relations\HasMany
   {
     return $this->hasMany('api\models\Resource', 'id_user');

@@ -25,6 +25,9 @@ final class UserByIdAction
       $token = Authorization::findOrFail($header['Authorization'][0]);
       $userToken = $token->user()->firstOrFail();
       $userSearch = UserService::getUserByID($args['id']);
+
+      $followers = $userSearch->followers()->count();
+      $follows = $userSearch->follows()->count();
     } catch (Exception  $e) {
       $data = [
         'error' => $e->getMessage()
@@ -51,6 +54,8 @@ final class UserByIdAction
         'user' => $user,
         'owner' => $owner,
         'following' => $following,
+        "nb_followers" => $followers,
+        "nb_follows" => $follows
       ]
     ];
 
