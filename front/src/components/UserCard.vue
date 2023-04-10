@@ -5,9 +5,11 @@ import UserStat from "./UserStat.vue";
 import Alert from "./ScudoTheming/Alert.vue";
 import FollowButton from "./ScudoTheming/FollowButton.vue";
 import Text from "./ScudoTheming/Text.vue";
-import { useSessionStore } from "@/stores/session";
-import { ref } from 'vue';
+import { useSessionStore } from "@/stores/session.js";
+import { useRoute } from "vue-router";
+import { ref } from "vue";
 
+const route = useRoute();
 const Session = useSessionStore();
 
 const props = defineProps({
@@ -21,15 +23,16 @@ const props = defineProps({
   },
 });
 
-const owner = ref(false);
-const following = ref(false);
-
-if (props.user.id === Session.data.idUser) {
-  owner.value = true;
-}
-
 console.log(props.user);
 
+const edit = ref(false);
+
+console.log(Session.data.idUser, route.params.id);
+if (Session.data.idUser === route.params.id) {
+  edit.value = true;
+}
+
+console.log(props.user.follows);
 </script>
 
 <template>
@@ -44,7 +47,7 @@ console.log(props.user);
           <UserStat :number="user.following" type="suivis" />
           <UserStat :number="user.followers" type="followers" />
         </div>
-        <FollowButton :type="type" :id="user.id" type="user" />
+        <FollowButton type="user" :id="user.id" />
       </aside>
       <Text class="biography">{{ user.biography }}</Text>
     </section>
