@@ -12,6 +12,8 @@ use api\models\Resource;
 final class FakerGenerator
 {
     private $faker;
+    private $urlApiUpload = "https://api.scudo.catif.me/uploads/videos/";
+    private $randVideo = ["c9321071-6447-47e0-a4ff-c758b8d60008.mp4", "1af4cc4c-2759-433d-af70-ab06e87fb841.mp4", "8f835e73-1f62-4378-9530-b70a0711be46.mp4"];
 
     public function __construct($fakerFactory)
     {
@@ -28,12 +30,12 @@ final class FakerGenerator
         $newUser->id_user = Uuid::uuid4()->toString();
         $newUser->username = $this->faker->userName();
         $newUser->email = $this->faker->email();
-        $newUser->password = password_hash("1234", PASSWORD_BCRYPT, ['cost' => 12]);
+        $newUser->fullname = "{$this->faker->firstName()} {$this->faker->lastName()}";
+        $newUser->password = password_hash("Scudo!", PASSWORD_BCRYPT, ['cost' => 12]);
         $newUser->biography = $this->faker->paragraph(2);
         $newUser->image = $this->faker->imageUrl(500, 500);
 
         if ($newUser->role === "professional") {
-            $newUser->fullname = "{$this->faker->firstName()} {$this->faker->lastName()}";
             $newUser->phone = "0650366517";
         }
 
@@ -66,21 +68,15 @@ final class FakerGenerator
     {
         $newResource = new Resource;
 
-        $type = ["stream", "video", "text"];
-
         $newResource->id_resource = Uuid::uuid4()->toString();
-        $newResource->type = $type[rand(0, 2)];
+        $newResource->type = 'video';
         $newResource->title = $this->faker->sentence(3);
         $newResource->text = $this->faker->words(25, true);
         $newResource->longitude = $this->faker->longitude();
         $newResource->latitude = $this->faker->latitude();
-        $newResource->is_private = 1;
+        $newResource->is_private = 0;
 
-        if ($newResource->type === "stream") {
-            $newResource->filename = "test";
-        } elseif ($newResource->type === "video") {
-            $newResource->filename = "test";
-        }
+        $newResource->filename = $this->urlApiUpload . $this->randVideo[rand(0, 2)];
 
         if ($user->role === "user") {
             $user->resources()->save($newResource);
@@ -104,13 +100,9 @@ final class FakerGenerator
         $newGroupResource->text = $this->faker->words(25, true);
         $newGroupResource->longitude = $this->faker->longitude();
         $newGroupResource->latitude = $this->faker->latitude();
-        $newGroupResource->is_private = 1;
+        $newGroupResource->is_private = 0;
 
-        if ($newGroupResource->type === "stream") {
-            $newGroupResource->filename = "test";
-        } elseif ($newGroupResource->type === "video") {
-            $newGroupResource->filename = "test";
-        }
+        $newGroupResource->filename = $this->urlApiUpload . $this->randVideo[rand(0, 2)];
 
         if ($user->role === "user") {
             $user->resources()->save($newGroupResource);
@@ -150,10 +142,9 @@ final class FakerGenerator
 
         if ($user->id_user === $userFollowed) {
             echo "A user cannot follow himself !<br/>";
+        } else {
+            $user->follows()->attach($userFollowed);
         }
-
         echo "Fake follow generated !<br/>";
-
-        $user->follows()->attach($userFollowed);
     }
 }
