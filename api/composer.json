@@ -10,6 +10,7 @@
         "slim/slim": "4.*",
         "slim/psr7": "^1.6",
         "illuminate/database": "^9.50",
+        "fakerphp/faker": "^1.21",
         "ramsey/uuid": "^4.7"
     }
 }

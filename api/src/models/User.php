@@ -29,6 +29,11 @@ class User extends \Illuminate\Database\Eloquent\Model
     return $this->hasMany('api\models\Resource', 'id_user');
   }
 
+  public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+  {
+    return $this->hasMany('api\models\Comment', 'id_user');
+  }
+
   public function authorization()
   {
     return $this->hasOne('api\models\Authorization', 'id_user');

@@ -2,8 +2,11 @@
 
 namespace api\models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
 class Comment extends \Illuminate\Database\Eloquent\Model
 {
+  use HasUuids;
 
   protected  $table = 'comment';
   protected  $primaryKey = 'id_comment';
