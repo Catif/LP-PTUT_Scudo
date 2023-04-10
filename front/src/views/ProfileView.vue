@@ -42,7 +42,7 @@ API.get(`api/user/${route.params.id}/resources?page=1&limit=10`, {
   <MainFeed>
     <Alert v-if="message !== ''" class="error">{{ message }}</Alert>
     <template v-if="message === ''">
-      <UserCard :user="user" :edit="true" />
+      <UserCard :user="user" />
       <template v-for="resource in resources">
         <ResourceCard :user="user" :resource="resource" />
       </template>

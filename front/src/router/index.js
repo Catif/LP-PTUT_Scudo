@@ -35,6 +35,11 @@ const router = createRouter({
 			component: () => import("@/views/LoginView.vue"),
 		},
 		{
+			path: "/profile/:id",
+			name: "profile",
+			component: () => import("@/views/ProfileView.vue"),
+		},
+		{
 			path: "/group",
 			name: "group",
 			redirect: "/group/create",

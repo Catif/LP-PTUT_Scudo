@@ -4,8 +4,11 @@ import UserPicture from "./UserPicture.vue";
 import UserStat from "./UserStat.vue";
 import Alert from "./ScudoTheming/Alert.vue";
 import FollowButton from "./ScudoTheming/FollowButton.vue";
-import EditButton from "./ScudoTheming/EditButton.vue";
 import Text from "./ScudoTheming/Text.vue";
+import { useSessionStore } from "@/stores/session";
+import { ref } from 'vue';
+
+const Session = useSessionStore();
 
 const props = defineProps({
   user: {
@@ -16,11 +19,17 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  edit: {
-    type: Boolean,
-    default: false,
-  }
 });
+
+const owner = ref(false);
+const following = ref(false);
+
+if (props.user.id === Session.data.idUser) {
+  owner.value = true;
+}
+
+console.log(props.user);
+
 </script>
 
 <template>
@@ -35,8 +44,7 @@ const props = defineProps({
           <UserStat :number="user.following" type="suivis" />
           <UserStat :number="user.followers" type="followers" />
         </div>
-        <FollowButton v-if="edit !== true" />
-        <EditButton v-if="edit" />
+        <FollowButton :type="type" :id="user.id" type="user" />
       </aside>
       <Text class="biography">{{ user.biography }}</Text>
     </section>
