@@ -23,7 +23,8 @@ var form = reactive({
   resource: {
     id: route.params.id,
   },
-  groups: []
+  groups: [],
+  errorMessage: ''
 })
 
 function validateGroups() {
@@ -42,13 +43,17 @@ function validateGroups() {
 }
 
 function getGroups() {
-  API.get(`/api/groups`, {
+  API.get(`/api/user/${Session.data.id}/groups`, {
     headers: {
       Authorization: Session.data.token,
     },
   }).then((reponse) => {
-    form.groups = reponse.data.result.group;
-    validateGroups();
+    form.groups = reponse.data.result.groups;
+    if (form.groups.length == 0) {
+      form.errorMessage = "Abonnez-vous d'abord à un groupe avant de pouvoir y partager du contenu.";
+    } else {
+      validateGroups();
+    }
   }).catch(() => {
     alert('Récupération de vos groupes échouée.');
     router.push({ name: "editResourceById", params: { id: form.resource.id } });
@@ -62,6 +67,7 @@ getGroups();
   <MainFeed :top-app-bar="true">
     <DefaultTopAppBar title="Partager" :back="true" />
     <Card>
+      <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
       <AddGroup v-for="group in form.groups" :group="group" :resource="form.resource" />
     </Card>
   </MainFeed>
