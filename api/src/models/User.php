@@ -1,13 +1,14 @@
 <?php
 
 namespace api\models;
+
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends \Illuminate\Database\Eloquent\Model
 {
   use HasUuids;
 
-  protected  $table = 'User';
+  protected  $table = 'user';
   protected  $primaryKey = 'id_user';
 
   public $timestamps = true;
@@ -15,12 +16,12 @@ class User extends \Illuminate\Database\Eloquent\Model
 
   public function groups(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\Group', 'User_Group', 'id_user', 'id_group');
+    return $this->belongsToMany('api\models\Group', 'user_group', 'id_user', 'id_group');
   }
 
   public function follows(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\User', 'User_Follow', 'id_user', 'id_user_followed');
+    return $this->belongsToMany('api\models\User', 'user_follow', 'id_user', 'id_user_followed');
   }
 
   public function resources(): \Illuminate\Database\Eloquent\Relations\HasMany
