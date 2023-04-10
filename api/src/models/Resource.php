@@ -22,7 +22,6 @@ class Resource extends \Illuminate\Database\Eloquent\Model
   {
     return $this->belongsTo('api\models\User', 'id_user');
   }
-
   public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
   {
     return $this->hasMany('api\models\Comment', 'id_resource');

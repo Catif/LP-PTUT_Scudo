@@ -11,55 +11,46 @@ use api\services\utils\FormatterAPI;
 
 //Exception
 use api\errors\exceptions\RessourceNotFoundException as RessourceNotFoundException;
+use api\models\Authorization;
+use api\services\utils\FormatterObject;
+use Exception;
 use Slim\Exception\HttpNotFoundException;
 
 final class UserByIdAction
 {
   public function __invoke(Request $rq, Response $rs, array $args): Response
   {
+    $header = $rq->getHeaders();
     try {
-      $array = UserService::getUserByID($args['id']);
-    } catch (RessourceNotFoundException  $e) {
-      throw new HttpNotFoundException($rq, $e->getMessage());
-    }
-
-    $ressources = [];
-    foreach ($array['resources'] as $resource) {
-      $ressources[] = [
-        'id' => $resource['id_resource'],
-        'type' => $resource['type'],
-        'urls' => [
-          'api' => '/api/resource/' . $resource['id_resource'],
-          'file' => $resource['filename']
-        ],
-        'title' => $resource['title'],
-        'description' => $resource['text'],
-        'localisation' => [
-          'latitude' => $resource['latitude'],
-          'longitude' => $resource['longitude'],
-        ],
-        'created_at' => $resource['created_at'],
-        'updated_at' => $resource['updated_at'],
-        'published_at' => $resource['published_at'],
+      $token = Authorization::findOrFail($header['Authorization'][0]);
+      $userToken = $token->user()->firstOrFail();
+      $userSearch = UserService::getUserByID($args['id']);
+    } catch (Exception  $e) {
+      $data = [
+        'error' => $e->getMessage()
       ];
+      return FormatterAPI::formatResponse($rq, $rs, $data, 404);
     }
 
-    $user = [
-      'id' => $array['user']['id_user'],
-      'fullname' => $array['user']['fullname'],
-      'username' => $array['user']['username'],
-      'email' => $array['user']['email'],
-      'biography' => $array['user']['biography'],
-      'phone' => $array['user']['phone'],
-      'role' => $array['user']['role'],
-      'created_at' => $array['user']['created_at'],
-    ];
+    $owner = false;
+    $following = false;
+
+    if ($userToken->id_user == $userSearch->id_user) {
+      $owner = true;
+      $following = true;
+    } elseif (UserService::isFollowing($userToken, $userSearch)) {
+      $following = true;
+    }
+
+
+    $user = FormatterObject::formatUser($userSearch);
 
     $data = [
       'request' => '/api/user/' . $args['id'],
       'result' => [
         'user' => $user,
-        'resources' => $ressources
+        'owner' => $owner,
+        'following' => $following,
       ]
     ];
 

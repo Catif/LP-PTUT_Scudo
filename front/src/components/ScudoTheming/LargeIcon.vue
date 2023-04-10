@@ -11,7 +11,7 @@ const props = defineProps(['active'])
 
 <style scoped>
 span {
-  line-height: 1.25rem;
+  line-height: inherit;
 
   vertical-align: bottom;
   font-size: 2.5rem;

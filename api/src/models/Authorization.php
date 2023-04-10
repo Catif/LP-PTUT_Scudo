@@ -2,6 +2,8 @@
 
 namespace api\models;
 
+
+
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Authorization extends \Illuminate\Database\Eloquent\Model

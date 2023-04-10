@@ -16,11 +16,11 @@ class Group extends \Illuminate\Database\Eloquent\Model
 
   public function resources(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\Resource', 'resource_group', 'id_resource', 'id_group');
+    return $this->belongsToMany('api\models\Resource', 'resource_group', 'id_group', 'id_resource');
   }
 
   public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\User', 'user_group', 'id_group', 'id_user');
+    return $this->belongsToMany('api\models\User', 'user_group', 'id_group', 'id_user')->withPivot('role');
   }
 }

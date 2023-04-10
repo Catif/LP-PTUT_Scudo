@@ -16,7 +16,7 @@ class User extends \Illuminate\Database\Eloquent\Model
 
   public function groups(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
   {
-    return $this->belongsToMany('api\models\Group', 'user_group', 'id_user', 'id_group');
+    return $this->belongsToMany('api\models\Group', 'user_group', 'id_group', 'id_user');
   }
 
   public function follows(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
