@@ -4,14 +4,19 @@ import Alert from "@/components/ScudoTheming/Alert.vue";
 import ResourceCard from "@/components/ResourceCard.vue";
 import UserCard from "@/components/UserCard.vue";
 import { useSessionStore } from "@/stores/session.js";
-import { inject, ref } from "vue";
+import { inject, ref, reactive } from "vue";
 import { useRoute } from "vue-router";
+
+const bus = inject("bus");
 const API = inject("api");
 const route = useRoute();
 const Session = useSessionStore();
 const user = ref(null);
 const resources = ref(null);
-const message = ref("");
+const message = reactive({
+  content: "",
+  type: "",
+});
 
 API.get(`/api/user/${route.params.id}`, {
   headers: {
@@ -21,7 +26,7 @@ API.get(`/api/user/${route.params.id}`, {
   .then((response) => {
     let result = response.data.result;
 
-    message.value = "";
+    message.content = "";
 
     result.user.following = result.following;
     result.user.owner = result.owner;
@@ -30,7 +35,7 @@ API.get(`/api/user/${route.params.id}`, {
     user.value = result.user;
   })
   .catch((error) => {
-    message.value = error.response.data.error;
+    message.content = error.response.data.error;
   });
 
 API.get(`api/user/${route.params.id}/resources?page=1&limit=10`, {
@@ -39,18 +44,39 @@ API.get(`api/user/${route.params.id}/resources?page=1&limit=10`, {
   },
 })
   .then((result) => {
-    message.value = "";
+    message.content = "";
     resources.value = result.data.result.resources;
   })
   .catch((error) => {
-    message.value = error.response.data.error;
+    message.content = error.response.data.error;
   });
+
+bus.on("actionFollow", (event) => {
+  message.type = event[1];
+  if (message.type == "success") {
+    user.value.following = !user.value.following;
+
+    if (user.value.following) {
+      user.value.nb_followers++;
+    } else {
+      user.value.nb_followers--;
+    }
+  } else if (message.type == "error") {
+    message.content = event[0];
+  }
+
+  setTimeout(() => {
+    message.content = "";
+  }, 3000);
+});
 </script>
 
 <template>
   <MainFeed>
-    <Alert v-if="message !== ''" class="error">{{ message }}</Alert>
-    <template v-if="message === ''">
+    <Alert v-if="message.content !== ''" :class="message.type">{{
+      message.content
+    }}</Alert>
+    <template v-if="message.content === ''">
       <template v-if="user">
         <UserCard :user="user" />
         <template v-for="resource in resources">

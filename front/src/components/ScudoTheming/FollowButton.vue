@@ -44,7 +44,6 @@ function follow() {
         bus.emit("actionFollow", [response.data.result.message, "success"]);
       })
       .catch((error) => {
-        console.log(error);
         bus.emit("actionFollow", [error.response.data.error, "error"]);
       });
   } else if (props.type == "user") {
@@ -58,9 +57,10 @@ function follow() {
       }
     )
       .then((response) => {
-        bus.emit("actionFollow", [response.data.result.message, "success"]);
+        bus.emit("actionFollow", [response.data.result.result, "success"]);
       })
       .catch((error) => {
+        console.log(error.response);
         bus.emit("actionFollow", [error.response.data.error, "error"]);
       });
   }
@@ -86,7 +86,7 @@ function unfollow() {
       },
     })
       .then((response) => {
-        bus.emit("actionFollow", [response.data.result.message, "success"]);
+        bus.emit("actionFollow", [response.data.result.result, "success"]);
       })
       .catch((error) => {
         bus.emit("actionFollow", [error.response.data.error, "error"]);
