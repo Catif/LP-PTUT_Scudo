@@ -1,13 +1,18 @@
 <script setup>
 import { onMounted, inject, ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import Card from './ScudoTheming/Card.vue';
 import FilledButton from './ScudoTheming/FilledButton.vue';
 import Icon from './ScudoTheming/Icon.vue';
 import Title from './ScudoTheming/Title.vue';
 import IconButton from './ScudoTheming/IconButton.vue';
+import { useSessionStore } from "@/stores/session.js";
 
 const props = defineProps(['resource']);
 const bus = inject('bus')
+const Session = useSessionStore();
+const router = useRouter();
+
 
 const videoSrc = ref(null);
 
@@ -112,6 +117,11 @@ onMounted(() => {
   })
   openResource();
 });
+console.log(props.resource);
+
+function openEdit() {
+  router.push({ name: "editResourceById", params: { id: props.resource.id } })
+}
 </script>
 
 <template>
@@ -119,6 +129,8 @@ onMounted(() => {
     <div id="video">
       <nav>
         <IconButton :light="true" @click="$router.back">close</IconButton>
+        <IconButton v-if="Session.data.idUser == props.resource.id_user" :light="true" @click="openEdit">edit
+        </IconButton>
       </nav>
       <video v-if="resource.type == 'stream'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
       <video v-if="resource.type == 'video' && props.resource.urls.file != ''" autoplay muted controls
@@ -152,11 +164,13 @@ onMounted(() => {
   position: relative;
 
   nav {
-    background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .1) 70%, rgba(0, 0, 0, 0));
+    background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .2) 70%, rgba(0, 0, 0, 0));
     position: absolute;
-    height: 4rem;
+    height: 3.5rem;
     width: 100%;
     z-index: 100;
+    display: flex;
+    justify-content: space-between;
   }
 }
 

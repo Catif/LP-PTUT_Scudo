@@ -38,7 +38,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/resource/:id/edit",
+      path: "/resource/:id/edit/:comp?",
       name: "editResourceById",
       component: () => import("@/views/EditResourceView.vue"),
       meta: {

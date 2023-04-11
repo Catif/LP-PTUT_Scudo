@@ -16,6 +16,13 @@ const API = inject("api");
 const router = useRouter();
 const route = useRoute();
 const Session = useSessionStore();
+const edit = reactive({
+  first: false
+})
+
+if (route.params.comp == 'create') {
+  edit.state = true;
+}
 
 var form = reactive({
   resource: {
@@ -81,7 +88,7 @@ getResource();
 
 <template>
   <MainFeed>
-    <EditTopAppBar :resource="form.resource" />
+    <EditTopAppBar :resource="form.resource" :back="!edit.state" />
     <form @submit.prevent="saveResource">
       <Card>
         <Input name="title" label="Titre" v-model:value="form.resource.title" />
