@@ -1,13 +1,13 @@
 <script setup>
-import { onMounted, inject, ref } from 'vue';
-import { useSessionStore } from '@/stores/session.js';
-import Card from './ScudoTheming/Card.vue';
-import { useRouter, useRoute } from 'vue-router';
+import { onMounted, inject, ref } from "vue";
+import { useSessionStore } from "@/stores/session.js";
+import Card from "./ScudoTheming/Card.vue";
+import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 
 const Session = useSessionStore();
-const props = defineProps(['id']);
-const bus = inject('bus')
+const props = defineProps(["id"]);
+const bus = inject("bus");
 
 var stream_id = props.id;
 
@@ -54,19 +54,28 @@ connection.onstream = function (event) {
         video: e.data,
       });
     } else {
-      mediaRecorder.stop();
+      if (mediaRecorder.state !== "inactive") {
+        mediaRecorder.stop();
+      }
     }
   });
   // Démarrage de l'enregistrement avec la durée d'un segment
   mediaRecorder.start(segmentLengthInMs);
-  bus.emit('recordOK');
-
+  bus.emit("recordOK");
 };
 
 function stopStream() {
   connection.closeSocket();
 
-  // mediaRecorder.stop();
+  if (mediaRecorder.state !== "inactive") {
+    mediaRecorder.stop();
+  }
+
+  // Arrêtez toutes les pistes du flux
+  if (videoSrc.value) {
+    videoSrc.value.getTracks().forEach((track) => track.stop());
+  }
+
   videoSrc.value = null;
   router.push({ name: "editResourceById", params: { id: stream_id } });
 }
@@ -80,17 +89,12 @@ onMounted(() => {
   });
   connection.socket.emit("runStream");
   connection.open(stream_id);
+});
 
-})
-
-
-
-bus.on('stopRecord', function () {
+bus.on("stopRecord", function () {
   stopStream();
-})
-
+});
 </script>
-
 
 <template>
   <Card>
@@ -108,7 +112,6 @@ video {
   object-fit: cover;
 
   vertical-align: bottom;
-
 
   transform: scaleX(-1);
 
