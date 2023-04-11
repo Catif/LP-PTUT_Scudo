@@ -7,13 +7,13 @@ export const useSessionStore = defineStore(
   () => {
     const router = useRouter();
     const data = reactive({
+      idUser: "",
       token: "",
-      id: "",
     });
 
-    function setSession(t, id) {
+    function setSession(t, idUser) {
       data.token = t;
-      data.id = id;
+      data.idUser = idUser;
     }
 
     function emptySession() {

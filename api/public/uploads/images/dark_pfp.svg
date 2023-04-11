@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #5dfcc6;
+      }
+
+      .cls-2 {
+        fill: #191c1a;
+      }
+    </style>
+  </defs>
+  <g id="Background">
+    <rect class="cls-2" width="512" height="512"/>
+  </g>
+  <g id="icon">
+    <g>
+      <path class="cls-1" d="m334.29,355.17h-156.58c-5.05,0-9.03-4.37-8.49-9.39,4.69-43.78,41.75-77.89,86.78-77.89s82.1,34.11,86.78,77.89c.54,5.02-3.44,9.39-8.49,9.39Z"/>
+      <circle class="cls-1" cx="256" cy="207.61" r="50.77"/>
+    </g>
+  </g>
+</svg>

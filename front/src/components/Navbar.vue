@@ -12,7 +12,9 @@ import Search from "./SearchInput.vue";
 import { useRoute } from "vue-router";
 import { ref, inject } from "vue";
 import IconButton from "./ScudoTheming/IconButton.vue";
+import { useSessionStore } from '@/stores/session.js';
 const route = useRoute();
+const Session = useSessionStore();
 
 // Create elementsNav array
 const elementsNav = [
@@ -22,7 +24,7 @@ const elementsNav = [
 	{ name: "Conversation", path: "/conversation", icon: "chat_bubble", title: "Conversations", mobile: true },
 
 	// Desktop
-	{ name: "Profil", path: "/profile", icon: "account_circle", title: "Profil", mobile: false },
+	{ name: "Profil", path: `/profile/${Session.data.idUser}`, icon: "account_circle", title: "Profil", mobile: false },
 	{ name: "Params", path: "/settings", icon: "settings", title: "Paramètres", mobile: false },
 ];
 
@@ -52,7 +54,9 @@ function changeState() {
 
 		<!-- ACCUEIL -->
 		<router-link key="Home" to="/" class="mobile" @click="closePublish">
-			<Text> <Icon :active="route.path == '/'">home</Icon><span class="title">Accueil</span> </Text>
+			<Text>
+				<Icon :active="route.path == '/'">home</Icon><span class="title">Accueil</span>
+			</Text>
 		</router-link>
 
 		<!-- BOUTON PUBLIER -->
@@ -67,35 +71,40 @@ function changeState() {
 			</Text>
 			<div class="sousmenu">
 				<router-link key="Film" to="/record/private" class="desktop">
-					<Text> <Icon>videocam</Icon><span class="title">Filmer pour moi</span> </Text>
+					<Text>
+						<Icon>videocam</Icon><span class="title">Filmer pour moi</span>
+					</Text>
 				</router-link>
 				<router-link key="FilmAndPublish" to="/record/public" class="desktop">
-					<Text> <Icon>cell_tower</Icon><span class="title">Filmer & Diffuser</span> </Text>
+					<Text>
+						<Icon>cell_tower</Icon><span class="title">Filmer & Diffuser</span>
+					</Text>
 				</router-link>
 				<router-link key="Upload" to="/upload" class="desktop">
-					<Text> <Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span> </Text>
+					<Text>
+						<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
+					</Text>
 				</router-link>
 			</div>
 		</button>
 
 		<!-- AUTRES BOUTONS -->
-		<router-link
-			v-for="el in elementsNav"
-			:key="el.name"
-			:to="el.path"
-			v-bind:class="{ mobile: el.mobile, desktop: !el.mobile }"
-			@click="closePublish"
-		>
+		<router-link v-for="el in elementsNav" :key="el.name" :to="el.path"
+			v-bind:class="{ mobile: el.mobile, desktop: !el.mobile }" @click="closePublish">
 			<Text>
-				<Icon :active="route.path == el.path">{{ el.icon }}</Icon
-				><span class="title">{{ el.title }}</span>
+				<Icon :active="route.path == el.path">{{ el.icon }}</Icon><span class="title">{{ el.title }}</span>
 			</Text>
 		</router-link>
 	</nav>
 	<ModalBottomSheet bus="NavBarModal">
-		<router-link to="/record/private"> <Icon>videocam</Icon>Filmer pour moi </router-link>
-		<router-link to="/record/public"> <Icon>cell_tower</Icon>Filmer & Diffuser </router-link
-		><router-link to="/upload"> <Icon>upload</Icon>Mettre en ligne une vidéo </router-link>
+		<router-link to="/record/private">
+			<Icon>videocam</Icon>Filmer pour moi
+		</router-link>
+		<router-link to="/record/public">
+			<Icon>cell_tower</Icon>Filmer & Diffuser
+		</router-link><router-link to="/upload">
+			<Icon>upload</Icon>Mettre en ligne une vidéo
+		</router-link>
 	</ModalBottomSheet>
 </template>
 
@@ -303,5 +312,4 @@ nav {
 			}
 		}
 	}
-}
-</style>
+}</style>
