@@ -1,17 +1,4 @@
 <script setup>
-window.addEventListener("scroll", function () {
-	var element = document.getElementById("AsideContainer");
-
-	var positionY = element.offsetHeight - window.pageYOffset - this.innerHeight + 12;
-
-	if (positionY <= 0) {
-		// Tester plusieurs valeur pour voir quel est la meilleur
-		element.classList.add("fixed");
-	} else {
-		element.classList.remove("fixed");
-	}
-});
-
 const props = defineProps(["large"]);
 </script>
 
@@ -36,15 +23,6 @@ aside {
 	&.large {
 		width: $content-min-width;
 	}
-}
-
-.fixed {
-	position: fixed;
-	bottom: 0;
-}
-
-.sticky {
-	position: sticky;
 }
 
 @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width + $aside-bar-min-width + 24px)) {

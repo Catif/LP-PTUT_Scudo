@@ -46,8 +46,9 @@ function saveResource() {
       Authorization: Session.data.token
     }
   }).then(() => {
-    router.push({ name: "resourceById", params: { id: props.resource.id } })
-  }).catch(() => {
+    router.push({ name: "resourceById", params: { id: form.resource.id } })
+  }).catch((error) => {
+    console.log(error)
     form.errorMessage = 'Un problème est survenu lors de la sauvgarde, vérifiez votre connexion internet et réessayez.'
   })
 }
