@@ -43,7 +43,7 @@ function validateGroups() {
 }
 
 function getGroups() {
-  API.get(`/api/user/${Session.data.id}/groups`, {
+  API.get(`/api/user/${Session.data.idUser}/groups`, {
     headers: {
       Authorization: Session.data.token,
     },

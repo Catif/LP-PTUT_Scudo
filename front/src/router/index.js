@@ -19,34 +19,56 @@ const router = createRouter({
       component: () => import("@/views/RegisterView.vue"),
     },
     {
-      path: "/record/:accessibility",
+      path: "/record",
       name: "record",
       component: () => import("@/views/RecordView.vue"),
+    },
+    {
+      path: "/resource/:id",
+      name: "resource",
+      component: () => import("@/views/ResourceView.vue"),
     },
     {
       path: "/login",
       name: "login",
       component: () => import("@/views/LoginView.vue"),
     },
+
     {
-      path: "/resource",
-      name: "resource",
-      redirect: "",
+      path: "/profile/:id",
+      name: "profile",
+      component: () => import("@/views/ProfileView.vue"),
+    },
+
+    {
+      path: "/profile/:id/edit",
+      name: "editProfile",
+      component: () => import("@/views/EditProfileView.vue"),
+    },
+    {
+      path: "/profile/:id",
+      name: "profile",
+      component: () => import("@/views/ProfileView.vue"),
+    },
+    {
+      path: "/group",
+      name: "group",
+      redirect: "/group/create",
       children: [
         {
+          path: "create",
+          name: "groupCreate",
+          component: () => import("@/views/group/GroupCreateView.vue"),
+        },
+        {
           path: ":id",
-          name: "resourceByID",
-          component: () => import("@/views/ResourceView.vue"),
+          name: "groupByID",
+          component: () => import("@/views/group/GroupView.vue"),
         },
         {
           path: ":id/edit",
-          name: "editResourceById",
-          component: () => import("@/views/EditResourceView.vue"),
-        },
-        {
-          path: ":id/share",
-          name: "shareResourceById",
-          component: () => import("@/views/ShareResourceView.vue"),
+          name: "groupEdit",
+          component: () => import("@/views/group/GroupEditView.vue"),
         },
       ],
     },

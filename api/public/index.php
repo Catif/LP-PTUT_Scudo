@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use api\actions as actions;
+use api\services\utils\FormatterAPI;
+
+use Slim\Factory\AppFactory as Appfactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory as Appfactory;
@@ -148,3 +152,7 @@ $app->delete('/api/group/{id}/unfollow', actions\group\DELETE\GroupUnfollowActio
 $app->post('/api/comment/{id_resource}', api\actions\comment\POST\CommentAction::class)->add(new TokenMiddleware());
 
 $app->run();
+
+
+// Génération de fausses données dans la base de donnnées
+// require_once(__DIR__ . '/../sql/data_generation.php');
