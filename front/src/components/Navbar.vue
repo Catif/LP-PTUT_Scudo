@@ -78,7 +78,7 @@ function changeState() {
 			</Text>
 		</router-link>
 
-	<!-- BOUTON PUBLIER -->
+		<!-- BOUTON PUBLIER -->
 		<Text class="add mobile">
 			<IconButton @click="changeState">add_circle</IconButton>
 			<!-- <span class="title">Publier</span> -->
@@ -100,10 +100,10 @@ function changeState() {
 					</Text>
 				</router-link>
 				<!-- <router-link key="Upload" to="/upload" class="desktop">
-												<Text>
-													<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
-												</Text>
-											</router-link> -->
+														<Text>
+															<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
+														</Text>
+													</router-link> -->
 			</div>
 		</button>
 
@@ -123,27 +123,8 @@ function changeState() {
 			<Icon>cell_tower</Icon>Filmer & Diffuser
 		</router-link>
 		<!-- <router-link to="/upload">
-						<Icon>upload</Icon>Mettre en ligne une vidéo
-					</router-link> -->
-	</ModalBottomSheet>
-	<!-- AUTRES BOUTONS -->
-	<router-link v-for="el in elementsNav" :key="el.name" :to="el.path"
-		v-bind:class="{ mobile: el.mobile, desktop: !el.mobile }" @click="closePublish">
-		<Text>
-			<Icon :active="route.path == el.path">{{ el.icon }}</Icon><span class="title">{{ el.title }}</span>
-		</Text>
-	</router-link>
-	</nav>
-	<ModalBottomSheet bus="NavBarModal">
-		<router-link to="/record/private">
-			<Icon>videocam</Icon>Filmer pour moi
-		</router-link>
-		<router-link to="/record/public">
-			<Icon>cell_tower</Icon>Filmer & Diffuser
-		</router-link>
-		<!-- <router-link to="/upload">
-					<Icon>upload</Icon>Mettre en ligne une vidéo
-				</router-link> -->
+								<Icon>upload</Icon>Mettre en ligne une vidéo
+							</router-link> -->
 	</ModalBottomSheet>
 </template>
 
