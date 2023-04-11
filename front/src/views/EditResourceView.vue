@@ -22,7 +22,7 @@ var form = reactive({
     id: route.params.id,
     title: '',
     text: '',
-    type: 'text',
+    type: 'pending',
   },
   is_public: false,
   errorMessage: '',

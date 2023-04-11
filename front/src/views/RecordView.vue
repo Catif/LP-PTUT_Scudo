@@ -13,6 +13,7 @@ import RecordDisplay from '@/components/RecordDisplay.vue';
 import FloatingAppButton from "../components/ScudoTheming/FloatingAppButton.vue";
 import Icon from "../components/ScudoTheming/LargeIcon.vue";
 import Card from "../components/ScudoTheming/Card.vue";
+import Button from "../components/ScudoTheming/Button.vue";
 
 const API = inject("api");
 const router = useRouter();
@@ -51,8 +52,36 @@ function createResource() {
     }
   }).then((reponse) => {
     form.resource = reponse.data.result.resource;
+    console.log(form.resource);
+    if (route.params.accessibility == 'public') {
+      router.push({ name: "record", params: { accessibility: 'public', id: form.resource.id } });
+    } else {
+      router.push({ name: "record", params: { accessibility: 'private', id: form.resource.id } });
+    }
   }).catch(() => {
     router.push({ name: "home" });
+  })
+}
+
+
+
+function getResource() {
+  API.get(`/api/resource/${form.resource.id}`, {
+    headers: {
+      Authorization: Session.data.token,
+    },
+  }).then((reponse) => {
+    form.resource = reponse.data.result.resource;
+    console.log(form.resource);
+    if (reponse.data.result.resource.is_private == 1) {
+      form.is_public = false;
+    } else {
+      form.is_public = true;
+    }
+  }).catch(() => {
+    alert('Vous ne pouvez pas modifier cette resource.');
+    router.push({ name: "resourceById", params: { id: route.params.id } });
+
   })
 }
 
@@ -83,9 +112,9 @@ function saveResource() {
 function toggleAccessibility() {
 
   if (form.is_public) {
-    router.push('/record/private');
+    router.push({ name: "record", params: { accessibility: 'private', id: form.resource.id } });
   } else {
-    router.push('/record/public');
+    router.push({ name: "record", params: { accessibility: 'public', id: form.resource.id } });
   }
 
   saveResource();
@@ -118,10 +147,23 @@ bus.on('recordOK', function () {
   saveResource();
 })
 
-createResource();
+
+
+if (!route.params.id) {
+  createResource();
+} else {
+  form.resource.id = route.params.id;
+  console.log(form.resource.id);
+  getResource()
+}
+
 
 function openEditResourceLive() {
   bus.emit('RecordDisplay')
+}
+
+function shareResource() {
+  router.push({ name: "shareResourceById", params: { id: form.resource.id } })
 }
 
 </script>
@@ -140,6 +182,16 @@ function openEditResourceLive() {
         </Text>
       </Card>
     </form>
+    <Card>
+      <div class="shareGroup">
+        <Button @click="shareResource">
+          <div>
+            <span>Partager dans mes groupes </span>
+            <Icon>chevron_right</Icon>
+          </div>
+        </Button>
+      </div>
+    </Card>
 
     <!-- RETOUR LIVE -->
     <div id="recordDisplay"
@@ -170,6 +222,14 @@ function openEditResourceLive() {
             <input @click="toggleAccessibility" id="role2" name="role2" type="checkbox" v-model="form.is_public" />
           </Text>
           <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
+          <div class="shareGroup">
+            <Button @click="shareResource">
+              <div>
+                <span>Partager dans mes groupes </span>
+                <Icon>chevron_right</Icon>
+              </div>
+            </Button>
+          </div>
         </Card>
       </form>
     </ModalBottomSheet>
@@ -183,6 +243,14 @@ function openEditResourceLive() {
             <input @click="toggleAccessibility" id="role3" name="role3" type="checkbox" v-model="form.is_public" />
           </Text>
           <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
+          <div class="shareGroup">
+            <Button @click="shareResource">
+              <div>
+                <span>Partager dans mes groupes </span>
+                <Icon>chevron_right</Icon>
+              </div>
+            </Button>
+          </div>
         </Card>
       </form>
     </AsideFeed>
@@ -191,6 +259,18 @@ function openEditResourceLive() {
 <style lang="scss" scoped>
 @import "@/assets/scss/colors";
 @import "@/assets/scss/media-queries";
+
+.shareGroup {
+  button {
+    width: calc(100% - 1.5rem);
+
+    div {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
 
 main {
   position: relative;
