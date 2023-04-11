@@ -26,7 +26,7 @@ var form = reactive({
     id: null,
     title: '',
     text: '',
-    type: 'text',
+    type: 'pending',
   },
   is_public: false,
 })
@@ -72,7 +72,7 @@ function getResource() {
     },
   }).then((reponse) => {
     form.resource = reponse.data.result.resource;
-    console.log(form.resource);
+    console.log(form.resource.is_private);
     if (reponse.data.result.resource.is_private == 1) {
       form.is_public = false;
     } else {
@@ -110,6 +110,8 @@ function saveResource() {
 }
 
 function toggleAccessibility() {
+
+  form.is_public = !form.is_public;
 
   if (form.is_public) {
     router.push({ name: "record", params: { accessibility: 'private', id: form.resource.id } });
@@ -153,7 +155,6 @@ if (!route.params.id) {
   createResource();
 } else {
   form.resource.id = route.params.id;
-  console.log(form.resource.id);
   getResource()
 }
 
@@ -202,7 +203,7 @@ function shareResource() {
           <Icon>settings_photo_camera</Icon>
         </FloatingAppButton>
         <FloatingAppButton @click="startStopRecord">
-          <Icon v-if="form.resource.type == 'text'">fiber_manual_record</Icon>
+          <Icon v-if="form.resource.type == 'pending'">fiber_manual_record</Icon>
           <Icon v-if="form.resource.type == 'stream'">stop</Icon>
         </FloatingAppButton>
       </div>

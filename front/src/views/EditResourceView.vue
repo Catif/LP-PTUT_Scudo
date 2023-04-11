@@ -22,7 +22,7 @@ var form = reactive({
     id: route.params.id,
     title: '',
     text: '',
-    type: 'pending',
+    type: 'video',
   },
   is_public: false,
   errorMessage: '',
