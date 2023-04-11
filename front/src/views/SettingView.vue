@@ -71,12 +71,17 @@ function isValidFormParams() {
         <Text>Changer son mot de passe</Text>
         <form action="/api/user/password_change" method="post" @submit.prevent="isValidFormParams">
             <Input type="password" name="old_password" :required='true' label="Ancien mot de passe" v-model:value="form.old_password" />
-            <Input type="password" name="new_password" :required='true' label="Nouveau mot de pass" v-model:value="form.new_password" />
+            <Input type="password" name="new_password" :required='true' label="Nouveau mot de passe" v-model:value="form.new_password" />
             <Input type="password" name="new_password_repeat" :required='true' label="Vérification du nouveau mot de passe" v-model:value="form.new_password_repeat" />
             <Alert id="success" :type="message.type" v-if="message.content !== ''">{{ message.content }}  </Alert>
             <Button>CONFIRMER</Button>
+            <RouterLink to="/"></RouterLink>
         </form>
-        <RouterLink to="/"></RouterLink>
+        <form @submit.prevent=" Session.emptySession()">
+            <Button>Déconnexion</Button>
+        
+        </form>
+       
     </MainFeed>
 </template>
 
