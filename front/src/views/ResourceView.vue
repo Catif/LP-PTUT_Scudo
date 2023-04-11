@@ -85,7 +85,6 @@ getResource();
 
 <template>
   <MainFeed :TopAppBar="false">
-    <ResourceTopAppBar/>
 
     <ResourceDisplay v-if="form.resource.type != ''" :resource="form.resource" />
 

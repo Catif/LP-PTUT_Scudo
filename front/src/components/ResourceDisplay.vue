@@ -4,6 +4,7 @@ import Card from './ScudoTheming/Card.vue';
 import FilledButton from './ScudoTheming/FilledButton.vue';
 import Icon from './ScudoTheming/Icon.vue';
 import Title from './ScudoTheming/Title.vue';
+import IconButton from './ScudoTheming/IconButton.vue';
 
 const props = defineProps(['resource']);
 const bus = inject('bus')
@@ -115,9 +116,14 @@ onMounted(() => {
 
 <template>
   <Card>
-    <video v-if="resource.type == 'stream'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
-    <video v-if="resource.type == 'video' && props.resource.urls.file != ''" autoplay muted controls
-      :src="videoSrc"></video>
+    <div id="video">
+      <nav>
+        <IconButton :light="true" @click="$router.back">close</IconButton>
+      </nav>
+      <video v-if="resource.type == 'stream'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
+      <video v-if="resource.type == 'video' && props.resource.urls.file != ''" autoplay muted controls
+        :src="videoSrc"></video>
+    </div>
     <div id="infoVideoTraitement" v-if="resource.type == 'video' && props.resource.urls.file == ''">
       <Title>Stream terminé, <br>vidéo en cours de traitement</Title>
       <div>
@@ -132,6 +138,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/media-queries";
+@import "@/assets/scss/colors";
 
 #infoVideoTraitement {
   text-align: center;
@@ -141,12 +148,26 @@ onMounted(() => {
   min-height: 90vh;
 }
 
+#video {
+  position: relative;
+
+  nav {
+    background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .1) 70%, rgba(0, 0, 0, 0));
+    position: absolute;
+    height: 4rem;
+    width: 100%;
+    z-index: 100;
+  }
+}
+
 video {
   width: 100%;
   aspect-ratio: 4 / 7;
   object-fit: cover;
 
   vertical-align: bottom;
+  position: relative;
+  z-index: 1;
 
 
   @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
