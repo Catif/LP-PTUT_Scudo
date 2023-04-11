@@ -147,6 +147,7 @@ onMounted(() => {
 #edit-group {
 	padding-top: 50px;
 }
+
 #container {
 	h2 {
 		text-align: center;

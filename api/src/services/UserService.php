@@ -74,7 +74,7 @@ final class UserService
     $user->password = $property['password'];
     $user->biography = $property['biography'];
     $user->phone = $property['phone'];
-    $user->image = $property['image'];
+    $user->image = 'https://api.scudo.catif.me/uploads/images/light_pfp.svg';
     $user->role = $property['role'];
 
     try {

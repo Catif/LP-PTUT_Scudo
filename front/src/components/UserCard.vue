@@ -5,6 +5,12 @@ import UserStat from "./UserStat.vue";
 import Alert from "./ScudoTheming/Alert.vue";
 import FollowButton from "./ScudoTheming/FollowButton.vue";
 import Text from "./ScudoTheming/Text.vue";
+import { useSessionStore } from "@/stores/session.js";
+import { useRoute } from "vue-router";
+import { ref } from "vue";
+
+const route = useRoute();
+const Session = useSessionStore();
 
 const props = defineProps({
   user: {
@@ -22,15 +28,20 @@ const props = defineProps({
   <Card>
     <section>
       <main>
-        <UserPicture :user="props['user']" />
+        <UserPicture :user="user" />
         <Alert class="live" v-if="live">LIVE</Alert>
       </main>
       <aside>
         <div class="stats">
-          <UserStat :number="user.following" type="suivis" />
-          <UserStat :number="user.followers" type="followers" />
+          <UserStat :number="user.nb_following" type="suivis" />
+          <UserStat :number="user.nb_followers" type="followers" />
         </div>
-        <FollowButton />
+        <FollowButton
+          :following="user.following"
+          :owner="user.owner"
+          :id="user.id"
+          type="user"
+        />
       </aside>
       <Text class="biography">{{ user.biography }}</Text>
     </section>
