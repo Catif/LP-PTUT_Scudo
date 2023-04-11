@@ -92,10 +92,8 @@ final class FakerGenerator
     {
         $newGroupResource = new Resource;
 
-        $type = ["stream", "video", "text"];
-
         $newGroupResource->id_resource = Uuid::uuid4()->toString();
-        $newGroupResource->type = $type[rand(0, 2)];
+        $newGroupResource->type = 'video';
         $newGroupResource->title = $this->faker->sentence(3);
         $newGroupResource->text = $this->faker->words(25, true);
         $newGroupResource->longitude = $this->faker->longitude();

@@ -1,9 +1,7 @@
 <script setup>
-import { inject, ref } from 'vue';
+import { inject, ref } from "vue";
 
-
-const bus = inject('bus');
-
+const bus = inject("bus");
 
 const props = defineProps({
   placeholder: {
@@ -69,29 +67,39 @@ const emit = defineEmits(["update:value"]);
 <template>
   <div v-bind:class="{ border: props.border, small: props.small }">
     <template v-if="props.label">
-      <label v-bind:class="{ active: props.value.length > 0 || props.type == 'file' }"
-        :for="props.name">{{ props.label }}</label>
+      <label
+        v-bind:class="{
+          active: props.value.length > 0 || props.type == 'file',
+        }"
+        :for="props.name"
+        >{{ props.label }}</label
+      >
     </template>
 
     <template v-if="props.type == 'file'">
       <img :src="photoUrl" class="picture" />
-      <input :type="props.type" :id="props.name" :name="props.name" :required="props.required" :disabled="props.disabled"
-        @change="onFileInput($event)" />
+      <input
+        :type="props.type"
+        :id="props.name"
+        :name="props.name"
+        :required="props.required"
+        :disabled="props.disabled"
+        @change="onFileInput($event)"
+      />
     </template>
     <template v-else>
-      <input :type="props.type" :id="props.name" :name="props.name" :value="props.value" :required="props.required"
-        :disabled="props.disabled" :placeholder="props.placeholder" @input="$emit('update:value', $event.target.value)" />
+      <input
+        :type="props.type"
+        :id="props.name"
+        :name="props.name"
+        :value="props.value"
+        :required="props.required"
+        :disabled="props.disabled"
+        :placeholder="props.placeholder"
+        @input="$emit('update:value', $event.target.value)"
+      />
     </template>
   </div>
-  <template v-if="props.type == 'file'">
-    <img :src="photoUrl" class="picture" />
-    <input :type="props.type" :id="props.name" :name="props.name" :required="props.required" :disabled="props.disabled"
-      @change="onFileInput($event)" />
-  </template>
-  <template v-else>
-    <input :type="props.type" :id="props.name" :name="props.name" :value="props.value" :required="props.required"
-      :disabled="props.disabled" :placeholder="props.placeholder" @input="$emit('update:value', $event.target.value)" />
-  </template>
 </template>
 
 <style lang="scss" scoped>
