@@ -22,7 +22,7 @@ const router = createRouter({
       component: () => import("@/views/LoginView.vue"),
     },
     {
-      path: "/record/:accessibility",
+      path: "/record/:accessibility/:id?",
       name: "record",
       component: () => import("@/views/RecordView.vue"),
       meta: {
