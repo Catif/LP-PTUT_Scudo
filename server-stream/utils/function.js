@@ -43,6 +43,11 @@ export function transcodeVideo(user, file) {
 
   // Path
   let pathFileTemp = `${conf.folderTemp}/${file.filename}.tmp`;
+  if (!existsSync(pathFileTemp)) {
+    console.log("Fichier temporaire introuvable");
+    return;
+  }
+
   let pathFileTranscode = `${conf.folderOutput}/${file.filename}.${conf.transcode.extensionFile}`;
 
   console.log("Début de la conversion");
@@ -71,6 +76,14 @@ export function transcodeVideo(user, file) {
           let endTime = performance.now();
           let durationTranscode = Math.round(endTime - startTime) / 1000;
 
+          if (!existsSync(pathFileTemp)) {
+            console.log(
+              file.id +
+                ": Erreur pendant la conversion, le fichier temporaire n'existe pas"
+            );
+            return;
+          }
+
           console.log("Conversion complete");
 
           fetch(`${conf.api_url}/api/resource/${file.id}`, {
@@ -84,8 +97,9 @@ export function transcodeVideo(user, file) {
             }),
           });
 
-          getStatFile(pathFileTranscode, durationTranscode);
           unlinkSync(pathFileTemp); // Delete file temp
+
+          getStatFile(pathFileTranscode, durationTranscode);
         })
         .run();
     })
