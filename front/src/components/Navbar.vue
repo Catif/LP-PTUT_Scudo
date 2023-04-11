@@ -50,7 +50,7 @@ function changeState() {
 			<Image src="/assets/img/logo-short_dark.svg" alt="Logo" />
 		</router-link>
 
-		<Search id="search" @click="closePublish" />
+		<!-- <Search id="search" @click="closePublish" /> -->
 
 		<!-- ACCUEIL -->
 		<router-link key="Home" to="/" class="mobile" @click="closePublish">
@@ -80,11 +80,11 @@ function changeState() {
 						<Icon>cell_tower</Icon><span class="title">Filmer & Diffuser</span>
 					</Text>
 				</router-link>
-				<router-link key="Upload" to="/upload" class="desktop">
-					<Text>
-						<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
-					</Text>
-				</router-link>
+				<!-- <router-link key="Upload" to="/upload" class="desktop">
+							<Text>
+								<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
+							</Text>
+						</router-link> -->
 			</div>
 		</button>
 
@@ -167,7 +167,7 @@ nav {
 		transition: height 150ms ease-out, border-radius 150ms ease-out;
 
 		&.open {
-			height: 12.5rem;
+			height: 9.5rem;
 		}
 
 		&.mobile {
