@@ -152,3 +152,6 @@ $app->run();
 
 // Génération de fausses données dans la base de donnnées
 // require_once(__DIR__ . '/../sql/data_generation.php');
+
+// Génération de fausses données dans la base de donnnées
+// require_once(__DIR__ . '/../sql/data_generation.php');
