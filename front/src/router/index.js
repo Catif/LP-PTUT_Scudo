@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
-
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -24,7 +23,7 @@ const router = createRouter({
       component: () => import("@/views/LoginView.vue"),
     },
     {
-      path: "/record/:accessibility",
+      path: "/record/:accessibility/:id?",
       name: "record",
       component: () => import("@/views/RecordView.vue"),
       meta: {
@@ -109,14 +108,6 @@ const router = createRouter({
           },
         },
       ],
-    },
-    {
-      path: "/example",
-      name: "example",
-      component: () => import("@/views/ExampleView.vue"),
-      meta: {
-        auth: true,
-      },
     },
   ],
 });

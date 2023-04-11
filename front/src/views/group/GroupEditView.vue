@@ -6,6 +6,7 @@ import Input from "@/components/ScudoTheming/Input.vue";
 import Textarea from "@/components/ScudoTheming/Textarea.vue";
 import Button from "../../components/ScudoTheming/FilledButton.vue";
 import Alert from "@/components/ScudoTheming/Alert.vue";
+import EditGroupTopAppBar from "@/components/EditGroupTopAppBar.vue";
 
 // Fonction
 import { ref, reactive, inject, onMounted } from "vue";
@@ -130,6 +131,7 @@ onMounted(() => {
 
 <template>
 	<MainFeed id="edit-group">
+		<EditGroupTopAppBar/>
 		<Title>{{ form.name }}</Title>
 
 		<form>

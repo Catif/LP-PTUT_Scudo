@@ -62,6 +62,10 @@ function onFileInput(event) {
 }
 
 const emit = defineEmits(["update:value"]);
+
+function changeOK() {
+  bus.emit("changeOK");
+}
 </script>
 
 <template>
@@ -96,6 +100,7 @@ const emit = defineEmits(["update:value"]);
         :required="props.required"
         :disabled="props.disabled"
         :placeholder="props.placeholder"
+        @blur="changeOK"
         @input="$emit('update:value', $event.target.value)"
       />
     </template>

@@ -12,6 +12,7 @@ import Card from '../components/ScudoTheming/Card.vue';
 import Text from '../components/ScudoTheming/Text.vue';
 import Title from '../components/ScudoTheming/Title.vue';
 import { useRouter, useRoute } from 'vue-router';
+import ResourceTopAppBar from '../components/ResourceTopAppBar.vue';
 const router = useRouter();
 
 const route = useRoute();
@@ -84,6 +85,8 @@ getResource();
 
 <template>
   <MainFeed :TopAppBar="false">
+    <ResourceTopAppBar/>
+
     <ResourceDisplay v-if="form.resource.type != ''" :resource="form.resource" />
 
 
