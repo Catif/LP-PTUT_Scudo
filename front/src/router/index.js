@@ -12,6 +12,7 @@ const router = createRouter({
         auth: true,
       },
     },
+
     {
       path: "/register",
       name: "register",
@@ -66,6 +67,14 @@ const router = createRouter({
       path: "/profile/:id/edit",
       name: "editProfile",
       component: () => import("@/views/EditProfileView.vue"),
+      meta: {
+        auth: true,
+      },
+    },
+    {
+      path: "/setting",
+      name: "setting",
+      component: () => import("@/views/SettingView.vue"),
       meta: {
         auth: true,
       },
