@@ -12,7 +12,9 @@ import Search from "./SearchInput.vue";
 import { useRoute } from "vue-router";
 import { ref, inject } from "vue";
 import IconButton from "./ScudoTheming/IconButton.vue";
+import { useSessionStore } from '@/stores/session.js';
 const route = useRoute();
+const Session = useSessionStore();
 
 // Create elementsNav array
 const elementsNav = [
@@ -22,7 +24,7 @@ const elementsNav = [
   { name: "Conversation", path: "/conversation", icon: "chat_bubble", title: "Conversations", mobile: true },
 
   // Desktop
-  { name: "Profil", path: "/profile", icon: "account_circle", title: "Profil", mobile: false },
+  { name: "Profil", path: `/profile/${Session.data.idUser}`, icon: "account_circle", title: "Profil", mobile: false },
   { name: "Params", path: "/settings", icon: "settings", title: "Paramètres", mobile: false },
 ];
 

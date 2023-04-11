@@ -5,11 +5,13 @@ import { useRouter } from 'vue-router';
 export const useSessionStore = defineStore('session', () => {
   const router = useRouter();
   const data = reactive({
-    token: ''
+    idUser: '',
+    token: '',
   })
 
-  function setSession(t){
+  function setSession(t, idUser){
     data.token = t;
+    data.idUser = idUser;
   }
   
   function emptySession(){
