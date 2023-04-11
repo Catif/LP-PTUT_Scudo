@@ -4,7 +4,7 @@ const props = defineProps(["user"]);
 // console.log(props.user);
 </script>
 <template>
-  <RouterLink v-if="props.user" :to="'/profile/' + user.id">
+  <RouterLink :to="'/profile/' + user.id">
     <img :src="user.url.image" :alt="'Photo de profil de ' + user.username" />
   </RouterLink>
 </template>

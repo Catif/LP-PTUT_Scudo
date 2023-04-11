@@ -22,6 +22,22 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  following: {
+    type: Boolean,
+    default: false,
+  },
+  owner: {
+    type: Boolean,
+    default: false,
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+  id: {
+    type: String,
+    required: true,
+  },
 });
 
 const Session = useSessionStore();
@@ -44,7 +60,6 @@ function follow() {
         bus.emit("actionFollow", [response.data.result.message, "success"]);
       })
       .catch((error) => {
-        console.log(error);
         bus.emit("actionFollow", [error.response.data.error, "error"]);
       });
   } else if (props.type == "user") {
@@ -58,10 +73,10 @@ function follow() {
       }
     )
       .then((response) => {
-        bus.emit("actionFollow", [response.data.result.message, "success"]);
+        bus.emit("actionFollow", [response.data.result.result, "success"]);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
         bus.emit("actionFollow", [error.response.data.error, "error"]);
       });
   }
@@ -78,7 +93,6 @@ function unfollow() {
         bus.emit("actionFollow", [response.data.result.message, "success"]);
       })
       .catch((error) => {
-        console.log(error);
         bus.emit("actionFollow", [error.response.data.error, "error"]);
       });
   } else if (props.type == "user") {
@@ -88,10 +102,9 @@ function unfollow() {
       },
     })
       .then((response) => {
-        bus.emit("actionFollow", [response.data.result.message, "success"]);
+        bus.emit("actionFollow", [response.data.result.result, "success"]);
       })
       .catch((error) => {
-        console.log(error);
         bus.emit("actionFollow", [error.response.data.error, "error"]);
       });
   }

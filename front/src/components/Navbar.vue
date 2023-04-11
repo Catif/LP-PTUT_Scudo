@@ -81,10 +81,10 @@ function changeState() {
 					</Text>
 				</router-link>
 				<!-- <router-link key="Upload" to="/upload" class="desktop">
-							<Text>
-								<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
-							</Text>
-						</router-link> -->
+								<Text>
+									<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
+								</Text>
+							</router-link> -->
 			</div>
 		</button>
 
