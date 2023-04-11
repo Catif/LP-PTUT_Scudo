@@ -1,6 +1,6 @@
 $navigation-bar-min-width : 19rem;
 $aside-bar-min-width : $navigation-bar-min-width;
-$content-min-width : calc((100vh - 1.5rem) * (4/7));
+$content-min-width : calc((100vh * (4/7)) - 1.5rem);
 
 // RATIO VIDEO : 4/7
 

@@ -1,12 +1,17 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, inject, ref, watch } from 'vue';
+import Card from './ScudoTheming/Card.vue';
+import FilledButton from './ScudoTheming/FilledButton.vue';
+import Icon from './ScudoTheming/Icon.vue';
+import Title from './ScudoTheming/Title.vue';
 
 const props = defineProps(['resource']);
+const bus = inject('bus')
 
 const videoSrc = ref(null);
 
 var connection = new RTCMultiConnection();
-connection.socketURL = "http://localhost:3000/";
+connection.socketURL = "https://scudo-node.herokuapp.com/";
 
 connection.socketCustomEvent = "scudo";
 connection.socketMessageEvent = "live";
@@ -35,12 +40,13 @@ connection.iceServers = [
 
 connection.videosContainer = document.getElementById("videos-container");
 connection.onstream = function (event) {
-  // console.log(event);
   videoSrc.value = event.stream;
 };
 
 connection.onstreamended = function (event) {
-  alert("Broadcast is ended.");
+  // alert("Broadcast is ended.");
+
+  refresh();
 
   videoSrc.value = null;
 
@@ -81,27 +87,59 @@ function openLive() {
 }
 
 function openVideo() {
-  // console.log(`http://localhost:3000/api/video?video=${props.resource.filename}`);
-  videoSrc.value = `http://localhost:3000/api/video?video=${props.resource.filename}`
+  videoSrc.value = props.resource.urls.file
 }
 
+function refresh() {
+  bus.emit('refreshResource');
+}
 
-onMounted(() => {
+function openResource() {
   if (props.resource.type == 'stream') {
     openLive()
   } else if (props.resource.type == 'video') {
-    openVideo()
+    if (props.resource.urls.file == '') {
+    } else {
+      openVideo()
+    }
   }
-})
+}
+
+onMounted(() => {
+  watch(() => props.resource.urls.file, (newValue, oldValue) => {
+    openResource();
+  })
+  openResource();
+});
 </script>
 
 <template>
-  <video v-if="resource.type == 'stream'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
-  <video v-if="resource.type == 'video'" id="remoteStream" autoplay muted controls :src="videoSrc"></video>
+  <Card>
+    <video v-if="resource.type == 'stream'" id="remoteStream" autoplay muted playsinline :srcObject="videoSrc"></video>
+    <video v-if="resource.type == 'video' && props.resource.urls.file != ''" autoplay muted controls
+      :src="videoSrc"></video>
+    <div id="infoVideoTraitement" v-if="resource.type == 'video' && props.resource.urls.file == ''">
+      <Title>Stream terminé, <br>vidéo en cours de traitement</Title>
+      <div>
+        <FilledButton @click="refresh">
+          <Icon>refresh</Icon>
+          Réessayer
+        </FilledButton>
+      </div>
+    </div>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/media-queries";
+
+#infoVideoTraitement {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 90vh;
+}
 
 video {
   width: 100%;
@@ -110,8 +148,8 @@ video {
 
   vertical-align: bottom;
 
+
   @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
-    margin: .75rem 0;
     border-radius: 1.75rem;
   }
 }

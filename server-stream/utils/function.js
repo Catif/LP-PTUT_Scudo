@@ -1,6 +1,7 @@
 import conf from "../conf/configuration.js";
 import ffmpeg from "fluent-ffmpeg";
 import { statSync, unlinkSync, existsSync, mkdirSync } from "fs";
+import fetch from "node-fetch";
 
 // ==============================
 //          fonctions
@@ -35,7 +36,7 @@ export function getStatFile(file, durationTranscode) {
   });
 }
 
-export function transcodeVideo(file) {
+export function transcodeVideo(user, file) {
   if (!existsSync(conf.folderOutput)) {
     mkdirSync(conf.folderOutput, { recursive: true });
   }
@@ -47,29 +48,50 @@ export function transcodeVideo(file) {
   console.log("Début de la conversion");
 
   // Transcode
-  let startTime = performance.now();
-  ffmpeg()
-    .input(pathFileTemp)
-    .withVideoCodec(conf.transcode.codec)
-    .addOption("-preset", conf.transcode.preset)
-    .addOption("-crf", conf.transcode.quality)
-    .output(pathFileTranscode)
-    .on("end", () => {
-      // Calcul du temps de conversion
-      let endTime = performance.now();
-      let durationTranscode = Math.round(endTime - startTime) / 1000;
+  fetch(`${conf.api_url}/api/resource/${file.id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: user.token,
+    },
+    body: JSON.stringify({
+      type: "video",
+    }),
+  })
+    .then((res) => {
+      let startTime = performance.now();
+      ffmpeg()
+        .input(pathFileTemp)
+        .withVideoCodec(conf.transcode.codec)
+        .addOption("-preset", conf.transcode.preset)
+        .addOption("-crf", conf.transcode.quality)
+        .output(pathFileTranscode)
+        .on("end", () => {
+          // Calcul du temps de conversion
+          let endTime = performance.now();
+          let durationTranscode = Math.round(endTime - startTime) / 1000;
 
-      console.log("Conversion complete");
+          console.log("Conversion complete");
 
-      // fetch(`${conf.api_url}/api/resource/${file.id}`, {
-      //   method: "POST",
-      //   body: JSON.stringify({ type: "video" }),
-      // });
+          fetch(`${conf.api_url}/api/resource/${file.id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: user.token,
+            },
+            body: JSON.stringify({
+              filename: `https://scudo-node.herokuapp.com/api/video?video=${file.filename}.${conf.transcode.extensionFile}`,
+            }),
+          });
 
-      getStatFile(pathFileTranscode, durationTranscode);
-      unlinkSync(pathFileTemp); // Delete file temp
+          getStatFile(pathFileTranscode, durationTranscode);
+          unlinkSync(pathFileTemp); // Delete file temp
+        })
+        .run();
     })
-    .run();
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export default () => {

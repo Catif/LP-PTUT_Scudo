@@ -22,6 +22,22 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  following: {
+    type: Boolean,
+    default: false,
+  },
+  owner: {
+    type: Boolean,
+    default: false,
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+  id: {
+    type: String,
+    required: true,
+  },
 });
 
 const Session = useSessionStore();
@@ -101,9 +117,7 @@ function unfollow() {
       <FilledButton id="follow" @click="follow">Suivre</FilledButton>
     </template>
     <template v-else-if="!owner">
-      <FilledButton id="unfollow" @click="unfollow"
-        >Ne plus suivre</FilledButton
-      >
+      <FilledButton id="unfollow" @click="unfollow">Ne plus suivre</FilledButton>
       <FilledButton id="notification">
         <Icon>notifications</Icon>
       </FilledButton>
@@ -136,7 +150,7 @@ function unfollow() {
   overflow: hidden;
   gap: 4px;
 
-  & > * {
+  &>* {
     margin: 0;
     display: flex;
     justify-content: center;

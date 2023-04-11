@@ -26,7 +26,7 @@ final class ResourceGroupShareAction
             $group = GroupService::getGroupByID($args['id_group']);
             var_dump($args['id_group']);
 
-            $group->resources()->attach($resource->id_resource);
+            $group->resources()->attach($resource['resource']->id_resource);
 
             $data = [
                 'result' => [

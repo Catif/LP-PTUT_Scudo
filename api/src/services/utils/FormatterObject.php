@@ -86,6 +86,7 @@ class FormatterObject
         'api' => '/api/resource/' . $resource['id_resource'],
         'file' => $resource['filename']
       ],
+      'is_private' => $resource['is_private'],
       'title' => $resource['title'],
       'text' => $resource['text'],
       'localisation' => [

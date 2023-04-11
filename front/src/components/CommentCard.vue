@@ -5,19 +5,43 @@ import Card from "@/components/ScudoTheming/Card.vue";
 import UserPicture from "@/components/UserPicture.vue";
 import Text from "@/components/ScudoTheming/Text.vue";
 import SmallText from "@/components/ScudoTheming/SmallText.vue";
-const props = defineProps(['user', 'comment'])
+import { inject, reactive } from "vue";
+import { useSessionStore } from '@/stores/session.js';
+
+const props = defineProps(['comment'])
+
+const API = inject("api");
+const Session = useSessionStore();
+const datas = reactive({
+    user: undefined
+})
+
+API.get(`/api/user/${props['comment'].id_user} `, {
+    headers: {
+        Authorization: Session.data.token,
+    },
+}).then((reponse) => {
+    datas.user = reponse.data.result.user;
+}).catch(() => {
+    // alert('oups');
+})
+
+
+
 
 </script>
 
 <template>
     <Card>
         <div class="content">
-            <UserPicture :user="props['user']" />
+            <UserPicture :user="datas.user" />
             <section>
                 <SmallText>
-                    <Username :to="props['user']">{{ props['user'].username }}</Username>
+                    <Username v-if="typeof (datas.user) != 'undefined' && typeof (datas.user.username) != 'undefined'"
+                        :user="datas.user">{{ datas.user.username }}
+                    </Username>
                 </SmallText>
-                <Text>{{ props['comment'] }}</Text>
+                <Text>{{ props['comment'].text }}</Text>
             </section>
         </div>
     </Card>
@@ -29,8 +53,9 @@ const props = defineProps(['user', 'comment'])
     margin: 0.75rem;
 }
 
-img {
+a {
     height: 3rem;
+    aspect-ratio: 1 / 1;
 }
 
 p {

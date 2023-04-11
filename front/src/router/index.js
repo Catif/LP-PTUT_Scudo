@@ -6,12 +6,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("@/views/TestView.vue"),
-    },
-    {
-      path: "/settings",
-      name: "settings",
-      component: () => import("@/views/ExampleView.vue"),
+      component: () => import("@/views/HomeView.vue"),
     },
     {
       path: "/register",
@@ -19,36 +14,39 @@ const router = createRouter({
       component: () => import("@/views/RegisterView.vue"),
     },
     {
-      path: "/record",
+      path: "/login",
+      name: "login",
+      component: () => import("@/views/LoginView.vue"),
+    },
+    {
+      path: "/record/:accessibility",
       name: "record",
       component: () => import("@/views/RecordView.vue"),
     },
     {
       path: "/resource/:id",
-      name: "resource",
+      name: "resourceById",
       component: () => import("@/views/ResourceView.vue"),
     },
     {
-      path: "/login",
-      name: "login",
-      component: () => import("@/views/LoginView.vue"),
+      path: "/resource/:id/edit",
+      name: "editResourceById",
+      component: () => import("@/views/EditResourceView.vue"),
     },
-
+    {
+      path: "/resource/:id/share",
+      name: "shareResourceById",
+      component: () => import("@/views/ShareResourceView.vue"),
+    },
     {
       path: "/profile/:id",
       name: "profile",
       component: () => import("@/views/ProfileView.vue"),
     },
-
     {
       path: "/profile/:id/edit",
       name: "editProfile",
       component: () => import("@/views/EditProfileView.vue"),
-    },
-    {
-      path: "/profile/:id",
-      name: "profile",
-      component: () => import("@/views/ProfileView.vue"),
     },
     {
       path: "/group",
@@ -71,6 +69,16 @@ const router = createRouter({
           component: () => import("@/views/group/GroupEditView.vue"),
         },
       ],
+    },
+    {
+      path: "/settings",
+      name: "settings",
+      component: () => import("@/views/SettingsView.vue"),
+    },
+    {
+      path: "/example",
+      name: "example",
+      component: () => import("@/views/ExampleView.vue"),
     },
   ],
 });

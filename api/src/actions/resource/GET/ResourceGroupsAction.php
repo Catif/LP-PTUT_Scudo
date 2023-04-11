@@ -10,13 +10,11 @@ use api\services\ResourceService as ResourceService;
 use api\services\utils\FormatterAPI;
 
 //Exception
-use api\errors\exceptions\RessourceNotFoundException as RessourceNotFoundException;
 use api\models\Authorization;
 use api\services\utils\FormatterObject;
 use Exception;
-use Slim\Exception\HttpNotFoundException;
 
-final class ResourceByIdAction
+final class ResourceGroupsAction
 {
   public function __invoke(Request $rq, Response $rs, array $args): Response
   {
@@ -31,22 +29,23 @@ final class ResourceByIdAction
           throw new Exception("Vous n'avez pas la permission pour cette ressource.");
         }
       }
+
+      $resourceGroups = ResourceService::getGroupsOfResource($array['resource']);
     } catch (Exception  $e) {
       $data = [
         'error' => $e->getMessage()
       ];
       return FormatterAPI::formatResponse($rq, $rs, $data, 401);
     }
-    $allComment = [];
-    foreach ($array['comment'] as $comment) {
-      $allComment[] = FormatterObject::formatComment($comment);
-    }
 
+    $listGroups = [];
+    foreach ($resourceGroups as $group) {
+      $listGroups[] = FormatterObject::formatGroup($group);
+    }
 
     $data = [
       'result' => [
-        'resource' => FormatterObject::formatResource($array['resource']),
-        'comments' => $allComment
+        'groups' => $listGroups
       ]
 
     ];

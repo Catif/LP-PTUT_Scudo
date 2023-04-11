@@ -1,5 +1,7 @@
 <script setup>
 const props = defineProps(["user"]);
+
+// console.log(props.user);
 </script>
 <template>
   <RouterLink :to="'/profile/' + user.id">

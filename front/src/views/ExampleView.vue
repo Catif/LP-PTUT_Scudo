@@ -1,4 +1,5 @@
 <script setup>
+
 import MainFeed from '../components/ScudoTheming/MainFeed.vue';
 import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
 import DefaultTopAppBar from '../components/DefaultTopAppBar.vue';

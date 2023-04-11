@@ -1,9 +1,13 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import FloatingAppButton from './ScudoTheming/FloatingAppButton.vue';
-import LargeIcon from './ScudoTheming/LargeIcon.vue';
+import { onMounted, inject, ref } from 'vue';
+import { useSessionStore } from '@/stores/session.js';
+import Card from './ScudoTheming/Card.vue';
+import { useRouter, useRoute } from 'vue-router';
+const router = useRouter();
 
+const Session = useSessionStore();
 const props = defineProps(['id']);
+const bus = inject('bus')
 
 var stream_id = props.id;
 
@@ -20,7 +24,7 @@ var constraints = {
   video: true,
 };
 var connection = new RTCMultiConnection();
-connection.socketURL = "http://localhost:3000/";
+connection.socketURL = "https://scudo-node.herokuapp.com/";
 
 connection.socketCustomEvent = "scudo";
 connection.socketMessageEvent = "live";
@@ -55,16 +59,16 @@ connection.onstream = function (event) {
   });
   // Démarrage de l'enregistrement avec la durée d'un segment
   mediaRecorder.start(segmentLengthInMs);
-};
+  bus.emit('recordOK');
 
-// function startStream() {
-// }
+};
 
 function stopStream() {
   connection.closeSocket();
 
   // mediaRecorder.stop();
   videoSrc.value = null;
+  router.push({ name: "editResourceById", params: { id: stream_id } });
 }
 
 onMounted(() => {
@@ -72,24 +76,26 @@ onMounted(() => {
   connection.socket.emit("initUser", {
     role: "streamer",
     room: stream_id,
+    token: Session.data.token,
   });
   connection.socket.emit("runStream");
   connection.open(stream_id);
 
-
 })
 
+
+
+bus.on('stopRecord', function () {
+  stopStream();
+})
 
 </script>
 
 
 <template>
-  <div id="record">
+  <Card>
     <video id="video" autoplay muted playsinline :srcObject="videoSrc"></video>
-    <FloatingAppButton v-if="videoSrc != null" @click="stopStream">
-      <LargeIcon>stop</LargeIcon>
-    </FloatingAppButton>
-  </div>
+  </Card>
 </template>
 
 <style lang="scss" scoped>
@@ -97,6 +103,7 @@ onMounted(() => {
 
 video {
   width: 100%;
+  // max-width: $content-min-width;
   aspect-ratio: 4 / 7;
   object-fit: cover;
 
@@ -106,19 +113,7 @@ video {
   transform: scaleX(-1);
 
   @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
-    margin: .75rem 0;
     border-radius: 1.75rem;
-  }
-}
-
-#record {
-  position: relative;
-
-  &>button {
-    position: absolute;
-    bottom: .75rem;
-    left: 50%;
-    transform: translateX(-50%);
   }
 }
 </style>

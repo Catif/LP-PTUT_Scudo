@@ -1,17 +1,32 @@
+<script setup>
+const props = defineProps({
+  TopAppBar: {
+    type: Boolean,
+    default: true,
+  }
+});
+
+</script>
+
 <template>
-	<main>
-		<div id="container">
-			<slot></slot>
-		</div>
-	</main>
+  <main :class="{ paddingTopToTopAppBar: TopAppBar }">
+    <div id="container">
+      <slot></slot>
+    </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/media-queries";
 
 main {
-	flex-grow: 1;
-	padding-top: 3.5rem;
+  flex-grow: 1;
+  height: 100vh;
+  overflow: auto;
+}
+
+.paddingTopToTopAppBar {
+  padding-top: 3.5rem;
 }
 
 #container {
@@ -20,8 +35,12 @@ main {
 }
 
 @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {
-	main {
-		padding-top: 0;
-	}
+  main {
+    padding-top: 0;
+  }
+
+  .paddingTopToTopAppBar {
+    padding-top: 0rem;
+  }
 }
 </style>

@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 use api\actions as actions;
 use api\services\utils\FormatterAPI;
-
-use Slim\Factory\AppFactory as Appfactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory as Appfactory;
-
-use  api\actions as actions;
 use api\middleware\TokenMiddleware;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -68,6 +64,7 @@ $app->post('/api/upload', actions\general\POST\UploadAction::class)->add(new Tok
 $app->get('/api/users', actions\user\GET\UsersAction::class)->add(new TokenMiddleware());
 $app->get('/api/user/{id}', actions\user\GET\UserByIdAction::class)->add(new TokenMiddleware());
 $app->get('/api/user/{id}/resources', actions\user\GET\UserResourcesAction::class)->add(new TokenMiddleware());
+$app->get('/api/user/{id}/groups', actions\user\GET\UserGetGroupsAction::class)->add(new TokenMiddleware());
 
 // POST
 
@@ -107,6 +104,7 @@ $app->post('/api/message', actions\message\POST\MessageAction::class)->add(new T
 // GET
 $app->get('/api/resources', actions\resource\GET\ResourcesAction::class)->add(new TokenMiddleware());
 $app->get('/api/resource/{id}', actions\resource\GET\ResourceByIdAction::class)->add(new TokenMiddleware());
+$app->get('/api/resource/{id}/groups', actions\resource\GET\ResourceGroupsAction::class)->add(new TokenMiddleware());
 
 
 // POST
@@ -115,6 +113,9 @@ $app->post('/api/resource/{id_resource}/group/{id_group}', actions\resource\POST
 
 // Méthode PATCH impossible en PHP
 $app->post('/api/resource/{id}', actions\resource\PATCH\ResourceAction::class)->add(new TokenMiddleware());
+
+// DELETE
+$app->delete('/api/resource/{id}/group/{id_group}', actions\resource\DELETE\ResourceGroupUnshareAction::class)->add(new TokenMiddleware());
 
 // =====================
 //     Groupe
@@ -149,6 +150,9 @@ $app->post('/api/comment/{id_resource}', api\actions\comment\POST\CommentAction:
 
 $app->run();
 
+
+// Génération de fausses données dans la base de donnnées
+// require_once(__DIR__ . '/../sql/data_generation.php');
 
 // Génération de fausses données dans la base de donnnées
 // require_once(__DIR__ . '/../sql/data_generation.php');
