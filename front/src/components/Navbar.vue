@@ -59,7 +59,7 @@ function changeState() {
 			</Text>
 		</router-link>
 
-		<!-- BOUTON PUBLIER -->
+	<!-- BOUTON PUBLIER -->
 		<Text class="add mobile">
 			<IconButton @click="changeState">add_circle</IconButton>
 			<!-- <span class="title">Publier</span> -->
@@ -81,10 +81,10 @@ function changeState() {
 					</Text>
 				</router-link>
 				<!-- <router-link key="Upload" to="/upload" class="desktop">
-								<Text>
-									<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
-								</Text>
-							</router-link> -->
+										<Text>
+											<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
+										</Text>
+									</router-link> -->
 			</div>
 		</button>
 
@@ -102,9 +102,10 @@ function changeState() {
 		</router-link>
 		<router-link to="/record/public">
 			<Icon>cell_tower</Icon>Filmer & Diffuser
-		</router-link><router-link to="/upload">
-			<Icon>upload</Icon>Mettre en ligne une vidéo
 		</router-link>
+		<!-- <router-link to="/upload">
+				<Icon>upload</Icon>Mettre en ligne une vidéo
+			</router-link> -->
 	</ModalBottomSheet>
 </template>
 
