@@ -35,6 +35,7 @@ API.get(`/api/user/${route.params.id}`, {
     user.value = result.user;
   })
   .catch((error) => {
+    console.log(error);
     message.content = error.response.data.error;
   });
 
