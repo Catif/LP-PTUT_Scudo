@@ -26,6 +26,11 @@ var constraints = {
 var connection = new RTCMultiConnection();
 connection.socketURL = "https://scudo-node.herokuapp.com/";
 
+connection.iceServers = [];
+connection.iceServers.push({
+  urls: "stun:stun.l.google.com:19302",
+});
+
 connection.socketCustomEvent = "scudo";
 connection.socketMessageEvent = "live";
 
