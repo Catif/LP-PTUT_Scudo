@@ -77,7 +77,7 @@ function isValidFormParams() {
             <Button>CONFIRMER</Button>
             <RouterLink to="/"></RouterLink>
         </form>
-        <form @submit=" Session.emptySession()">
+        <form @submit.prevent=" Session.emptySession()">
             <Button>Déconnexion</Button>
         
         </form>
