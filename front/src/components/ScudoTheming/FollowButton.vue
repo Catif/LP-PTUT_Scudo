@@ -116,7 +116,7 @@ function unfollow() {
         </RouterLink>
       </template>
       <template v-else-if="type == 'user'">
-        <RouterLink :to="{ name: 'userEdit', params: { id: id } }" id="edit">
+        <RouterLink :to="{ name: 'editProfile', params: { id: id } }" id="edit">
           <FilledButton>Modifier</FilledButton>
         </RouterLink>
       </template>

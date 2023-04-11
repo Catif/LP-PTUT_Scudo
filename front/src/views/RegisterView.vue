@@ -77,7 +77,7 @@ function isValidForm() {
 			password: form.password,
 			role: 'individual',
 		}).then((result) => {
-			Session.setSession(result.data.result.token)
+			Session.setSession(result.data.result.token, result.data.result.user.id)
 			router.push('/')
 		}).catch((error) => {
 			message.value = error.response.data.error

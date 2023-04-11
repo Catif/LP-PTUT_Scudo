@@ -1,8 +1,10 @@
 <script setup>
 const props = defineProps(["user"]);
+
+// console.log(props.user);
 </script>
 <template>
-  <RouterLink :to="'/profile/' + user.id">
+  <RouterLink v-if="props.user" :to="'/profile/' + user.id">
     <img :src="user.url.image" :alt="'Photo de profil de ' + user.username" />
   </RouterLink>
 </template>

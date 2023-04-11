@@ -19,7 +19,7 @@ function changeState() {
 
 
 function back() {
-  router.push({ name: "resourceByID", params: { id: props.resource.id } })
+  router.push({ name: "resourceById", params: { id: props.resource.id } })
 }
 
 </script>
@@ -43,8 +43,8 @@ function back() {
       <Icon>groups</Icon>Créer un groupe
     </router-link>
     <!-- <button @click="switchMode">
-        <Icon>dark_mode</Icon>Mode nuit
-      </button> -->
+          <Icon>dark_mode</Icon>Mode nuit
+        </button> -->
     <router-link to="settings">
       <Icon>settings</Icon>Paramètres
     </router-link>

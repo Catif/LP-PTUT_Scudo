@@ -21,7 +21,7 @@ const elementsNav = [
 	// Mobile + Desktop
 	// { name: "Home", path: "/", icon: "home", title: "Accueil", mobile: true },
 	// { name: "Upload", path: "/upload", icon: "add_circle", title: "Publier", mobile: true },
-	{ name: "Conversation", path: "/conversation", icon: "chat_bubble", title: "Conversations", mobile: true },
+	// { name: "Conversation", path: "/conversation", icon: "chat_bubble", title: "Conversations", mobile: true },
 
 	// Desktop
 	{ name: "Profil", path: `/profile/${Session.data.idUser}`, icon: "account_circle", title: "Profil", mobile: false },
@@ -312,4 +312,5 @@ nav {
 			}
 		}
 	}
-}</style>
+}
+</style>

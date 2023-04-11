@@ -1,9 +1,11 @@
 <script setup>
 // Importation de la méthode Ref de Vue.js
-import { ref } from "vue";
+import { inject, ref } from "vue";
 
 // Déclaration de la variable user en réactive
 const user = ref({});
+
+const API = inject("api");
 
 // Appel à une API de test
 // ps: API est déclaré dans le main.js
@@ -25,10 +27,10 @@ API.get("https://jsonplaceholder.typicode.com/users/1")
 
     <h2>Exemple de code pour axios</h2>
     <pre>
-      <code>
-        <!-- Implémentation dans le HTML -->
-{{ user }}
-      </code>
-    </pre>
+          <code>
+            <!-- Implémentation dans le HTML -->
+    {{ user }}
+          </code>
+        </pre>
   </div>
 </template>
