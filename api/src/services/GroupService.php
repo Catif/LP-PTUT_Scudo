@@ -22,6 +22,11 @@ final class GroupService
     ])->get();
   }
 
+  static public function getRandomGroups($limit)
+  {
+    return Group::inRandomOrder()->limit($limit)->get();
+  }
+
   static public function getGroupById($id)
   {
     try {
@@ -75,7 +80,11 @@ final class GroupService
   {
 
     try {
-      $resources = Group::findOrFail($id)->resources()->skip(($page - 1) * $nbMax)->take($nbMax)->get();
+      $resources = Group::findOrFail($id)
+        ->resources()
+        ->where('is_private', 0)
+        ->skip(($page - 1) * $nbMax)->take($nbMax)
+        ->get();
     } catch (\Exception $e) {
       new \Exception("Erreur lors de recuperations des resources d'un groupe");
     }

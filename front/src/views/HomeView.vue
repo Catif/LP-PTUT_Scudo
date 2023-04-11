@@ -1,34 +1,97 @@
 <script setup>
-// Importation de la méthode Ref de Vue.js
-import { ref } from "vue";
+// Importation de composants
+import TopAppBar from "@/components/ScudoTheming/TopAppBar.vue";
+import MainFeed from "@/components/ScudoTheming/MainFeed.vue";
+import ResourceCard from "@/components/ResourceCard.vue";
+import AsideFeed from "../components/ScudoTheming/AsideFeed.vue";
+import SmallGroupCard from "../components/SmallGroupCard.vue";
 
-// Déclaration de la variable user en réactive
-const user = ref({});
+// Importation de méthode
+import { ref, inject } from "vue";
 
-// Appel à une API de test
-// ps: API est déclaré dans le main.js
-// remarque: le lien défini dans la variable API, peut être écrasé par un autre lien
-API.get("https://jsonplaceholder.typicode.com/users/1")
-  .then((response) => {
-    // Récupération des informations
-    user.value = response.data;
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+// Importation de store
+import { useSessionStore } from "@/stores/session.js";
+
+const API = inject("api");
+const Session = useSessionStore();
+
+const listResources = ref([]);
+const listGroups = ref([]);
+
+function getResources() {
+	const config = {
+		headers: {
+			Authorization: Session.data.token,
+		},
+	};
+
+	API.get("/api/resources?page=1&limit=20", config)
+		.then((response) => {
+			const data = response.data;
+			data.result.resources.map((resource) => {
+				loadUserForResource(resource.id_user).then((user) => {
+					resource.user = user;
+					listResources.value.push(resource);
+				});
+			});
+		})
+		.catch((err) => {
+			console.log(err.response.data);
+		});
+}
+
+function loadUserForResource(idUser) {
+	let config = {
+		headers: {
+			Authorization: Session.data.token,
+		},
+	};
+	return API.get(`/api/user/${idUser}`, config)
+		.then((response) => {
+			return response.data.result.user;
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+}
+
+function getRandomGroups() {
+	let config = {
+		headers: {
+			Authorization: Session.data.token,
+		},
+	};
+	return API.get(`/api/groups/random?limit=5`, config)
+		.then((response) => {
+			listGroups.value = response.data.result.groups;
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+}
+
+getResources();
+getRandomGroups();
 </script>
 
 <template>
-  <div>
-    <h1>Bonjour monde!</h1>
-    <p>Je suis un composant Vue.js nommé <b>Home</b></p>
+	<MainFeed>
+		<TopAppBar></TopAppBar>
+		<div id="listResources">
+			<ResourceCard v-for="resource in listResources" :resource="resource" :user="resource.user" />
+			<ResourceCard v-for="resource in listResources" :resource="resource" :user="resource.user" />
+			<ResourceCard v-for="resource in listResources" :resource="resource" :user="resource.user" />
+			<ResourceCard v-for="resource in listResources" :resource="resource" :user="resource.user" />
+			<ResourceCard v-for="resource in listResources" :resource="resource" :user="resource.user" />
+			<ResourceCard v-for="resource in listResources" :resource="resource" :user="resource.user" />
+			<ResourceCard v-for="resource in listResources" :resource="resource" :user="resource.user" />
+			<ResourceCard v-for="resource in listResources" :resource="resource" :user="resource.user" />
+		</div>
+	</MainFeed>
 
-    <h2>Exemple de code pour axios</h2>
-    <pre>
-      <code>
-        <!-- Implémentation dans le HTML -->
-{{ user }}
-      </code>
-    </pre>
-  </div>
+	<AsideFeed>
+		<div id="listGroups">
+			<SmallGroupCard v-for="group in listGroups" :group="group" />
+		</div>
+	</AsideFeed>
 </template>

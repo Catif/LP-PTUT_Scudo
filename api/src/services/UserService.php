@@ -89,16 +89,16 @@ final class UserService
 
   static public function editUser(User $user, array $property)
   {
-    if ($property['image'] != null) {
+    if (isset($property['image'])) {
       $user->image = $property['image'];
     }
-    if ($property['biography'] != null) {
+    if (isset($property['biography'])) {
       $user->biography = $property['biography'];
     }
-    if ($property['password'] != null) {
+    if (isset($property['password'])) {
       $user->password = password_hash($property['password'], PASSWORD_BCRYPT, ['cost' => 12]);
     }
-    if ($property['username'] != null) {
+    if (isset($property['username'])) {
       $user->username = $property['username'];
     }
 

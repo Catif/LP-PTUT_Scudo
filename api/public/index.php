@@ -121,6 +121,7 @@ $app->post('/api/resource/{id}', actions\resource\PATCH\ResourceAction::class)->
 // =====================
 // GET
 $app->get('/api/groups', actions\group\GET\GroupsAction::class)->add(new TokenMiddleware());
+$app->get('/api/groups/random', actions\group\GET\GroupsRandomAction::class)->add(new TokenMiddleware());
 $app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class)->add(new TokenMiddleware());
 $app->get('/api/group/{id}/resources', actions\group\GET\GroupResourceAction::class)->add(new TokenMiddleware());
 

@@ -2,7 +2,7 @@
 
 namespace api\actions\resource\GET;
 
-
+use api\models\Authorization;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -16,11 +16,16 @@ final class ResourcesAction
 {
     public function __invoke(Request $rq, Response $rs, array $args): Response
     {
+        $headers = $rq->getHeaders();
         $query = $rq->getQueryParams();
         try {
+            $token = Authorization::findOrFail($headers['Authorization'][0]);
+            $user = $token->user()->first();
+
             $page = isset($query['page']) ? $query['page'] : 1;
             $limit = isset($query['limit']) ? $query['limit'] : 5;
-            $resources = ResourceService::getResources($page, $limit);
+
+            $resources = ResourceService::getResourcesHomePage($user, $page, $limit);
 
             $listResources = [];
             foreach ($resources as $resource) {
@@ -31,7 +36,7 @@ final class ResourcesAction
                 'count' => count($resources),
 
                 'result' => [
-                    'Resource' => $listResources
+                    'resources' => $listResources
                 ]
             ];
 
