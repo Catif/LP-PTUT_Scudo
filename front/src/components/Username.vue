@@ -5,7 +5,7 @@ const props = defineProps(['user'])
 </script>
 
 <template>
-  <router-link :to="'/' + props['user'].username">
+  <router-link :to="'/profile/' + user.id">
     @<slot></slot>
   </router-link>
 </template>

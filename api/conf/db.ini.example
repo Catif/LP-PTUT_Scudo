@@ -5,4 +5,4 @@ collation=utf8_unicode_ci
 username=root
 password=
 host=localhost
-database=LP-PTUT_Scudo
+database=scudo_db

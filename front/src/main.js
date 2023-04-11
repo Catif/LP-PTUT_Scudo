@@ -16,6 +16,7 @@ const app = createApp(App);
 
 // Fichier CSS
 import "@/assets/css/main.css";
+import "@/assets/fonts/icon.css";
 
 // Propriété Application
 app.use(pinia).use(router);
