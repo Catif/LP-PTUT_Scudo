@@ -1,5 +1,6 @@
 <script setup>
 import MainFeed from "@/components/ScudoTheming/MainFeed.vue";
+import UserTopAppBar from "@/components/UserTopAppBar.vue";
 import Alert from "@/components/ScudoTheming/Alert.vue";
 import ResourceCard from "@/components/ResourceCard.vue";
 import UserCard from "@/components/UserCard.vue";
@@ -74,6 +75,7 @@ bus.on("actionFollow", (event) => {
 
 <template>
   <MainFeed>
+    <UserTopAppBar :user="user"/>
     <Alert v-if="message.content !== ''" :class="message.type">{{
       message.content
     }}</Alert>

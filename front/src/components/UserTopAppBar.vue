@@ -10,7 +10,7 @@ const props = defineProps(['user'])
 
 <template>
   <TopAppBar :back="true" :title="'@' + user.username">
-    <IconButton>add_comment</IconButton>
+    <!-- <IconButton>add_comment</IconButton> -->
   </TopAppBar>
 </template>
 
