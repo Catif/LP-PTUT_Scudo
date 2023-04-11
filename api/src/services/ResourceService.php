@@ -17,6 +17,38 @@ final class ResourceService
     return Resource::where('is_private', 0)->skip(($page - 1) * $limit)->take($limit)->get();
   }
 
+  static public function getResourcesHomePage($user, $page, $limit)
+  {
+    // Récupérer les 10 dernières ressources en fonction des groupes suivis par l'utilisateur
+    $groupIds = $user->groups()->pluck('group.id_group');
+    $latestResourcesFromGroups = [];
+    if (!empty($groupIds)) {
+      $latestResourcesFromGroups = Resource::select('resource.*')
+        ->join('resource_group', 'resource.id_resource', '=', 'resource_group.id_resource')
+        ->whereIn('resource_group.id_group', $groupIds)
+        ->where('resource.is_private', 0)
+        ->orderBy('resource.created_at', 'desc')
+        ->skip(($page - 1) * $limit)
+        ->take($limit)
+        ->get();
+    }
+
+    // Récupérer les 10 dernières ressources en fonction des utilisateurs suivis par l'utilisateur
+    $userIds = $user->follows()->pluck('user.id_user');
+    $latestResourcesFromUsers = [];
+    if (!empty($userIds)) {
+      $latestResourcesFromUsers = Resource::whereIn('id_user', $userIds)
+        ->where('is_private', 0)
+        ->orderBy('created_at', 'desc')
+        ->limit($limit)
+        ->get();
+    }
+
+    // Fusionner les deux résultats en une seule collection de ressources
+    $latestResources = $latestResourcesFromGroups->merge($latestResourcesFromUsers);
+    return $latestResources;
+  }
+
   static public function getResourceByID($id): array
   {
     try {

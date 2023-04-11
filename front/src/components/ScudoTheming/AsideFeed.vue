@@ -1,59 +1,61 @@
 <script setup>
 window.addEventListener("scroll", function () {
+	var element = document.getElementById("AsideContainer");
 
-  var element = document.getElementById("AsideContainer");
+	var positionY = element.offsetHeight - window.pageYOffset - this.innerHeight + 12;
 
-  element.classList.remove('fixed')
-
-  var positionY = element.offsetTop + element.offsetHeight - window.pageYOffset - this.innerHeight + 12;
-
-  if (positionY <= 0) {
-    element.classList.add('fixed')
-  }
-
+	if (positionY <= 0) {
+		// Tester plusieurs valeur pour voir quel est la meilleur
+		element.classList.add("fixed");
+	} else {
+		element.classList.remove("fixed");
+	}
 });
 
-const props = defineProps(['large'])
-
+const props = defineProps(["large"]);
 </script>
 
 <template>
-  <aside :class="{ large: props.large }">
-    <div id="AsideContainer">
-      <div>
-        <slot></slot>
-      </div>
-    </div>
-  </aside>
+	<aside :class="{ large: props.large }">
+		<div id="AsideContainer">
+			<div>
+				<slot></slot>
+			</div>
+		</div>
+	</aside>
 </template>
 
 <style lang="scss" scoped>
 @import "@/assets/scss/media-queries";
 
 aside {
-  display: none;
-  flex-shrink: 0;
-  width: $aside-bar-min-width;
+	display: none;
+	flex-shrink: 0;
+	width: $aside-bar-min-width;
 
-  &.large {
-    width: $content-min-width;
-  }
+	&.large {
+		width: $content-min-width;
+	}
 }
 
 .fixed {
-  position: fixed;
-  bottom: 0;
+	position: fixed;
+	bottom: 0;
 }
 
-@media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $aside-bar-min-width + 24px)) {
-  aside:not(.large) {
-    display: block;
-  }
+.sticky {
+	position: sticky;
 }
 
-@media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $content-min-width + 24px)) {
-  aside.large {
-    display: block;
-  }
+@media screen and (min-width: calc($navigation-bar-min-width + $content-min-width + $aside-bar-min-width + 24px)) {
+	aside:not(.large) {
+		display: block;
+	}
+}
+
+@media screen and (min-width: calc($navigation-bar-min-width + $content-min-width + $content-min-width + 24px)) {
+	aside.large {
+		display: block;
+	}
 }
 </style>

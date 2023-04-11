@@ -22,15 +22,9 @@ final class GroupService
     ])->get();
   }
 
-  static public function getGroupsOfUser($id_user)
+  static public function getRandomGroups($limit)
   {
-    try {
-      $groups = User::findOrFail($id_user)->groups()->get();
-    } catch (\Exception $e) {
-      new \Exception("Erreur lors de recuperations des groupes d'un utilisateur");
-    }
-
-    return $groups;
+    return Group::inRandomOrder()->limit($limit)->get();
   }
 
   static public function getGroupById($id)
@@ -86,7 +80,11 @@ final class GroupService
   {
 
     try {
-      $resources = Group::findOrFail($id)->resources()->skip(($page - 1) * $nbMax)->take($nbMax)->get();
+      $resources = Group::findOrFail($id)
+        ->resources()
+        ->where('is_private', 0)
+        ->skip(($page - 1) * $nbMax)->take($nbMax)
+        ->get();
     } catch (\Exception $e) {
       new \Exception("Erreur lors de recuperations des resources d'un groupe");
     }

@@ -30,9 +30,8 @@ main {
 }
 
 #container {
-  max-width: $content-min-width;
-  margin: auto;
-
+	max-width: $content-min-width;
+	margin: auto;
 }
 
 @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width)) {

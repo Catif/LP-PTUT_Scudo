@@ -122,6 +122,7 @@ $app->delete('/api/resource/{id}/group/{id_group}', actions\resource\DELETE\Reso
 // =====================
 // GET
 $app->get('/api/groups', actions\group\GET\GroupsAction::class)->add(new TokenMiddleware());
+$app->get('/api/groups/random', actions\group\GET\GroupsRandomAction::class)->add(new TokenMiddleware());
 $app->get('/api/group/{id}', actions\group\GET\GroupByIdAction::class)->add(new TokenMiddleware());
 $app->get('/api/group/{id}/resources', actions\group\GET\GroupResourceAction::class)->add(new TokenMiddleware());
 
