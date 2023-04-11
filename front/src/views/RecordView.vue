@@ -172,27 +172,29 @@ function shareResource() {
 <template>
   <MainFeed :TopAppBar="false">
     <!-- FORMULAIRE ÉDITION DE RESOURCE AVANT LE LIVE -->
-    <form v-if="form.resource.type != 'stream'">
+    <template v-if="form.resource.type != 'stream'">
+      <form>
+        <Card>
+          <Title>Démarrer un enregistrement</Title>
+          <Input name="title1" label="Titre" v-model:value="form.resource.title" />
+          <Input name="text1" label="Description" v-model:value="form.resource.text" />
+          <Text>
+            <label for="role1" class="form-control">Partager publiquement</label>
+            <input @click="toggleAccessibility" id="role1" name="role1" type="checkbox" v-model="form.is_public" />
+          </Text>
+        </Card>
+      </form>
       <Card>
-        <Title>Démarrer un enregistrement</Title>
-        <Input name="title1" label="Titre" v-model:value="form.resource.title" />
-        <Input name="text1" label="Description" v-model:value="form.resource.text" />
-        <Text>
-          <label for="role1" class="form-control">Partager publiquement</label>
-          <input @click="toggleAccessibility" id="role1" name="role1" type="checkbox" v-model="form.is_public" />
-        </Text>
+        <div class="shareGroup">
+          <Button @click="shareResource">
+            <div>
+              <span>Partager dans mes groupes </span>
+              <Icon>chevron_right</Icon>
+            </div>
+          </Button>
+        </div>
       </Card>
-    </form>
-    <Card>
-      <div class="shareGroup">
-        <Button @click="shareResource">
-          <div>
-            <span>Partager dans mes groupes </span>
-            <Icon>chevron_right</Icon>
-          </div>
-        </Button>
-      </div>
-    </Card>
+    </template>
 
     <!-- RETOUR LIVE -->
     <div id="recordDisplay"
@@ -223,14 +225,6 @@ function shareResource() {
             <input @click="toggleAccessibility" id="role2" name="role2" type="checkbox" v-model="form.is_public" />
           </Text>
           <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
-          <div class="shareGroup">
-            <Button @click="shareResource">
-              <div>
-                <span>Partager dans mes groupes </span>
-                <Icon>chevron_right</Icon>
-              </div>
-            </Button>
-          </div>
         </Card>
       </form>
     </ModalBottomSheet>
@@ -244,14 +238,6 @@ function shareResource() {
             <input @click="toggleAccessibility" id="role3" name="role3" type="checkbox" v-model="form.is_public" />
           </Text>
           <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
-          <div class="shareGroup">
-            <Button @click="shareResource">
-              <div>
-                <span>Partager dans mes groupes </span>
-                <Icon>chevron_right</Icon>
-              </div>
-            </Button>
-          </div>
         </Card>
       </form>
     </AsideFeed>

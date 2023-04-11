@@ -81,10 +81,10 @@ function changeState() {
 					</Text>
 				</router-link>
 				<!-- <router-link key="Upload" to="/upload" class="desktop">
-										<Text>
-											<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
-										</Text>
-									</router-link> -->
+											<Text>
+												<Icon>upload</Icon><span class="title">Mettre en ligne une vidéo</span>
+											</Text>
+										</router-link> -->
 			</div>
 		</button>
 
@@ -104,8 +104,8 @@ function changeState() {
 			<Icon>cell_tower</Icon>Filmer & Diffuser
 		</router-link>
 		<!-- <router-link to="/upload">
-				<Icon>upload</Icon>Mettre en ligne une vidéo
-			</router-link> -->
+					<Icon>upload</Icon>Mettre en ligne une vidéo
+				</router-link> -->
 	</ModalBottomSheet>
 </template>
 
