@@ -5,6 +5,7 @@ import TextArea from "../components/ScudoTheming/Textarea.vue";
 import MainFeed from "../components/ScudoTheming/MainFeed.vue";
 import Button from "../components/ScudoTheming/FilledButton.vue";
 import Alert from "../components/ScudoTheming/Alert.vue";
+import Card from "../components/ScudoTheming/Card.vue";
 import { reactive, ref, inject } from "vue";
 import { useSessionStore } from "@/stores/session.js";
 import { useRoute, useRouter } from "vue-router";
@@ -94,25 +95,17 @@ function isValidForm() {
 
 <template>
   <MainFeed>
-    <Alert v-if="message" class="error">{{ message }}</Alert>
-    <p>{{ form.image }}</p>
-    <Title>Modifier votre profil !</Title>
-    <form @submit.prevent="isValidForm">
-      <Input
-        type="file"
-        name="image"
-        label="Photo"
-        accept=".jpg, .jpeg, .png"
-        v-model:value="form.image"
-      />
-      <TextArea
-        name="biography"
-        label="Biographie"
-        v-model:value="form.biography"
-      />
-      <Input name="username" label="Pseudo" v-model:value="form.username" />
-      <Button>Modifier mon profil</Button>
-    </form>
+    <Card>
+      <Alert v-if="message" class="error">{{ message }}</Alert>
+      <p>{{ form.image }}</p>
+      <Title>Modifier votre profil !</Title>
+      <form @submit.prevent="isValidForm">
+        <Input type="file" name="image" label="Photo" accept=".jpg, .jpeg, .png" v-model:value="form.image" />
+        <TextArea name="biography" label="Biographie" v-model:value="form.biography" />
+        <Input name="username" label="Pseudo" v-model:value="form.username" />
+        <Button>Modifier mon profil</Button>
+      </form>
+    </Card>
   </MainFeed>
 </template>
 
