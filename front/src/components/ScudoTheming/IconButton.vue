@@ -7,11 +7,17 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  light: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
 });
+
 </script>
 
 <template>
-  <Button>
+  <Button :light="light">
     <Icon :active="props.active">
       <slot></slot>
     </Icon>

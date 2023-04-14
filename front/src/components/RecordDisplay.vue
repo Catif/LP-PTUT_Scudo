@@ -82,7 +82,7 @@ function stopStream() {
   }
 
   videoSrc.value = null;
-  router.push({ name: "editResourceById", params: { id: stream_id } });
+  router.push({ name: "editResourceById", params: { id: stream_id, comp: "create" } });
 }
 
 onMounted(() => {

@@ -21,6 +21,7 @@ const props = defineProps({
 
 main {
   flex-grow: 1;
+  padding-bottom: 3.5rem;
 }
 
 .paddingTopToTopAppBar {

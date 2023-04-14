@@ -1,11 +1,9 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { inject } from "vue";
-import ModalBottomSheet from "@/components/ScudoTheming/ModalBottomSheet.vue";
-import IconButton from "@/components/ScudoTheming/IconButton.vue";
-import Icon from "@/components/ScudoTheming/Icon.vue";
+import TopAppBar from './ScudoTheming/TopAppBar.vue';
 
-const props = defineProps(["resource", "title", "mobileOnly"]);
+const props = defineProps(["resource", "title", "mobileOnly", "back"]);
 const router = useRouter();
 const bus = inject('bus')
 
@@ -18,8 +16,8 @@ function changeState() {
 }
 
 
-function back() {
-  router.push({ name: "resourceById", params: { id: props.resource.id } })
+function goback() {
+  router.back();
 }
 
 </script>
@@ -27,28 +25,7 @@ function back() {
 
 
 <template>
-  <header>
-    <section>
-      <IconButton @click="back"> arrow_back </IconButton>
-      <h1>Édition</h1>
-    </section>
-    <section>
-      <IconButton>search</IconButton>
-      <IconButton>account_circle</IconButton>
-      <IconButton @click="changeState">more_vert</IconButton>
-    </section>
-  </header>
-  <ModalBottomSheet bus="TopAppBarModal">
-    <router-link to="create-group">
-      <Icon>groups</Icon>Créer un groupe
-    </router-link>
-    <!-- <button @click="switchMode">
-          <Icon>dark_mode</Icon>Mode nuit
-        </button> -->
-    <router-link to="settings">
-      <Icon>settings</Icon>Paramètres
-    </router-link>
-  </ModalBottomSheet>
+  <TopAppBar title="Édition" :back="back"></TopAppBar>
 </template>
 
 

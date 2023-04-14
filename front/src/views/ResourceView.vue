@@ -1,50 +1,53 @@
 <script setup>
-import MainFeed from '../components/ScudoTheming/MainFeed.vue';
-import AsideFeed from '../components/ScudoTheming/AsideFeed.vue';
-import Input from '../components/ScudoTheming/Input.vue';
-import ResourceDisplay from '../components/ResourceDisplay.vue';
-import CommentCard from '../components/CommentCard.vue';
-import AuthorSection from '../components/AuthorSection.vue';
-import Description from '../components/Description.vue';
-import { inject, reactive } from 'vue';
-import { useSessionStore } from '@/stores/session.js';
-import Card from '../components/ScudoTheming/Card.vue';
-import Text from '../components/ScudoTheming/Text.vue';
-import Title from '../components/ScudoTheming/Title.vue';
-import { useRouter, useRoute } from 'vue-router';
-import ResourceTopAppBar from '../components/ResourceTopAppBar.vue';
+import MainFeed from "../components/ScudoTheming/MainFeed.vue";
+import AsideFeed from "../components/ScudoTheming/AsideFeed.vue";
+import Input from "../components/ScudoTheming/Input.vue";
+import ResourceDisplay from "../components/ResourceDisplay.vue";
+import CommentCard from "../components/CommentCard.vue";
+import AuthorSection from "../components/AuthorSection.vue";
+import Description from "../components/Description.vue";
+import { inject, reactive } from "vue";
+import { useSessionStore } from "@/stores/session.js";
+import Card from "../components/ScudoTheming/Card.vue";
+import Text from "../components/ScudoTheming/Text.vue";
+import Title from "../components/ScudoTheming/Title.vue";
+import { useRouter, useRoute } from "vue-router";
+import ResourceTopAppBar from "../components/ResourceTopAppBar.vue";
 const router = useRouter();
 
 const route = useRoute();
 const Session = useSessionStore();
 const API = inject("api");
-const bus = inject('bus')
+const bus = inject("bus");
 const form = reactive({
   resource: {
     id: route.params.id,
-    type: ''
+    type: "",
   },
   comments: [],
-  newComment: '',
+  newComment: "",
   auteur: {
     url: {
-      image: ''
-    }
-  }
-})
+      image: "",
+    },
+  },
+});
 
 function getResource() {
   API.get(`/api/resource/${form.resource.id}`, {
     headers: {
       Authorization: Session.data.token,
     },
-  }).then((reponse) => {
-    form.resource = reponse.data.result.resource;
-    form.comments = reponse.data.result.comments;
-    getAuteur();
-  }).catch(() => {
-    router.push({ name: "home" });
   })
+    .then((reponse) => {
+      form.resource = reponse.data.result.resource;
+      form.comments = reponse.data.result.comments;
+      console.log(form.comments);
+      getAuteur();
+    })
+    .catch(() => {
+      router.push({ name: "home" });
+    });
 }
 
 function getAuteur() {
@@ -52,74 +55,95 @@ function getAuteur() {
     headers: {
       Authorization: Session.data.token,
     },
-  }).then((reponse) => {
-    form.auteur = reponse.data.result.user;
-  }).catch(() => {
-    // alert('oups');
   })
+    .then((reponse) => {
+      form.auteur = reponse.data.result.user;
+    })
+    .catch(() => {
+      // alert('oups');
+    });
 }
 
 function postComment() {
-  API.post(`/api/comment/${form.resource.id}`, {
-    content: form.newComment,
-  }, {
-    headers: {
-      Authorization: Session.data.token
+  API.post(
+    `/api/comment/${form.resource.id}`,
+    {
+      content: form.newComment,
+    },
+    {
+      headers: {
+        Authorization: Session.data.token,
+      },
     }
-  }).then(() => {
-    getResource();
-    form.newComment = ''
-  }).catch(() => {
-    alert('Publication de commentaire échouée.');
-  })
+  )
+    .then(() => {
+      getResource();
+      form.newComment = "";
+    })
+    .catch(() => {
+      alert("Publication de commentaire échouée.");
+    });
 }
 
-bus.on('refreshResource', function () {
+bus.on("refreshResource", function () {
   getResource();
-})
+});
 
 getResource();
-
-
 </script>
 
 <template>
   <MainFeed :TopAppBar="false">
-    <ResourceTopAppBar/>
-
-    <ResourceDisplay v-if="form.resource.type != ''" :resource="form.resource" />
-
-
+    <ResourceDisplay
+      v-if="form.resource.type != ''"
+      :resource="form.resource"
+    />
 
     <div id="resourceDatasS">
       <Card>
         <AuthorSection :user="form.auteur" :title="form.resource.title" />
-        <Description v-if="form.resource.text != ''" :description="form.resource.text" />
+        <Description
+          v-if="form.resource.text != ''"
+          :description="form.resource.text"
+        />
       </Card>
-      <div v-if="typeof (form.comments) != 'undefined'">
+      <div v-if="typeof form.comments != 'undefined'">
         <Card>
           <Title>COMMENTAIRES</Title>
           <form @submit.prevent="postComment">
-            <Input name="commentaire" placeholder="Ajouter un commentaire" v-model:value="form.newComment" />
+            <Input
+              name="commentaire"
+              placeholder="Ajouter un commentaire"
+              v-model:value="form.newComment"
+            />
           </form>
         </Card>
-        <CommentCard v-for="comment in form.comments" :comment="comment" />
+        <CommentCard
+          v-for="comment in form.comments"
+          :comment="comment"
+          :key="comment.id"
+        />
       </div>
     </div>
   </MainFeed>
 
-
-
   <AsideFeed :large="true">
     <Card>
       <AuthorSection :user="form.auteur" :title="form.resource.title" />
-      <Description v-if="form.resource.text != ''" :description="form.resource.text" />
+      <Description
+        v-if="form.resource.text != ''"
+        :description="form.resource.text"
+      />
     </Card>
-    <div v-if="typeof (form.comments) != 'undefined'">
+    <div v-if="typeof form.comments != 'undefined'">
       <Card>
         <Title>COMMENTAIRES</Title>
         <form @submit.prevent="postComment">
-          <Input name="commentaire1" placeholder="Ajouter un commentaire" v-model:value="form.newComment" />
+          <Input
+            name="commentaire1"
+            placeholder="Ajouter un commentaire"
+            v-model:value="form.newComment"
+          />
         </form>
       </Card>
       <CommentCard v-for="comment in form.comments" :comment="comment" />
@@ -129,7 +153,7 @@ getResource();
 <style lang="scss" scoped>
 @import "@/assets/scss/media-queries";
 
-@media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $content-min-width + 24px)) {
+@media screen and (min-width: calc($navigation-bar-min-width + $content-min-width + $content-min-width + 24px)) {
   #resourceDatasS {
     display: none;
   }

@@ -4,6 +4,7 @@ import MainFeed from "@/components/ScudoTheming/MainFeed.vue";
 import Title from "@/components/ScudoTheming/Title.vue";
 import Input from "@/components/ScudoTheming/Input.vue";
 import Textarea from "@/components/ScudoTheming/Textarea.vue";
+import Card from "@/components/ScudoTheming/Card.vue";
 import Button from "../../components/ScudoTheming/FilledButton.vue";
 import Alert from "@/components/ScudoTheming/Alert.vue";
 import EditGroupTopAppBar from "@/components/EditGroupTopAppBar.vue";
@@ -131,17 +132,19 @@ onMounted(() => {
 
 <template>
 	<MainFeed id="edit-group">
-		<EditGroupTopAppBar/>
-		<Title>{{ form.name }}</Title>
+		<EditGroupTopAppBar />
+		<Card>
+			<Title>{{ form.name }}</Title>
 
-		<form>
-			<Alert v-if="message"> {{ message }} </Alert>
-			<Input type="text" name="name" label="Nom" v-model:value="form.name" />
-			<Input type="file" name="image" label="Photo" v-model:value="form.image" />
-			<Textarea name="description" label="Description" v-model:value="form.description" />
+			<form>
+				<Alert v-if="message"> {{ message }} </Alert>
+				<Input type="text" name="name" label="Nom" v-model:value="form.name" />
+				<Input type="file" name="image" label="Photo" v-model:value="form.image" />
+				<Textarea name="description" label="Description" v-model:value="form.description" />
 
-			<Button @click.prevent="editGroup">Modifier</Button>
-		</form>
+				<Button @click.prevent="editGroup">Modifier</Button>
+			</form>
+		</Card>
 	</MainFeed>
 </template>
 

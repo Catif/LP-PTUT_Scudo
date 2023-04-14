@@ -92,17 +92,9 @@ function changeOK() {
       />
     </template>
     <template v-else>
-      <input
-        :type="props.type"
-        :id="props.name"
-        :name="props.name"
-        :value="props.value"
-        :required="props.required"
-        :disabled="props.disabled"
-        :placeholder="props.placeholder"
-        @blur="changeOK"
-        @input="$emit('update:value', $event.target.value)"
-      />
+      <input :type="props.type" :id="props.name" :name="props.name" :value="props.value" :required="props.required"
+        :disabled="props.disabled" :placeholder="props.placeholder" @blur="changeOK"
+        @input="$emit('update:value', $event.target.value)" autocomplete="off" />
     </template>
   </div>
 </template>
