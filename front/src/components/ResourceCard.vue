@@ -9,13 +9,13 @@ const props = defineProps(["user", "resource", "group"]);
 </script>
 
 <template>
-  <RouterLink v-if="resource.type == 'video' || resource.type == 'stream'"
-    :to="{ name: 'resourceById', params: { id: resource.id } }">
+  <RouterLink
+    v-if="resource.type == 'video' || resource.type == 'stream'"
+    :to="{ name: 'resourceById', params: { id: resource.id } }"
+  >
     <ClickableFilledCard>
       <RouterLink :to="'/group/' + group.id" v-if="group">
-        <Text>
-          <Icon>groups</Icon> {{ group.name }}
-        </Text>
+        <Text> <Icon>groups</Icon> {{ group.name }} </Text>
       </RouterLink>
       <ResourceSection :resource="resource" :user="user" />
       <AuthorSection :user="user" :title="resource.title" />

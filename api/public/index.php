@@ -70,6 +70,7 @@ $app->get('/api/user/{id}/groups', actions\user\GET\UserGetGroupsAction::class)-
 
 $app->post('/api/user/{id}/follow', actions\user\POST\FollowAction::class)->add(new TokenMiddleware());
 
+$app->post('/api/user/password_change', actions\user\POST\PasswordChangeAction::class)->add(new TokenMiddleware());
 
 // PATCH
 $app->post('/api/user/edit', actions\user\PATCH\UserAction::class)->add(new TokenMiddleware());
@@ -150,9 +151,6 @@ $app->post('/api/comment/{id_resource}', api\actions\comment\POST\CommentAction:
 
 $app->run();
 
-
-// Génération de fausses données dans la base de donnnées
-// require_once(__DIR__ . '/../sql/data_generation.php');
 
 // Génération de fausses données dans la base de donnnées
 // require_once(__DIR__ . '/../sql/data_generation.php');

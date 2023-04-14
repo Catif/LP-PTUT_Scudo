@@ -1,15 +1,15 @@
 <script setup>
-import Title from "@/components/ScudoTheming/Title.vue"
+import Title from "@/components/ScudoTheming/Title.vue";
 import { reactive, inject } from "vue";
 import ModalBottomSheet from "@/components/ScudoTheming/ModalBottomSheet.vue";
 import Input from "@/components/ScudoTheming/Input.vue";
-import { useRouter, useRoute } from 'vue-router';
-import { useSessionStore } from '@/stores/session.js';
-import Text from '@/components/ScudoTheming/Text.vue';
-import MainFeed from '@/components/ScudoTheming/MainFeed.vue';
-import FilledButton from '@/components/ScudoTheming/FilledButton.vue';
-import AsideFeed from '@/components/ScudoTheming/AsideFeed.vue';
-import RecordDisplay from '@/components/RecordDisplay.vue';
+import { useRouter, useRoute } from "vue-router";
+import { useSessionStore } from "@/stores/session.js";
+import Text from "@/components/ScudoTheming/Text.vue";
+import MainFeed from "@/components/ScudoTheming/MainFeed.vue";
+import FilledButton from "@/components/ScudoTheming/FilledButton.vue";
+import AsideFeed from "@/components/ScudoTheming/AsideFeed.vue";
+import RecordDisplay from "@/components/RecordDisplay.vue";
 import FloatingAppButton from "../components/ScudoTheming/FloatingAppButton.vue";
 import Icon from "../components/ScudoTheming/LargeIcon.vue";
 import Card from "../components/ScudoTheming/Card.vue";
@@ -19,18 +19,18 @@ const API = inject("api");
 const router = useRouter();
 const route = useRoute();
 const Session = useSessionStore();
-const bus = inject('bus')
+const bus = inject("bus");
 
 var form = reactive({
   resource: {
     id: null,
-    title: '',
-    text: '',
-    type: 'pending',
+    title: "",
+    text: "",
+    type: "pending",
   },
   is_public: false,
-})
-if (route.params.accessibility == 'public') {
+});
+if (route.params.accessibility == "public") {
   form.is_public = true;
 }
 
@@ -41,89 +41,111 @@ function createResource() {
     var is_private = 1;
   }
 
-  API.post('/api/resource', {
-    title: form.resource.title,
-    text: form.resource.text,
-    type: form.resource.type,
-    is_private: is_private,
-  }, {
-    headers: {
-      Authorization: Session.data.token
+  API.post(
+    "/api/resource",
+    {
+      title: form.resource.title,
+      text: form.resource.text,
+      type: form.resource.type,
+      is_private: is_private,
+    },
+    {
+      headers: {
+        Authorization: Session.data.token,
+      },
     }
-  }).then((reponse) => {
-    form.resource = reponse.data.result.resource;
-    console.log(form.resource);
-    if (route.params.accessibility == 'public') {
-      router.push({ name: "record", params: { accessibility: 'public', id: form.resource.id } });
-    } else {
-      router.push({ name: "record", params: { accessibility: 'private', id: form.resource.id } });
-    }
-  }).catch(() => {
-    router.push({ name: "home" });
-  })
+  )
+    .then((reponse) => {
+      form.resource = reponse.data.result.resource;
+      console.log(form.resource);
+      if (route.params.accessibility == "public") {
+        router.push({
+          name: "record",
+          params: { accessibility: "public", id: form.resource.id },
+        });
+      } else {
+        router.push({
+          name: "record",
+          params: { accessibility: "private", id: form.resource.id },
+        });
+      }
+    })
+    .catch(() => {
+      router.push({ name: "home" });
+    });
 }
-
-
 
 function getResource() {
   API.get(`/api/resource/${form.resource.id}`, {
     headers: {
       Authorization: Session.data.token,
     },
-  }).then((reponse) => {
-    form.resource = reponse.data.result.resource;
-    console.log(form.resource.is_private);
-    if (reponse.data.result.resource.is_private == 1) {
-      form.is_public = false;
-    } else {
-      form.is_public = true;
-    }
-  }).catch(() => {
-    alert('Vous ne pouvez pas modifier cette resource.');
-    router.push({ name: "resourceById", params: { id: route.params.id } });
-
   })
+    .then((reponse) => {
+      form.resource = reponse.data.result.resource;
+      if (reponse.data.result.resource.is_private == 1) {
+        form.is_public = false;
+      } else {
+        form.is_public = true;
+      }
+    })
+    .catch(() => {
+      alert("Vous ne pouvez pas modifier cette resource.");
+      router.push({ name: "resourceById", params: { id: route.params.id } });
+    });
 }
 
 function saveResource() {
-  form.errorMessage = '';
+  form.errorMessage = "";
   if (form.is_public) {
     var is_private = 0;
   } else {
     var is_private = 1;
   }
 
-  API.post(`/api/resource/${form.resource.id}`, {
-    title: form.resource.title,
-    text: form.resource.text,
-    type: form.resource.type,
-    is_private: is_private,
-  }, {
-    headers: {
-      Authorization: Session.data.token
+  API.post(
+    `/api/resource/${form.resource.id}`,
+    {
+      title: form.resource.title,
+      text: form.resource.text,
+      type: form.resource.type,
+      is_private: is_private,
+    },
+    {
+      headers: {
+        Authorization: Session.data.token,
+      },
     }
-  }).then((reponse) => {
-    form.resource = reponse.data.result.Resource;
-  }).catch(() => {
-    form.errorMessage = 'Un problème est survenu lors de la sauvgarde, vérifiez votre connexion internet et réessayez.'
-  })
+  )
+    .then((reponse) => {
+      form.resource = reponse.data.result.Resource;
+    })
+    .catch(() => {
+      form.errorMessage =
+        "Un problème est survenu lors de la sauvgarde, vérifiez votre connexion internet et réessayez.";
+    });
 }
 
 function toggleAccessibility() {
-
   form.is_public = !form.is_public;
 
   if (form.is_public) {
-    router.push({ name: "record", params: { accessibility: 'private', id: form.resource.id } });
+    router.push({
+      name: "record",
+      params: { accessibility: "private", id: form.resource.id },
+    });
   } else {
-    router.push({ name: "record", params: { accessibility: 'public', id: form.resource.id } });
+    router.push({
+      name: "record",
+      params: { accessibility: "public", id: form.resource.id },
+    });
   }
 
   saveResource();
 }
 
 function startStopRecord() {
-  if (form.resource.type == 'stream') {
+  if (form.resource.type == "stream") {
     stopRecord();
   } else {
     startRecord();
@@ -131,42 +153,38 @@ function startStopRecord() {
 }
 
 function startRecord() {
-  form.resource.type = 'stream';
+  form.resource.type = "stream";
 }
 
 function stopRecord() {
-  form.resource.type = 'video';
+  form.resource.type = "video";
   saveResource();
-  bus.emit('stopRecord');
+  bus.emit("stopRecord");
   // alert('rediriger vers édition resource');
 }
 
-bus.on('changeOK', function () {
+bus.on("changeOK", function () {
   saveResource();
-})
+});
 
-bus.on('recordOK', function () {
+bus.on("recordOK", function () {
   saveResource();
-})
-
-
+});
 
 if (!route.params.id) {
   createResource();
 } else {
   form.resource.id = route.params.id;
-  getResource()
+  getResource();
 }
 
-
 function openEditResourceLive() {
-  bus.emit('RecordDisplay')
+  bus.emit("RecordDisplay");
 }
 
 function shareResource() {
-  router.push({ name: "shareResourceById", params: { id: form.resource.id } })
+  router.push({ name: "shareResourceById", params: { id: form.resource.id } });
 }
-
 </script>
 
 <template>
@@ -176,11 +194,27 @@ function shareResource() {
       <form>
         <Card>
           <Title>Démarrer un enregistrement</Title>
-          <Input name="title1" label="Titre" v-model:value="form.resource.title" />
-          <Input name="text1" label="Description" v-model:value="form.resource.text" />
+          <Input
+            name="title1"
+            label="Titre"
+            v-model:value="form.resource.title"
+          />
+          <Input
+            name="text1"
+            label="Description"
+            v-model:value="form.resource.text"
+          />
           <Text>
-            <label for="role1" class="form-control">Partager publiquement</label>
-            <input @click="toggleAccessibility" id="role1" name="role1" type="checkbox" v-model="form.is_public" />
+            <label for="role1" class="form-control"
+              >Partager publiquement</label
+            >
+            <input
+              @click="toggleAccessibility"
+              id="role1"
+              name="role1"
+              type="checkbox"
+              v-model="form.is_public"
+            />
           </Text>
         </Card>
       </form>
@@ -197,15 +231,28 @@ function shareResource() {
     </template>
 
     <!-- RETOUR LIVE -->
-    <div id="recordDisplay"
-      :class="{ recordOn: form.resource.type == 'stream', recordOff: form.resource.type != 'stream' }">
-      <RecordDisplay v-if="form.resource.type == 'stream'" :id="form.resource.id" />
+    <div
+      id="recordDisplay"
+      :class="{
+        recordOn: form.resource.type == 'stream',
+        recordOff: form.resource.type != 'stream',
+      }"
+    >
+      <RecordDisplay
+        v-if="form.resource.type == 'stream'"
+        :id="form.resource.id"
+      />
       <div id="liveButtons">
-        <FloatingAppButton @click="openEditResourceLive" v-if="form.resource.type == 'stream'">
+        <FloatingAppButton
+          @click="openEditResourceLive"
+          v-if="form.resource.type == 'stream'"
+        >
           <Icon>settings_photo_camera</Icon>
         </FloatingAppButton>
         <FloatingAppButton @click="startStopRecord">
-          <Icon v-if="form.resource.type == 'pending'">fiber_manual_record</Icon>
+          <Icon v-if="form.resource.type == 'pending'"
+            >fiber_manual_record</Icon
+          >
           <Icon v-if="form.resource.type == 'stream'">stop</Icon>
         </FloatingAppButton>
       </div>
@@ -214,15 +261,30 @@ function shareResource() {
 
   <!-- FORMULAIRE ÉDITION DE RESOURCE PENDANT LE LIVE -->
   <template v-if="form.resource.type == 'stream'">
-
     <ModalBottomSheet bus="RecordDisplay">
       <form>
         <Card>
-          <Input name="title2" label="Titre" v-model:value="form.resource.title" />
-          <Input name="text2" label="Description" v-model:value="form.resource.text" />
+          <Input
+            name="title2"
+            label="Titre"
+            v-model:value="form.resource.title"
+          />
+          <Input
+            name="text2"
+            label="Description"
+            v-model:value="form.resource.text"
+          />
           <Text>
-            <label for="role2" class="form-control">Partager publiquement</label>
-            <input @click="toggleAccessibility" id="role2" name="role2" type="checkbox" v-model="form.is_public" />
+            <label for="role2" class="form-control"
+              >Partager publiquement</label
+            >
+            <input
+              @click="toggleAccessibility"
+              id="role2"
+              name="role2"
+              type="checkbox"
+              v-model="form.is_public"
+            />
           </Text>
           <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
         </Card>
@@ -231,11 +293,27 @@ function shareResource() {
     <AsideFeed :large="true">
       <form>
         <Card>
-          <Input name="title3" label="Titre" v-model:value="form.resource.title" />
-          <Input name="text3" label="Description" v-model:value="form.resource.text" />
+          <Input
+            name="title3"
+            label="Titre"
+            v-model:value="form.resource.title"
+          />
+          <Input
+            name="text3"
+            label="Description"
+            v-model:value="form.resource.text"
+          />
           <Text>
-            <label for="role3" class="form-control">Partager publiquement</label>
-            <input @click="toggleAccessibility" id="role3" name="role3" type="checkbox" v-model="form.is_public" />
+            <label for="role3" class="form-control"
+              >Partager publiquement</label
+            >
+            <input
+              @click="toggleAccessibility"
+              id="role3"
+              name="role3"
+              type="checkbox"
+              v-model="form.is_public"
+            />
           </Text>
           <Text v-if="form.errorMessage != ''">{{ form.errorMessage }}</Text>
         </Card>
@@ -270,9 +348,9 @@ main {
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 0 .75rem;
+    padding: 0 0.75rem;
 
-    @media screen and (min-width : calc($navigation-bar-min-width + $content-min-width + $content-min-width + 24px)) {
+    @media screen and (min-width: calc($navigation-bar-min-width + $content-min-width + $content-min-width + 24px)) {
       button:nth-child(1) {
         display: none;
         // display: none;
@@ -283,7 +361,7 @@ main {
       position: absolute;
       left: 50%;
       bottom: 0;
-      transform: translateX(calc(-50% - .75rem));
+      transform: translateX(calc(-50% - 0.75rem));
     }
   }
 }
@@ -292,7 +370,7 @@ main {
   position: absolute;
   bottom: 4.25rem;
   left: 50%;
-  transform: translateX(calc(-50% - .75rem));
+  transform: translateX(calc(-50% - 0.75rem));
 }
 
 // #liveButtons {
@@ -312,7 +390,6 @@ main {
 //     transform: translateX(-50%);
 //   }
 // }
-
 
 p,
 label {
@@ -367,7 +444,7 @@ input[type="checkbox"] {
       opacity: 1;
     }
 
-    ~label::before {
+    ~ label::before {
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     }
   }

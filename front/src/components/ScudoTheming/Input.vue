@@ -64,22 +64,32 @@ function onFileInput(event) {
 const emit = defineEmits(["update:value"]);
 
 function changeOK() {
-  bus.emit('changeOK')
+  bus.emit("changeOK");
 }
 </script>
 
 <template>
   <div v-bind:class="{ border: props.border, small: props.small }">
     <template v-if="props.label">
-      <label v-bind:class="{
-        active: props.value.length > 0 || props.type == 'file',
-      }" :for="props.name">{{ props.label }}</label>
+      <label
+        v-bind:class="{
+          active: props.value.length > 0 || props.type == 'file',
+        }"
+        :for="props.name"
+        >{{ props.label }}</label
+      >
     </template>
 
     <template v-if="props.type == 'file'">
       <img :src="photoUrl" class="picture" />
-      <input :type="props.type" :id="props.name" :name="props.name" :required="props.required" :disabled="props.disabled"
-        @change="onFileInput($event)" />
+      <input
+        :type="props.type"
+        :id="props.name"
+        :name="props.name"
+        :required="props.required"
+        :disabled="props.disabled"
+        @change="onFileInput($event)"
+      />
     </template>
     <template v-else>
       <input :type="props.type" :id="props.name" :name="props.name" :value="props.value" :required="props.required"

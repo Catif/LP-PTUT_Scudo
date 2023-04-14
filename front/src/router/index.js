@@ -11,6 +11,7 @@ const router = createRouter({
         auth: true,
       },
     },
+
     {
       path: "/register",
       name: "register",
@@ -70,6 +71,14 @@ const router = createRouter({
       },
     },
     {
+      path: "/settings",
+      name: "settings",
+      component: () => import("@/views/SettingView.vue"),
+      meta: {
+        auth: true,
+      },
+    },
+    {
       path: "/group",
       name: "group",
       redirect: "/group/create",
@@ -99,14 +108,6 @@ const router = createRouter({
           },
         },
       ],
-    },
-    {
-      path: "/example",
-      name: "example",
-      component: () => import("@/views/ExampleView.vue"),
-      meta: {
-        auth: true,
-      },
     },
   ],
 });
